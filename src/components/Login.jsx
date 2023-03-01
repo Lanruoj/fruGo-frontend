@@ -37,13 +37,15 @@ export const Login = (props) => {
         localStorage.setItem("role", response.data.role);
         return response.data.role;
       });
-      setMerchant(() => {
-        localStorage.setItem(
-          "merchant",
-          JSON.stringify(response.data.merchant)
-        );
-        return response.data.merchant;
-      });
+      if (response.data.role == "Customer") {
+        setMerchant(() => {
+          localStorage.setItem(
+            "merchant",
+            JSON.stringify(response.data.merchant)
+          );
+          return response.data.merchant;
+        });
+      }
     }
   };
   return (

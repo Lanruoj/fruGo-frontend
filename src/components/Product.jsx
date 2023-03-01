@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { Wrapper } from "./styled/Wrapper";
 
 export const Product = (props) => {
@@ -28,6 +29,7 @@ export const Product = (props) => {
       >
         ${product.price || product.product.price}
       </div>
+      <Button>Add to cart</Button>
     </Wrapper>
   );
 };

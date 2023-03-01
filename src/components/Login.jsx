@@ -1,12 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
-import NotLoggedInNavBar from "./NavBar/NotLoggedInNavBar";
-import Title from "./styled/Title";
-import InputWrapper from "./styled/InputWrapper";
+import { Title } from "./styled/Title";
 import { useAuthContext } from "../utils/AuthContext";
 import { useMerchantContext } from "../utils/MerchantContext";
+import { InputWrapper } from "./styled/InputWrapper";
 
-export default function Login(props) {
+export const Login = (props) => {
   const { setLoggedInUser, setToken } = useAuthContext();
   const { setMerchant } = useMerchantContext();
   const [userFormDetails, setUserFormDetails] = useState({
@@ -44,7 +43,6 @@ export default function Login(props) {
   };
   return (
     <>
-      <NotLoggedInNavBar />
       <Title>Login</Title>
       <form
         style={{
@@ -78,4 +76,4 @@ export default function Login(props) {
       </form>
     </>
   );
-}
+};

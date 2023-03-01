@@ -1,10 +1,9 @@
 // import UI components
 import axios from "axios";
 import { useEffect, useState } from "react";
-import NotLoggedInNavBar from "../NavBar/NotLoggedInNavBar";
-import { ProductList } from "./ProductList";
-import { useAuthContext } from "../../utils/AuthContext";
-import { useMerchantContext } from "../../utils/MerchantContext";
+import { ProductList } from "../components/ProductList";
+import { useAuthContext } from "../utils/AuthContext";
+import { useMerchantContext } from "../utils/MerchantContext";
 
 export function ProductsPage() {
   const { loggedInUser } = useAuthContext();
@@ -30,7 +29,6 @@ export function ProductsPage() {
   }, []);
   return (
     <>
-      <NotLoggedInNavBar />
       <h1>PRODUCTS</h1>
       <ProductList products={products} />
     </>

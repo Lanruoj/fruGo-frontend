@@ -2,8 +2,7 @@
 import Wrapper from "../styled/Wrapper";
 
 export default function Product(props) {
-  const product = props.productInfo;
-
+  const { product } = props;
   return (
     <Wrapper>
       <img

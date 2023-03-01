@@ -1,10 +1,6 @@
 import styled from "styled-components";
 import { useAuthContext } from "../utils/AuthContext";
-
-//importing default exports - name can be different
-import Product from "./Product";
-
-// import styled UI components
+import { Product } from "./Product";
 import { GridBox } from "./styled/GridBox";
 
 export const CustomGrid = styled(GridBox)`
@@ -12,7 +8,7 @@ export const CustomGrid = styled(GridBox)`
 `;
 
 export function ProductList(props) {
-  const { loggedInUser } = useAuthContext();
+  const { token } = useAuthContext();
   const { products } = props;
   return (
     <div id="products">
@@ -24,7 +20,7 @@ export function ProductList(props) {
                 key={product._id}
                 product={product}
                 setProduct={props.setProduct}
-                loggedInUser={loggedInUser}
+                // token={token}
               />
             );
           })}

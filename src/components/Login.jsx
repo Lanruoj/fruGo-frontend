@@ -6,7 +6,7 @@ import { useMerchantContext } from "../utils/MerchantContext";
 import { InputWrapper } from "./styled/InputWrapper";
 
 export const Login = (props) => {
-  const { setLoggedInUser, setToken } = useAuthContext();
+  const { setLoggedInUser, setRole, setToken } = useAuthContext();
   const { setMerchant } = useMerchantContext();
   const [userFormDetails, setUserFormDetails] = useState({
     username: "",
@@ -24,20 +24,25 @@ export const Login = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await axios.post("/auth/login", userFormDetails);
-
     if (response.status == 200) {
       setLoggedInUser(() => {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         return response.data.user;
       });
       setToken(() => {
         localStorage.setItem("token", response.data.accessToken);
         return response.data.accessToken;
       });
-      const merchantResponse = await axios.get(
-        `/merchants/${response.data.cart._merchant}`
-      );
+      setRole(() => {
+        localStorage.setItem("role", response.data.role);
+        return response.data.role;
+      });
       setMerchant(() => {
-        return merchantResponse.data.data;
+        localStorage.setItem(
+          "merchant",
+          JSON.stringify(response.data.merchant)
+        );
+        return response.data.merchant;
       });
     }
   };

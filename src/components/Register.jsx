@@ -2,8 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Title } from "./styled/Title";
 import { InputWrapper } from "./styled/InputWrapper";
+import { useAuthContext } from "../utils/AuthContext";
+import { useMerchantContext } from "../utils/MerchantContext";
 
 export const Register = () => {
+  const { setLoggedInUser, setRole, setToken } = useAuthContext();
+  const { setMerchant } = useMerchantContext();
   const [cities, setCities] = useState("");
   const [formData, setFormData] = useState({
     email: "",
@@ -30,12 +34,26 @@ export const Register = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formData);
     axios
       .post("/customers/register", formData)
       .then((response) => response.data)
       .then((data) => {
-        console.log(data);
+        setLoggedInUser(() => {
+          localStorage.setItem("user", JSON.stringify(data.user));
+          return data.user;
+        });
+        setToken(() => {
+          localStorage.setItem("token", data.accessToken);
+          return data.accessToken;
+        });
+        setRole(() => {
+          localStorage.setItem("role", data.role);
+          return data.role;
+        });
+        setMerchant(() => {
+          localStorage.setItem("merchant", JSON.stringify(data.merchant));
+          return data.merchant;
+        });
       });
   };
   return (

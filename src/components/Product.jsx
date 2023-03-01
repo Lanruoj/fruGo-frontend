@@ -1,7 +1,6 @@
-// import UI components
-import Wrapper from "./styled/Wrapper";
+import { Wrapper } from "./styled/Wrapper";
 
-export default function Product(props) {
+export const Product = (props) => {
   const { product } = props;
   return (
     <Wrapper>
@@ -31,4 +30,4 @@ export default function Product(props) {
       </div>
     </Wrapper>
   );
-}
+};

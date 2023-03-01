@@ -3,7 +3,7 @@ import { Route, Routes, NavLink } from "react-router-dom";
 
 // Below are import commands for the UI components
 import NotLoggedInHomePage from "./components/HomePage/NotLoggedInHomePage";
-import NotLoggedInProductsPage from "./components/ProductsPage/NotLoggedInProductsPage";
+import { ProductsPage } from "./components/ProductsPage/ProductsPage";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import Register from "./components/Register";
@@ -30,7 +30,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<NotLoggedInHomePage />} />
 
-        <Route exact path="products" element={<NotLoggedInProductsPage />} />
+        <Route exact path="products" element={<ProductsPage />} />
 
         <Route
           exact

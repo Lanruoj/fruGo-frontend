@@ -9,6 +9,7 @@ import { MerchantContext } from "./utils/MerchantContext";
 import { NavBar } from "./components/NavBar";
 import { Register } from "./components/Register";
 import "./App.css";
+import { CartContext } from "./utils/CartContext";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -20,6 +21,9 @@ function App() {
     localStorage.getItem("merchant")
       ? JSON.parse(localStorage.getItem("merchant"))
       : ""
+  );
+  const [cart, setCart] = useState(
+    localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : ""
   );
   return (
     <div className="App">
@@ -34,13 +38,15 @@ function App() {
         }}
       >
         <MerchantContext.Provider value={{ merchant, setMerchant }}>
-          <NavBar />
-          <Routes>
-            <Route exact path="/" element={<HomePage />} />
-            <Route exact path="/products" element={<ProductsPage />} />
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/customers/register" element={<Register />} />
-          </Routes>
+          <CartContext.Provider value={{ cart, setCart }}>
+            <NavBar />
+            <Routes>
+              <Route exact path="/" element={<HomePage />} />
+              <Route exact path="/products" element={<ProductsPage />} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/customers/register" element={<Register />} />
+            </Routes>
+          </CartContext.Provider>
         </MerchantContext.Provider>
       </AuthContext.Provider>
     </div>

@@ -1,13 +1,9 @@
-// import the styled UI components
-import Title from "./styled/Title";
-import InputWrapper from "./styled/InputWrapper";
-
-import NotLoggedInNavBar from "./NavBar/NotLoggedInNavBar";
+import { Title } from "./styled/Title";
+import { InputWrapper } from "./styled/InputWrapper";
 
 export const Register = () => {
   return (
     <>
-      <NotLoggedInNavBar />
       <Title>Register</Title>
       <form
         style={{
@@ -17,20 +13,24 @@ export const Register = () => {
         }}
       >
         <InputWrapper>
-          <label htmlFor="username">Username:</label>
-          <input type="text" name="username" />
+          <label htmlFor="email">Email:</label>
+          <input type="email" name="email" />
         </InputWrapper>
         <InputWrapper>
           <label htmlFor="password">Password:</label>
           <input type="password" name="password" />
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="firstName">First Name:</label>
+          <label htmlFor="firstName">First name:</label>
           <input type="text" name="firstName" />
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="lastName">Last Name:</label>
+          <label htmlFor="lastName">Last name:</label>
           <input type="text" name="lastName" />
+        </InputWrapper>
+        <InputWrapper>
+          <label htmlFor="streetAddress">Street address:</label>
+          <input type="text" name="streetAddress" />
         </InputWrapper>
         <InputWrapper>
           <label htmlFor="city">City:</label>

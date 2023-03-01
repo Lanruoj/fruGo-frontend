@@ -1,7 +1,18 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Title } from "./styled/Title";
 import { InputWrapper } from "./styled/InputWrapper";
 
 export const Register = () => {
+  const [cities, setCities] = useState("");
+  useEffect(() => {
+    axios
+      .get("/cities")
+      .then((response) => response.data)
+      .then((data) => {
+        setCities(data.data);
+      });
+  }, []);
   return (
     <>
       <Title>Register</Title>
@@ -35,13 +46,14 @@ export const Register = () => {
         <InputWrapper>
           <label htmlFor="city">City:</label>
           <select name="city" id="city">
-            <option value="Melbourne">Melbourne</option>
-            <option value="Sydney">Sydney</option>
-            <option value="Adelaide">Adelaide</option>
-            <option value="Brisbane">Brisbane</option>
-            <option value="Perth">Perth</option>
-            <option value="Darwin">Darwin</option>
-            <option value="Hobart">Hobart</option>
+            {cities &&
+              cities.map((city) => {
+                return (
+                  <option key={city._id} value={city._id}>
+                    {city.name}
+                  </option>
+                );
+              })}
           </select>
         </InputWrapper>
         <div>

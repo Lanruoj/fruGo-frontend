@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useAuthContext } from "../../utils/AuthContext";
 
 //importing default exports - name can be different
 import Product from "./Product";
@@ -13,6 +14,7 @@ export const CustomGrid = styled(GridBox)`
 `;
 
 export function ProductList(props) {
+  const { loggedInUser } = useAuthContext();
   const { products } = props;
   return (
     <div id="products">
@@ -22,8 +24,9 @@ export function ProductList(props) {
             return (
               <Product
                 key={product._id}
-                productInfo={product}
+                product={product}
                 setProduct={props.setProduct}
+                loggedInUser={loggedInUser}
               />
             );
           })}

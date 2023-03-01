@@ -4,15 +4,7 @@ import { useAuthContext } from "../utils/AuthContext";
 
 export const NavBar = () => {
   const { loggedInUser } = useAuthContext();
-  <NavLink
-    key="fruGo-title"
-    style={{
-      textDecoration: "none",
-    }}
-    to="/"
-  >
-    <h1 className="fruGo-title">fruGo</h1>
-  </NavLink>;
+
   const navBarItems = [
     {
       title: "Home",
@@ -28,40 +20,51 @@ export const NavBar = () => {
     },
     {
       title: "Register",
-      linkTo: "/register",
+      linkTo: "/customers/register",
     },
   ];
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 1, display: "flex" }}>
-            {navBarItems.map((item) => {
-              return (
-                <NavLink
-                  key={item.title}
-                  style={{
-                    textDecoration: "none",
-                  }}
-                  to={item.linkTo}
-                >
-                  <Button
-                    sx={{
-                      my: 1,
-                      color: "white",
-                      display: "block",
+    <>
+      <NavLink
+        key="fruGo-title"
+        style={{
+          textDecoration: "none",
+        }}
+        to="/"
+      >
+        <h1 className="fruGo-title">fruGo</h1>
+      </NavLink>
+      <AppBar position="static">
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Box sx={{ flexGrow: 1, display: "flex" }}>
+              {navBarItems.map((item) => {
+                return (
+                  <NavLink
+                    key={item.title}
+                    style={{
+                      textDecoration: "none",
                     }}
+                    to={item.linkTo}
                   >
-                    {item.title}
-                  </Button>
-                </NavLink>
-              );
-            })}
-            {loggedInUser && <p>{loggedInUser.username}</p>}
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+                    <Button
+                      sx={{
+                        my: 1,
+                        color: "white",
+                        display: "block",
+                      }}
+                    >
+                      {item.title}
+                    </Button>
+                  </NavLink>
+                );
+              })}
+              {loggedInUser && <p>{loggedInUser.username}</p>}
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </>
   );
 };

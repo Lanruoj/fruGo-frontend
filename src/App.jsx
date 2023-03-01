@@ -7,6 +7,7 @@ import { Login } from "./components/Login";
 import { AuthContext } from "./utils/AuthContext";
 import { MerchantContext } from "./utils/MerchantContext";
 import { NavBar } from "./components/NavBar";
+import { Register } from "./components/Register";
 import "./App.css";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route exact path="/" element={<HomePage />} />
             <Route exact path="/products" element={<ProductsPage />} />
             <Route exact path="/login" element={<Login />} />
+            <Route exact path="/customers/register" element={<Register />} />
           </Routes>
         </MerchantContext.Provider>
       </AuthContext.Provider>

@@ -3,9 +3,10 @@ import { useState } from "react";
 import NotLoggedInNavBar from "./NavBar/NotLoggedInNavBar";
 import Title from "./styled/Title";
 import InputWrapper from "./styled/InputWrapper";
+import { useLoggedInUserContext } from "../utils/LoggedInUserContext";
 
 export default function Login(props) {
-  const { setLoggedInUser, setToken } = props;
+  const { setLoggedInUser, setToken } = useLoggedInUserContext();
   const [userFormDetails, setUserFormDetails] = useState({
     username: "",
     password: "",

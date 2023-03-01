@@ -22,7 +22,6 @@ export function ProductsPage() {
         .get(`/merchants/${merchant._id}/stock/products`)
         .then((res) => res.data.data)
         .then((data) => {
-          console.log(data);
           setProducts(data);
         });
     }

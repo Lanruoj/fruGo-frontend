@@ -9,8 +9,8 @@ export default function Product(props) {
         style={{
           height: 200,
         }}
-        src={product.img}
-        alt={product.name}
+        src={product.img || product.product.img}
+        alt={product.name || product.product.name}
       ></img>
       <div
         style={{
@@ -20,14 +20,14 @@ export default function Product(props) {
           marginBottom: 10,
         }}
       >
-        {product.name}
+        {product.name || product.product.name}
       </div>
       <div
         style={{
           fontFamily: "Verdana, sans-serif",
         }}
       >
-        ${product.price}
+        ${product.price || product.product.price}
       </div>
     </Wrapper>
   );

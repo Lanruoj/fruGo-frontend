@@ -10,6 +10,7 @@ import { NavBar } from "./components/NavBar";
 import { Register } from "./components/Register";
 import "./App.css";
 import { CartContext } from "./utils/CartContext";
+import { Cart } from "./components/Cart";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -45,6 +46,7 @@ function App() {
               <Route exact path="/products" element={<ProductsPage />} />
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/customers/register" element={<Register />} />
+              <Route exact path="/cart" element={<Cart />} />
             </Routes>
           </CartContext.Provider>
         </MerchantContext.Provider>

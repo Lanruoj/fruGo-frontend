@@ -39,13 +39,14 @@ const CartProductImg = styled.img`
 `;
 
 export const Cart = () => {
-  const { cartProducts, setCartProducts } = useCartContext();
+  const { cartProducts, setCartProducts, setNewOrder } = useCartContext();
   const navigate = useNavigate();
   const handleSubmitOrder = (event) => {
     axios.post("/orders").then((response) => {
-      console.log(response);
+      console.log(response.data.data);
+      setNewOrder(response.data.data._id);
       setCartProducts([]);
-      navigate("/orders");
+      navigate(`/orderConfirmation/${response.data.data._id}`);
     });
   };
   return (
@@ -56,11 +57,9 @@ export const Cart = () => {
           ? cartProducts.map((cartProduct) => {
               return (
                 <CartProduct key={cartProduct._id}>
-                  <CartProductName>
-                    {cartProduct._stockProduct._product.name}
-                  </CartProductName>
+                  <CartProductName>{cartProduct._product.name}</CartProductName>
                   <CartProductImg
-                    src={cartProduct._stockProduct._product.img}
+                    src={cartProduct._product.img}
                   ></CartProductImg>
                   <CartProductQuantity>
                     Quantity:
@@ -68,8 +67,8 @@ export const Cart = () => {
                   </CartProductQuantity>
                   <CartProductPrice>
                     Subtotal:
-                    {cartProduct._stockProduct._product.price *
-                      cartProduct.subQuantity}
+                    {/* {cartProduct._product.price *
+                      cartProduct.subQuantity} */}
                   </CartProductPrice>
                 </CartProduct>
               );

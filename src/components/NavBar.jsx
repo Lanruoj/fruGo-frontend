@@ -61,7 +61,7 @@ export const NavBar = () => {
                   style={{
                     textDecoration: "none",
                   }}
-                  to={"/register"}
+                  to={"/customers/register"}
                 >
                   <Button
                     sx={{

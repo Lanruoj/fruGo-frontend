@@ -5,35 +5,21 @@ import { Wrapper } from "./styled/Wrapper";
 
 export const Product = (props) => {
   const { product } = props;
-  const { cart, setCart } = useCartContext();
+  const { setCartProducts } = useCartContext();
   const handleAddToCart = (event) => {
     event.preventDefault();
-    if (
-      cart._cartProducts.some(
-        (cartProduct) => cartProduct._stockProduct._id == event.target.value
+    axios
+      .post(
+        `/customers/${
+          JSON.parse(localStorage.getItem("user"))._id
+        }/cart/products`,
+        {
+          product: event.target.value,
+        }
       )
-    ) {
-      console.log("Product already in cart");
-    } else {
-      axios
-        .post(
-          `/customers/${
-            JSON.parse(localStorage.getItem("user"))._id
-          }/cart/products`,
-          {
-            product: event.target.value,
-          }
-        )
-        .then((response) => {
-          setCart(() => {
-            if (cart) {
-              console.log("Product added to cart");
-              localStorage.setItem("cart", JSON.stringify(response.data.cart));
-              return response.data.cart;
-            }
-          });
-        });
-    }
+      .then((response) => {
+        setCartProducts(response.data.data._cartProducts);
+      });
   };
   return (
     <Wrapper>
@@ -61,23 +47,16 @@ export const Product = (props) => {
       >
         ${product.price || product.product.price}
       </div>
-      {!cart && (
-        <Button value={product._id} onClick={handleAddToCart} disabled={true}>
-          Add to cart
-        </Button>
-      )}
-      {cart && (
-        <Button
-          value={product._id}
-          onClick={handleAddToCart}
-          disabled={cart._cartProducts.some(
-            (cartProduct) =>
-              cartProduct._stockProduct._id == product._id && true
-          )}
-        >
-          Add to cart
-        </Button>
-      )}
+      <Button value={product._id} onClick={handleAddToCart}>
+        Add to cart
+      </Button>
+      <input
+        type="number"
+        name="quantity"
+        min="0"
+        step="1"
+        defaultValue="1"
+      ></input>
     </Wrapper>
   );
 };

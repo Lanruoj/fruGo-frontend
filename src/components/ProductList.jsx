@@ -15,14 +15,7 @@ export function ProductList(props) {
       <GridBox>
         {products &&
           products.map((product) => {
-            return (
-              <Product
-                key={product._id}
-                product={product}
-                setProduct={props.setProduct}
-                // token={token}
-              />
-            );
+            return <Product key={product._id} product={product} />;
           })}
       </GridBox>
     </div>

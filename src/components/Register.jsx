@@ -25,7 +25,14 @@ export const Register = () => {
       .get("/cities")
       .then((response) => response.data)
       .then((data) => {
+        console.log(data);
         setCities(data.data);
+        setFormData(() => {
+          return {
+            ...formData,
+            _city: data.data[0]._id,
+          };
+        });
       });
   }, []);
   const handleChange = (event) => {

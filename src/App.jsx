@@ -32,7 +32,13 @@ function App() {
     if (loggedInUser) {
       navigate("/products");
       axios.get(`/customers/${loggedInUser._id}/cart`).then((response) => {
-        setCartProducts(response.data.data._cartProducts);
+        setCartProducts((prev) => {
+          let data = response.data.data._cartProducts;
+          const cartProducts = data.map((cartProduct) => {
+            return { stockProduct: cartProduct, quantity: 1 };
+          });
+          return cartProducts;
+        });
       });
     } else if (!loggedInUser) {
       navigate("/");

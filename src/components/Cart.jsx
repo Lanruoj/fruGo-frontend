@@ -40,34 +40,32 @@ const CartProductImg = styled.img`
 
 export const Cart = (props) => {
   const { setCart, cart } = useCartContext();
-  useEffect(() => {
-    console.log(cart);
-  });
   return (
     <CartContainer>
       <h1>Cart</h1>
       <CartProductList>
-        {cart._cartProducts.map((cartProduct) => {
-          return (
-            <CartProduct key={cartProduct._id}>
-              <CartProductName>
-                {cartProduct._stockProduct._product.name}
-              </CartProductName>
-              <CartProductImg
-                src={cartProduct._stockProduct._product.img}
-              ></CartProductImg>
-              <CartProductQuantity>
-                Quantity:
-                {cartProduct.subQuantity}
-              </CartProductQuantity>
-              <CartProductPrice>
-                Subtotal:
-                {cartProduct._stockProduct._product.price *
-                  cartProduct.subQuantity}
-              </CartProductPrice>
-            </CartProduct>
-          );
-        })}
+        {cart &&
+          cart._cartProducts.map((cartProduct) => {
+            return (
+              <CartProduct key={cartProduct._id}>
+                <CartProductName>
+                  {cartProduct._stockProduct._product.name}
+                </CartProductName>
+                <CartProductImg
+                  src={cartProduct._stockProduct._product.img}
+                ></CartProductImg>
+                <CartProductQuantity>
+                  Quantity:
+                  {cartProduct.subQuantity}
+                </CartProductQuantity>
+                <CartProductPrice>
+                  Subtotal:
+                  {cartProduct._stockProduct._product.price *
+                    cartProduct.subQuantity}
+                </CartProductPrice>
+              </CartProduct>
+            );
+          })}
       </CartProductList>
     </CartContainer>
   );

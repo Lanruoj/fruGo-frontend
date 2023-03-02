@@ -2,7 +2,7 @@ import axios from "axios";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { HomePage } from "./pages/HomePage";
-import { ProductsPage } from "./pages/ProductsPage";
+import { Products } from "./components/Products";
 import { Login } from "./components/Login";
 import { AuthContext } from "./utils/AuthContext";
 import { MerchantContext } from "./utils/MerchantContext";
@@ -57,7 +57,7 @@ function App() {
             <NavBar />
             <Routes>
               <Route exact path="/" element={<HomePage />} />
-              <Route exact path="/products" element={<ProductsPage />} />
+              <Route exact path="/products" element={<Products />} />
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/customers/register" element={<Register />} />
               <Route exact path="/cart" element={<Cart />} />

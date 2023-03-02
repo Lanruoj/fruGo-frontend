@@ -61,15 +61,8 @@ export const Cart = () => {
                   <CartProductImg
                     src={cartProduct._product.img}
                   ></CartProductImg>
-                  <CartProductQuantity>
-                    Quantity:
-                    {cartProduct.subQuantity}
-                  </CartProductQuantity>
-                  <CartProductPrice>
-                    Subtotal:
-                    {/* {cartProduct._product.price *
-                      cartProduct.subQuantity} */}
-                  </CartProductPrice>
+                  <CartProductQuantity>Quantity:</CartProductQuantity>
+                  <CartProductPrice>Subtotal:</CartProductPrice>
                 </CartProduct>
               );
             })

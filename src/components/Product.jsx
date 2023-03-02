@@ -1,11 +1,12 @@
 import { Button } from "@mui/material";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useCartContext } from "../utils/CartContext";
 import { Wrapper } from "./styled/Wrapper";
 
 export const Product = (props) => {
-  const { product } = props;
-  const { setCartProducts } = useCartContext();
+  const { product, products } = props;
+  const { setCartProducts, cartProducts } = useCartContext();
   const handleAddToCart = (event) => {
     event.preventDefault();
     axios
@@ -19,6 +20,25 @@ export const Product = (props) => {
       )
       .then((response) => {
         setCartProducts(response.data.data._cartProducts);
+      });
+  };
+  const handleRemoveFromCart = (event) => {
+    event.preventDefault();
+    axios
+      .delete(
+        `/customers/${
+          JSON.parse(localStorage.getItem("user"))._id
+        }/cart/products`,
+        {
+          data: {
+            product: event.target.value,
+          },
+        }
+      )
+      .then((response) => {
+        setCartProducts(() => {
+          return response.data.data._cartProducts;
+        });
       });
   };
   return (
@@ -49,6 +69,9 @@ export const Product = (props) => {
       </div>
       <Button value={product._id} onClick={handleAddToCart}>
         Add to cart
+      </Button>
+      <Button value={product._id} onClick={handleRemoveFromCart}>
+        Remove
       </Button>
       <input
         type="number"

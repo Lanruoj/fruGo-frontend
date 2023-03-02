@@ -1,11 +1,16 @@
-// import UI components
 import axios from "axios";
+import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { ProductList } from "../components/ProductList";
 import { useAuthContext } from "../utils/AuthContext";
 import { useMerchantContext } from "../utils/MerchantContext";
+import { GridBox } from "./styled/GridBox";
+import { Product } from "./Product";
 
-export function ProductsPage() {
+export const CustomGrid = styled(GridBox)`
+  padding: 30px;
+`;
+
+export function Products() {
   const { loggedInUser } = useAuthContext();
   const { merchant } = useMerchantContext();
   const [products, setProducts] = useState("");
@@ -29,7 +34,20 @@ export function ProductsPage() {
   return (
     <>
       <h1>PRODUCTS</h1>
-      <ProductList products={products} />
+      <div id="products">
+        <GridBox>
+          {products &&
+            products.map((product) => {
+              return (
+                <Product
+                  key={product._id}
+                  product={product}
+                  products={products}
+                />
+              );
+            })}
+        </GridBox>
+      </div>
     </>
   );
 }

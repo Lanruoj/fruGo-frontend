@@ -9,7 +9,7 @@ export const Login = () => {
   const { setLoggedInUser, setRole, setToken } = useAuthContext();
   const { setMerchant } = useMerchantContext();
   const [userFormDetails, setUserFormDetails] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const handleChange = (event) => {

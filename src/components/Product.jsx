@@ -87,7 +87,11 @@ export const Product = (props) => {
         ${product.price || product.product.price}
       </div>
       {!existingProduct ? (
-        <Button value={product._id} onClick={handleAddToCart}>
+        <Button
+          value={product._id}
+          onClick={handleAddToCart}
+          disabled={product.quantity <= 0 && true}
+        >
           Add to cart
         </Button>
       ) : (

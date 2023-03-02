@@ -6,6 +6,7 @@ import { useMerchantContext } from "../utils/MerchantContext";
 import { GridBox } from "./styled/GridBox";
 import { Product } from "./Product";
 import { useCartContext } from "../utils/CartContext";
+import { SearchBar } from "./styled/SearchBar";
 
 export const CustomGrid = styled(GridBox)`
   padding: 30px;
@@ -16,6 +17,7 @@ export function Products() {
   const { cartProducts } = useCartContext();
   const { merchant } = useMerchantContext();
   const [products, setProducts] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     if (!loggedInUser) {
       axios
@@ -33,9 +35,25 @@ export function Products() {
         });
     }
   }, []);
+  const handleSearchQueryChange = (event) => {
+    event.preventDefault();
+    setSearchQuery(event.target.value);
+    axios
+      .get(`/merchants/${merchant._id}/stock/products?name=${searchQuery}`)
+      .then((response) => {
+        setProducts(response.data.data);
+      });
+  };
   return (
     <>
       <h1>PRODUCTS</h1>
+      <form>
+        <SearchBar
+          value={searchQuery}
+          onChange={handleSearchQueryChange}
+          placeholder="Search for products"
+        />
+      </form>
       <div id="products">
         <GridBox>
           {products &&

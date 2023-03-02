@@ -14,10 +14,6 @@ export const NavBar = () => {
       title: "Products",
       linkTo: "/products",
     },
-    {
-      title: `${loggedInUser ? "Logout" : "Login"}`,
-      linkTo: `${loggedInUser ? "/logout" : "/login"}`,
-    },
   ];
 
   return (
@@ -75,23 +71,57 @@ export const NavBar = () => {
                 </NavLink>
               )}
               {loggedInUser && (
-                <NavLink
-                  style={{
-                    textDecoration: "none",
-                  }}
-                  to={"/cart"}
-                >
-                  <Button
-                    sx={{
-                      my: 1,
-                      color: "white",
-                      display: "block",
+                <>
+                  <NavLink
+                    style={{
+                      textDecoration: "none",
                     }}
+                    to={"/cart"}
                   >
-                    Cart
-                  </Button>
-                </NavLink>
+                    <Button
+                      sx={{
+                        my: 1,
+                        color: "white",
+                        display: "block",
+                      }}
+                    >
+                      Cart
+                    </Button>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      textDecoration: "none",
+                    }}
+                    to={"/orders"}
+                  >
+                    <Button
+                      sx={{
+                        my: 1,
+                        color: "white",
+                        display: "block",
+                      }}
+                    >
+                      Orders
+                    </Button>
+                  </NavLink>
+                </>
               )}
+              <NavLink
+                style={{
+                  textDecoration: "none",
+                }}
+                to={loggedInUser ? "/logout" : "/login"}
+              >
+                <Button
+                  sx={{
+                    my: 1,
+                    color: "white",
+                    display: "block",
+                  }}
+                >
+                  {loggedInUser ? "Logout" : "Login"}
+                </Button>
+              </NavLink>
               {loggedInUser && <p>{loggedInUser.username}</p>}
             </Box>
           </Toolbar>

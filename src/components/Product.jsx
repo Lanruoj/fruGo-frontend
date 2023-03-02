@@ -1,11 +1,13 @@
-import { Button } from "@mui/material";
+import { Button } from "./styled/Button";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useAuthContext } from "../utils/AuthContext";
 import { useCartContext } from "../utils/CartContext";
 import { Wrapper } from "./styled/Wrapper";
 
 export const Product = (props) => {
-  const { product, products } = props;
+  const { loggedInUser } = useAuthContext();
+  const { product, existingProduct } = props;
   const { setCartProducts, cartProducts } = useCartContext();
   const handleAddToCart = (event) => {
     event.preventDefault();
@@ -19,7 +21,18 @@ export const Product = (props) => {
         }
       )
       .then((response) => {
-        setCartProducts(response.data.data._cartProducts);
+        setCartProducts((prev) => {
+          return [
+            ...prev,
+            {
+              stockProduct:
+                response.data.data._cartProducts[
+                  response.data.data._cartProducts.length - 1
+                ],
+              quantity: 1,
+            },
+          ];
+        });
       });
   };
   const handleRemoveFromCart = (event) => {
@@ -36,11 +49,17 @@ export const Product = (props) => {
         }
       )
       .then((response) => {
-        setCartProducts(() => {
-          return response.data.data._cartProducts;
+        setCartProducts((prev) => {
+          const cartProducts = [...prev];
+          const index = cartProducts.findIndex(
+            (cartProduct) => cartProduct.stockProduct._id == event.target.value
+          );
+          cartProducts.splice(index, 1);
+          return cartProducts;
         });
       });
   };
+
   return (
     <Wrapper>
       <img
@@ -67,19 +86,16 @@ export const Product = (props) => {
       >
         ${product.price || product.product.price}
       </div>
-      <Button value={product._id} onClick={handleAddToCart}>
-        Add to cart
-      </Button>
-      <Button value={product._id} onClick={handleRemoveFromCart}>
-        Remove
-      </Button>
-      <input
-        type="number"
-        name="quantity"
-        min="0"
-        step="1"
-        defaultValue="1"
-      ></input>
+      {!existingProduct ? (
+        <Button value={product._id} onClick={handleAddToCart}>
+          Add to cart
+        </Button>
+      ) : (
+        <Button value={product._id} onClick={handleRemoveFromCart}>
+          Remove
+        </Button>
+      )}
+      {loggedInUser && <div>Stock quantity: {product.quantity}</div>}
     </Wrapper>
   );
 };

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import styled from "styled-components";
 import { useCartContext } from "../utils/CartContext";
 
@@ -38,14 +37,14 @@ const CartProductImg = styled.img`
   width: 100px;
 `;
 
-export const Cart = (props) => {
-  const { setCart, cart } = useCartContext();
+export const Cart = () => {
+  const { cartProducts } = useCartContext();
   return (
     <CartContainer>
       <h1>Cart</h1>
       <CartProductList>
-        {cart &&
-          cart._cartProducts.map((cartProduct) => {
+        {cartProducts.length &&
+          cartProducts.map((cartProduct) => {
             return (
               <CartProduct key={cartProduct._id}>
                 <CartProductName>

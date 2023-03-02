@@ -15,12 +15,8 @@ export const NavBar = () => {
       linkTo: "/products",
     },
     {
-      title: "Login",
-      linkTo: "/login",
-    },
-    {
-      title: "Register",
-      linkTo: "/customers/register",
+      title: `${loggedInUser ? "Logout" : "Login"}`,
+      linkTo: `${loggedInUser ? "/logout" : "/login"}`,
     },
   ];
 
@@ -60,6 +56,42 @@ export const NavBar = () => {
                   </NavLink>
                 );
               })}
+              {!loggedInUser && (
+                <NavLink
+                  style={{
+                    textDecoration: "none",
+                  }}
+                  to={"/customers/register"}
+                >
+                  <Button
+                    sx={{
+                      my: 1,
+                      color: "white",
+                      display: "block",
+                    }}
+                  >
+                    Register
+                  </Button>
+                </NavLink>
+              )}
+              {loggedInUser && (
+                <NavLink
+                  style={{
+                    textDecoration: "none",
+                  }}
+                  to={"/cart"}
+                >
+                  <Button
+                    sx={{
+                      my: 1,
+                      color: "white",
+                      display: "block",
+                    }}
+                  >
+                    Cart
+                  </Button>
+                </NavLink>
+              )}
               {loggedInUser && <p>{loggedInUser.username}</p>}
             </Box>
           </Toolbar>

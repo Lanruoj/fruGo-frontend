@@ -4,10 +4,12 @@ import { Title } from "./styled/Title";
 import { InputWrapper } from "./styled/InputWrapper";
 import { useAuthContext } from "../utils/AuthContext";
 import { useMerchantContext } from "../utils/MerchantContext";
+import { useCartContext } from "../utils/CartContext";
 
 export const Register = () => {
   const { setLoggedInUser, setRole, setToken } = useAuthContext();
   const { setMerchant } = useMerchantContext();
+  const { setCart } = useCartContext();
   const [cities, setCities] = useState("");
   const [formData, setFormData] = useState({
     email: "",
@@ -23,7 +25,14 @@ export const Register = () => {
       .get("/cities")
       .then((response) => response.data)
       .then((data) => {
+        console.log(data);
         setCities(data.data);
+        setFormData(() => {
+          return {
+            ...formData,
+            _city: data.data[0]._id,
+          };
+        });
       });
   }, []);
   const handleChange = (event) => {
@@ -53,6 +62,10 @@ export const Register = () => {
         setMerchant(() => {
           localStorage.setItem("merchant", JSON.stringify(data.merchant));
           return data.merchant;
+        });
+        setCart(() => {
+          localStorage.setItem("cart", JSON.stringify(data.cart));
+          return data.cart;
         });
       });
   };

@@ -25,7 +25,7 @@ export function ProductsPage() {
           setProducts(data);
         });
     }
-  }, [merchant]);
+  }, []);
   return (
     <>
       <h1>PRODUCTS</h1>

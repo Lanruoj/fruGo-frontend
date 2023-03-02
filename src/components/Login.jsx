@@ -5,7 +5,7 @@ import { useAuthContext } from "../utils/AuthContext";
 import { useMerchantContext } from "../utils/MerchantContext";
 import { InputWrapper } from "./styled/InputWrapper";
 
-export const Login = (props) => {
+export const Login = () => {
   const { setLoggedInUser, setRole, setToken } = useAuthContext();
   const { setMerchant } = useMerchantContext();
   const [userFormDetails, setUserFormDetails] = useState({

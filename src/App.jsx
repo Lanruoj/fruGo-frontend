@@ -9,6 +9,8 @@ import { MerchantContext } from "./utils/MerchantContext";
 import { NavBar } from "./components/NavBar";
 import { Register } from "./components/Register";
 import "./App.css";
+import { CartContext } from "./utils/CartContext";
+import { Cart } from "./components/Cart";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -21,6 +23,13 @@ function App() {
       ? JSON.parse(localStorage.getItem("merchant"))
       : ""
   );
+  const [cartProducts, setCartProducts] = useState([]);
+  useEffect(() => {
+    if (loggedInUser)
+      axios.get(`/customers/${loggedInUser._id}/cart`).then((response) => {
+        setCartProducts(response.data.data._cartProducts);
+      });
+  }, [loggedInUser]);
   return (
     <div className="App">
       <AuthContext.Provider
@@ -34,13 +43,16 @@ function App() {
         }}
       >
         <MerchantContext.Provider value={{ merchant, setMerchant }}>
-          <NavBar />
-          <Routes>
-            <Route exact path="/" element={<HomePage />} />
-            <Route exact path="/products" element={<ProductsPage />} />
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/customers/register" element={<Register />} />
-          </Routes>
+          <CartContext.Provider value={{ cartProducts, setCartProducts }}>
+            <NavBar />
+            <Routes>
+              <Route exact path="/" element={<HomePage />} />
+              <Route exact path="/products" element={<ProductsPage />} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/customers/register" element={<Register />} />
+              <Route exact path="/cart" element={<Cart />} />
+            </Routes>
+          </CartContext.Provider>
         </MerchantContext.Provider>
       </AuthContext.Provider>
     </div>

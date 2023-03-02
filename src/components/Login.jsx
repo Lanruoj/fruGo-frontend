@@ -4,12 +4,10 @@ import { Title } from "./styled/Title";
 import { useAuthContext } from "../utils/AuthContext";
 import { useMerchantContext } from "../utils/MerchantContext";
 import { InputWrapper } from "./styled/InputWrapper";
-import { useCartContext } from "../utils/CartContext";
 
-export const Login = (props) => {
+export const Login = () => {
   const { setLoggedInUser, setRole, setToken } = useAuthContext();
   const { setMerchant } = useMerchantContext();
-  const { setCart } = useCartContext();
   const [userFormDetails, setUserFormDetails] = useState({
     username: "",
     password: "",
@@ -46,10 +44,6 @@ export const Login = (props) => {
             JSON.stringify(response.data.merchant)
           );
           return response.data.merchant;
-        });
-        setCart(() => {
-          localStorage.setItem("cart", JSON.stringify(response.data.cart));
-          return response.data.cart;
         });
       }
     }

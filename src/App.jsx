@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { HomePage } from "./pages/HomePage";
 import { ProductsPage } from "./pages/ProductsPage";
@@ -11,6 +11,8 @@ import { Register } from "./components/Register";
 import "./App.css";
 import { CartContext } from "./utils/CartContext";
 import { Cart } from "./components/Cart";
+import { Orders } from "./components/Orders";
+import { OrderConfirmation } from "./components/OrderConfirmation";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -24,11 +26,17 @@ function App() {
       : ""
   );
   const [cartProducts, setCartProducts] = useState([]);
+  const [newOrder, setNewOrder] = useState("");
+  const navigate = useNavigate();
   useEffect(() => {
-    if (loggedInUser)
+    if (loggedInUser) {
+      navigate("/products");
       axios.get(`/customers/${loggedInUser._id}/cart`).then((response) => {
         setCartProducts(response.data.data._cartProducts);
       });
+    } else if (!loggedInUser) {
+      navigate("/");
+    }
   }, [loggedInUser]);
   return (
     <div className="App">
@@ -43,7 +51,9 @@ function App() {
         }}
       >
         <MerchantContext.Provider value={{ merchant, setMerchant }}>
-          <CartContext.Provider value={{ cartProducts, setCartProducts }}>
+          <CartContext.Provider
+            value={{ cartProducts, setCartProducts, newOrder, setNewOrder }}
+          >
             <NavBar />
             <Routes>
               <Route exact path="/" element={<HomePage />} />
@@ -51,6 +61,11 @@ function App() {
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/customers/register" element={<Register />} />
               <Route exact path="/cart" element={<Cart />} />
+              <Route exact path="/orders" element={<Orders />} />
+              <Route
+                path={`/orderConfirmation/${newOrder}`}
+                element={<OrderConfirmation />}
+              />
             </Routes>
           </CartContext.Provider>
         </MerchantContext.Provider>

@@ -13,7 +13,6 @@ import { CartContext } from "./utils/CartContext";
 import { Cart } from "./components/Cart";
 
 function App() {
-  const [session, setSession] = useState("");
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [loggedInUser, setLoggedInUser] = useState(
     localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : ""
@@ -24,17 +23,13 @@ function App() {
       ? JSON.parse(localStorage.getItem("merchant"))
       : ""
   );
-  const [cart, setCart] = useState("");
+  const [cartProducts, setCartProducts] = useState([]);
   useEffect(() => {
-    if (token) {
+    if (loggedInUser)
       axios.get(`/customers/${loggedInUser._id}/cart`).then((response) => {
-        setCart(() => {
-          return response.data.data;
-        });
+        setCartProducts(response.data.data._cartProducts);
       });
-    }
-  }, [token]);
-
+  }, [loggedInUser]);
   return (
     <div className="App">
       <AuthContext.Provider
@@ -48,7 +43,7 @@ function App() {
         }}
       >
         <MerchantContext.Provider value={{ merchant, setMerchant }}>
-          <CartContext.Provider value={{ cart, setCart }}>
+          <CartContext.Provider value={{ cartProducts, setCartProducts }}>
             <NavBar />
             <Routes>
               <Route exact path="/" element={<HomePage />} />

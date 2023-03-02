@@ -84,6 +84,9 @@ export const Cart = () => {
         (cartProduct) => cartProduct.stockProduct._id == event.target.value
       );
       cartProducts[index].quantity -= 1;
+      if (cartProducts[index].quantity == 0) {
+        cartProducts.splice(index, 1);
+      }
       return cartProducts;
     });
   };

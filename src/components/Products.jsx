@@ -5,6 +5,7 @@ import { useAuthContext } from "../utils/AuthContext";
 import { useMerchantContext } from "../utils/MerchantContext";
 import { GridBox } from "./styled/GridBox";
 import { Product } from "./Product";
+import { useCartContext } from "../utils/CartContext";
 
 export const CustomGrid = styled(GridBox)`
   padding: 30px;
@@ -12,6 +13,7 @@ export const CustomGrid = styled(GridBox)`
 
 export function Products() {
   const { loggedInUser } = useAuthContext();
+  const { cartProducts } = useCartContext();
   const { merchant } = useMerchantContext();
   const [products, setProducts] = useState("");
   useEffect(() => {
@@ -38,11 +40,14 @@ export function Products() {
         <GridBox>
           {products &&
             products.map((product) => {
+              const existingProduct = cartProducts.find(
+                (cartProduct) => cartProduct.stockProduct._id == product._id
+              );
               return (
                 <Product
                   key={product._id}
                   product={product}
-                  products={products}
+                  existingProduct={existingProduct}
                 />
               );
             })}

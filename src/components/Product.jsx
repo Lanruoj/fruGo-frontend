@@ -1,10 +1,12 @@
 import { Button } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useAuthContext } from "../utils/AuthContext";
 import { useCartContext } from "../utils/CartContext";
 import { Wrapper } from "./styled/Wrapper";
 
 export const Product = (props) => {
+  const { loggedInUser } = useAuthContext();
   const { product, products } = props;
   const { setCartProducts, cartProducts } = useCartContext();
   const handleAddToCart = (event) => {
@@ -67,19 +69,27 @@ export const Product = (props) => {
       >
         ${product.price || product.product.price}
       </div>
-      <Button value={product._id} onClick={handleAddToCart}>
+      <Button
+        value={product._id}
+        onClick={handleAddToCart}
+        disabled={!loggedInUser && true}
+      >
         Add to cart
       </Button>
-      <Button value={product._id} onClick={handleRemoveFromCart}>
-        Remove
-      </Button>
-      <input
-        type="number"
-        name="quantity"
-        min="0"
-        step="1"
-        defaultValue="1"
-      ></input>
+      {loggedInUser && (
+        <>
+          <Button value={product._id} onClick={handleRemoveFromCart}>
+            Remove
+          </Button>
+          <input
+            type="number"
+            name="quantity"
+            min="0"
+            step="1"
+            defaultValue="1"
+          ></input>
+        </>
+      )}
     </Wrapper>
   );
 };

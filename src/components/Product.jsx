@@ -90,7 +90,7 @@ export const Product = (props) => {
         <Button
           value={product._id}
           onClick={handleAddToCart}
-          disabled={product.quantity <= 0 && true}
+          disabled={(product.quantity <= 0 || !loggedInUser) && true}
         >
           Add to cart
         </Button>

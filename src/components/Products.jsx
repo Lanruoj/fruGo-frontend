@@ -19,30 +19,21 @@ export function Products() {
   const [products, setProducts] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
-    if (!loggedInUser) {
+    if (loggedInUser) {
       axios
-        .get("/products")
-        .then((res) => res.data.data)
-        .then((data) => {
-          setProducts(data);
+        .get(`/merchants/${merchant._id}/stock/products?name=${searchQuery}`)
+        .then((response) => {
+          setProducts(response.data.data);
         });
     } else {
       axios
-        .get(`/merchants/${merchant._id}/stock/products`)
-        .then((res) => res.data.data)
-        .then((data) => {
-          setProducts(data);
-        });
+        .get(`products?name=${searchQuery}`)
+        .then((response) => setProducts(response.data.data));
     }
-  }, []);
+  }, [searchQuery]);
   const handleSearchQueryChange = (event) => {
     event.preventDefault();
     setSearchQuery(event.target.value);
-    axios
-      .get(`/merchants/${merchant._id}/stock/products?name=${searchQuery}`)
-      .then((response) => {
-        setProducts(response.data.data);
-      });
   };
   return (
     <>
@@ -69,6 +60,7 @@ export function Products() {
                 />
               );
             })}
+          {!products.length && <h2>No products matching that criteria</h2>}
         </GridBox>
       </div>
     </>

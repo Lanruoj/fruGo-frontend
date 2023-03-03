@@ -12,6 +12,10 @@ const ProductImg = styled.img`
   object-fit: cover;
 `;
 
+const ProductWrapper = styled(Wrapper)`
+  padding: 1rem;
+`;
+
 export const Product = (props) => {
   const { loggedInUser } = useAuthContext();
   const { product, existingProduct } = props;
@@ -68,21 +72,12 @@ export const Product = (props) => {
   };
 
   return (
-    <Wrapper>
+    <ProductWrapper>
       <ProductImg
         src={loggedInUser ? product.product.img : product.img}
         alt={loggedInUser ? product.product.name : product.name}
       ></ProductImg>
-      <div
-        style={{
-          fontFamily: "Verdana, sans-serif",
-          fontSize: 25,
-          fontWeight: 700,
-          marginBottom: 10,
-        }}
-      >
-        {loggedInUser ? product.product.name : product.name}
-      </div>
+      <div>{loggedInUser ? product.product.name : product.name}</div>
       <div
         style={{
           fontFamily: "Verdana, sans-serif",
@@ -107,6 +102,6 @@ export const Product = (props) => {
         </Button>
       )}
       {loggedInUser && <div>Stock quantity: {product.quantity}</div>}
-    </Wrapper>
+    </ProductWrapper>
   );
 };

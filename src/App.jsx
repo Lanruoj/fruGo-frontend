@@ -43,17 +43,19 @@ function App() {
         setMerchant(() => {
           return JSON.parse(localStorage.getItem("merchant"));
         });
-      }
-      navigate("/products");
-      axios.get(`/customers/${loggedInUser._id}/cart`).then((response) => {
-        setCartProducts((prev) => {
-          let data = response.data.data._cartProducts;
-          const cartProducts = data.map((cartProduct) => {
-            return { stockProduct: cartProduct, quantity: 1 };
+        navigate("/customer/products");
+        axios.get(`/customers/${loggedInUser._id}/cart`).then((response) => {
+          setCartProducts((prev) => {
+            let data = response.data.data._cartProducts;
+            const cartProducts = data.map((cartProduct) => {
+              return { stockProduct: cartProduct, quantity: 1 };
+            });
+            return cartProducts;
           });
-          return cartProducts;
         });
-      });
+      } else if (localStorage.getItem("role") == "Merchant") {
+        navigate("/merchant/stock");
+      }
     } else if (!loggedInUser) {
       navigate("/");
     }
@@ -78,12 +80,12 @@ function App() {
             <Routes>
               <Route exact path="/" element={<HomePage />} />
               <Route exact path="/login" element={<Login />} />
-              <Route exact path="/register/customer" element={<Register />} />
+              <Route exact path="/customer/register" element={<Register />} />
               {/* {CUSTOMER ROUTES} */}
-              <Route exact path="/products" element={<Products />} />
+              <Route exact path="/customer/products" element={<Products />} />
               <Route
                 exact
-                path="/cart"
+                path="/customer/cart"
                 element={
                   <CustomerRoute>
                     <Cart />
@@ -92,7 +94,7 @@ function App() {
               />
               <Route
                 exact
-                path="/orders"
+                path="/customer/orders"
                 element={
                   <CustomerRoute>
                     <Orders />
@@ -100,7 +102,7 @@ function App() {
                 }
               />
               <Route
-                path={`/orderConfirmation/${newOrder}`}
+                path={`/customer/orderConfirmation/${newOrder}`}
                 element={
                   <CustomerRoute>
                     <OrderConfirmation />

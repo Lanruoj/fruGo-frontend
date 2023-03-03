@@ -16,12 +16,11 @@ export const Orders = (props) => {
   return (
     <>
       <h1>Orders</h1>
-      <div>Hello</div>
-      <ul>
-        {/* {orders.map((order) => {
+      <div>
+        {orders.map((order) => {
           return <Order key={order._id} order={order} />;
-        })} */}
-      </ul>
+        })}
+      </div>
     </>
   );
 };

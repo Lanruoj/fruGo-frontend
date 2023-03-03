@@ -1,9 +1,24 @@
 import { AppBar, Box, Container, Toolbar, Button } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../utils/AuthContext";
 
 export const NavBar = () => {
-  const { loggedInUser } = useAuthContext();
+  const { loggedInUser, setLoggedInUser } = useAuthContext();
+  const navigate = useNavigate();
+  const handleLogout = (event) => {
+    event.preventDefault();
+    axios
+      .post("auth/logout")
+      .then((response) => {
+        if (response.status == 200) {
+          localStorage.clear();
+          setLoggedInUser("");
+          navigate("/");
+        }
+      })
+      .catch((error) => console.log(error));
+  };
 
   const navBarItems = [
     {
@@ -118,6 +133,7 @@ export const NavBar = () => {
                     color: "white",
                     display: "block",
                   }}
+                  onClick={loggedInUser ? handleLogout : null}
                 >
                   {loggedInUser ? "Logout" : "Login"}
                 </Button>

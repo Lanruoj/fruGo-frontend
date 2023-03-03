@@ -62,10 +62,12 @@ function App() {
           >
             <NavBar />
             <Routes>
+              {/* {`/${role[0].toLowerCase() + role.slice(1) + "s"}`} */}
+              {/* Customer routes */}
               <Route exact path="/" element={<HomePage />} />
               <Route exact path="/products" element={<Products />} />
               <Route exact path="/login" element={<Login />} />
-              <Route exact path="/customers/register" element={<Register />} />
+              <Route exact path="/register/customer" element={<Register />} />
               <Route exact path="/cart" element={<Cart />} />
               <Route exact path="/orders" element={<Orders />} />
               <Route

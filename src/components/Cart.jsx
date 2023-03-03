@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useCartContext } from "../utils/CartContext";
 import { useMerchantContext } from "../utils/MerchantContext";
 import { CartProduct } from "./CartProduct";
+import { useAuthContext } from "../utils/AuthContext";
 
 const CartContainer = styled.div`
   height: 100%;
@@ -19,6 +20,7 @@ const CartProductList = styled.ul`
 `;
 
 export const Cart = () => {
+  const { loggedInUser } = useAuthContext();
   const { cartProducts, setCartProducts, setNewOrder } = useCartContext();
   const { merchant } = useMerchantContext();
   const navigate = useNavigate();
@@ -42,6 +44,14 @@ export const Cart = () => {
         }
       });
   };
+  const handleClearCart = () => {
+    axios
+      .delete(`/customers/${loggedInUser._id}/cart/products?all=true`)
+      .then(() => {
+        setCartProducts([]);
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <CartContainer>
@@ -58,7 +68,12 @@ export const Cart = () => {
             })
           : "No products in cart"}
       </CartProductList>
-      <Button onClick={handleSubmitOrder}>Submit order</Button>
+      {!!cartProducts.length && (
+        <>
+          <Button onClick={handleSubmitOrder}>Checkout</Button>
+          <Button onClick={handleClearCart}>Clear cart</Button>
+        </>
+      )}
     </CartContainer>
   );
 };

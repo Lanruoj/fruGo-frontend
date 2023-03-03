@@ -53,7 +53,7 @@ export const Cart = () => {
       .then((response) => {
         setNewOrder(response.data.data._id);
 
-        navigate(`/orderConfirmation/${response.data.data._id}`);
+        navigate(`/customer/orderConfirmation/${response.data.data._id}`);
       })
       .then(() => {
         for (let cartProduct of cartProducts) {

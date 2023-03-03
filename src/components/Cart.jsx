@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useCartContext } from "../utils/CartContext";
 import { useMerchantContext } from "../utils/MerchantContext";
+import { CartProduct } from "./CartProduct";
 
 const CartContainer = styled.div`
   height: 100%;
@@ -15,30 +16,6 @@ const CartProductList = styled.ul`
   height: 100%;
   flex-direction: column;
   align-items: center;
-`;
-
-const CartProduct = styled.li`
-  border: solid red;
-  flex-direction: column;
-  justify-content: center;
-  width: 400px;
-  list-style: none;
-  margin-top: 3rem;
-`;
-const CartProductName = styled.div`
-  background-color: orange;
-`;
-
-const CartProductPrice = styled.div`
-  /* background-color: purple; */
-`;
-
-const CartProductQuantity = styled.div`
-  /* background-color: red; */
-`;
-
-const CartProductImg = styled.img`
-  width: 100px;
 `;
 
 export const Cart = () => {
@@ -65,31 +42,7 @@ export const Cart = () => {
         }
       });
   };
-  const handleIncrementQuantity = (event) => {
-    event.preventDefault();
-    setCartProducts((prev) => {
-      const cartProducts = [...prev];
-      const index = cartProducts.findIndex(
-        (cartProduct) => cartProduct.stockProduct._id == event.target.value
-      );
-      cartProducts[index].quantity += 1;
-      return cartProducts;
-    });
-  };
-  const handleDecrementQuantity = (event) => {
-    event.preventDefault();
-    setCartProducts((prev) => {
-      const cartProducts = [...prev];
-      const index = cartProducts.findIndex(
-        (cartProduct) => cartProduct.stockProduct._id == event.target.value
-      );
-      cartProducts[index].quantity -= 1;
-      if (cartProducts[index].quantity == 0) {
-        cartProducts.splice(index, 1);
-      }
-      return cartProducts;
-    });
-  };
+
   return (
     <CartContainer>
       <h1>Cart</h1>
@@ -97,37 +50,10 @@ export const Cart = () => {
         {cartProducts.length
           ? cartProducts.map((cartProduct) => {
               return (
-                <CartProduct key={cartProduct.stockProduct._id + "CartProduct"}>
-                  <CartProductName>
-                    {cartProduct.stockProduct._product.name}
-                  </CartProductName>
-                  <CartProductImg
-                    src={cartProduct.stockProduct._product.img}
-                  ></CartProductImg>
-                  <CartProductQuantity>Quantity:</CartProductQuantity>
-                  <form>
-                    <Button
-                      onClick={handleIncrementQuantity}
-                      value={cartProduct.stockProduct._id}
-                    >
-                      +
-                    </Button>
-                    <Button
-                      onClick={handleDecrementQuantity}
-                      value={cartProduct.stockProduct._id}
-                    >
-                      -
-                    </Button>
-                  </form>
-                  <p>Quantity: {cartProduct.quantity}</p>
-                  <CartProductPrice>
-                    Subtotal: ${" "}
-                    {Number.parseFloat(
-                      cartProduct.quantity *
-                        cartProduct.stockProduct._product.price
-                    ).toFixed(2)}
-                  </CartProductPrice>
-                </CartProduct>
+                <CartProduct
+                  key={cartProduct.stockProduct._id + "CartProduct"}
+                  cartProduct={cartProduct}
+                />
               );
             })
           : "No products in cart"}

@@ -25,7 +25,6 @@ export const Register = () => {
       .get("/cities")
       .then((response) => response.data)
       .then((data) => {
-        console.log(data);
         setCities(data.data);
         setFormData(() => {
           return {

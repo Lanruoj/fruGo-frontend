@@ -66,8 +66,8 @@ export const Product = (props) => {
         style={{
           height: 200,
         }}
-        src={product.img || product.product.img}
-        alt={product.name || product.product.name}
+        src={loggedInUser ? product.product.img : product.img}
+        alt={loggedInUser ? product.product.name : product.name}
       ></img>
       <div
         style={{
@@ -77,14 +77,14 @@ export const Product = (props) => {
           marginBottom: 10,
         }}
       >
-        {product.name || product.product.name}
+        {loggedInUser ? product.product.name : product.name}
       </div>
       <div
         style={{
           fontFamily: "Verdana, sans-serif",
         }}
       >
-        ${product.price || product.product.price}
+        ${loggedInUser ? product.product.price : product.price}
       </div>
       {!existingProduct ? (
         <Button
@@ -95,7 +95,10 @@ export const Product = (props) => {
           Add to cart
         </Button>
       ) : (
-        <Button value={product._id} onClick={handleRemoveFromCart}>
+        <Button
+          value={loggedInUser && product._id}
+          onClick={handleRemoveFromCart}
+        >
           Remove
         </Button>
       )}

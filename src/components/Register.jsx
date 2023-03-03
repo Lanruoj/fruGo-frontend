@@ -44,27 +44,19 @@ export const Register = () => {
     event.preventDefault();
     axios
       .post("/customers/register", formData)
-      .then((response) => response.data)
-      .then((data) => {
+      .then((response) => response)
+      .then((response) => {
         setLoggedInUser(() => {
-          localStorage.setItem("user", JSON.stringify(data.user));
-          return data.user;
-        });
-        setToken(() => {
-          localStorage.setItem("token", data.accessToken);
-          return data.accessToken;
-        });
-        setRole(() => {
-          localStorage.setItem("role", data.role);
-          return data.role;
-        });
-        setMerchant(() => {
-          localStorage.setItem("merchant", JSON.stringify(data.merchant));
-          return data.merchant;
-        });
-        setCart(() => {
-          localStorage.setItem("cart", JSON.stringify(data.cart));
-          return data.cart;
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+          localStorage.setItem("token", response.data.accessToken);
+          localStorage.setItem("role", response.data.role);
+          if (localStorage.getItem("role") == "Customer") {
+            localStorage.setItem(
+              "merchant",
+              JSON.stringify(response.data.merchant)
+            );
+          }
+          return response.data.user;
         });
       });
   };

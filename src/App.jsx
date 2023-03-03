@@ -16,6 +16,7 @@ import { OrderConfirmation } from "./components/OrderConfirmation";
 import { Stock } from "./components/Stock";
 import { CustomerRoute } from "./utils/CustomerRoute";
 import { Order } from "./components/Order";
+import { Main } from "./components/styled/Main";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -77,41 +78,48 @@ function App() {
             value={{ cartProducts, setCartProducts, newOrder, setNewOrder }}
           >
             <NavBar />
-            <Routes>
-              <Route exact path="/" element={<HomePage />} />
-              <Route exact path="/login" element={<Login />} />
-              <Route exact path="/customer/register" element={<Register />} />
-              {/* {CUSTOMER ROUTES} */}
-              <Route exact path="/customer/products" element={<Products />} />
-              <Route
+            <Main>
+              <Routes>
+                <Route exact path="/" element={<HomePage />} />
+                <Route exact path="/login" element={<Login />} />
+                <Route exact path="/customer/register" element={<Register />} />
+                {/* {CUSTOMER ROUTES} */}
+                <Route exact path="/customer/products" element={<Products />} />
+                <Route
+                  exact
+                  path="/customer/cart"
+                  element={
+                    <CustomerRoute>
+                      <Cart />
+                    </CustomerRoute>
+                  }
+                />
+                <Route
+                  exact
+                  path="/customer/orders"
+                  element={
+                    <CustomerRoute>
+                      <Orders />
+                    </CustomerRoute>
+                  }
+                />
+                <Route
+                  path={`/customer/orderConfirmation/${newOrder}`}
+                  element={
+                    <CustomerRoute>
+                      <OrderConfirmation />
+                    </CustomerRoute>
+                  }
+                />
+                {/* {MERCHANT ROUTES} */}
+                <Route exact path="/merchant/stock" element={<Stock />} />
+                {/* <Route
                 exact
-                path="/customer/cart"
-                element={
-                  <CustomerRoute>
-                    <Cart />
-                  </CustomerRoute>
-                }
-              />
-              <Route
-                exact
-                path="/customer/orders"
-                element={
-                  <CustomerRoute>
-                    <Orders />
-                  </CustomerRoute>
-                }
-              />
-              <Route
-                path={`/customer/orderConfirmation/${newOrder}`}
-                element={
-                  <CustomerRoute>
-                    <OrderConfirmation />
-                  </CustomerRoute>
-                }
-              />
-              {/* {MERCHANT ROUTES} */}
-              <Route exact path="/merchant/stock" element={<Stock />} />
-            </Routes>
+                path="/merchant/orders"
+                element={<MerchantOrders />}
+              /> */}
+              </Routes>
+            </Main>
           </CartContext.Provider>
         </MerchantContext.Provider>
       </AuthContext.Provider>

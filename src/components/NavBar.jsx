@@ -57,7 +57,7 @@ export const NavBar = () => {
                   style={{
                     textDecoration: "none",
                   }}
-                  to={"/customers/register"}
+                  to={"/register/customer"}
                 >
                   <Button
                     sx={{

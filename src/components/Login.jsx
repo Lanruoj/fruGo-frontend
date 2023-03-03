@@ -23,29 +23,22 @@ export const Login = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await axios.post("/auth/login", userFormDetails);
+    const response = await axios
+      .post("/auth/login", userFormDetails)
+      .catch((error) => console.log(error));
     if (response.status == 200) {
       setLoggedInUser(() => {
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        return response.data.user;
-      });
-      setToken(() => {
         localStorage.setItem("token", response.data.accessToken);
-        return response.data.accessToken;
-      });
-      setRole(() => {
         localStorage.setItem("role", response.data.role);
-        return response.data.role;
-      });
-      if (response.data.role == "Customer") {
-        setMerchant(() => {
+        if (localStorage.getItem("role") == "Customer") {
           localStorage.setItem(
             "merchant",
             JSON.stringify(response.data.merchant)
           );
-          return response.data.merchant;
-        });
-      }
+        }
+        return response.data.user;
+      });
     }
   };
   return (

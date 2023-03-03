@@ -30,6 +30,17 @@ function App() {
   const navigate = useNavigate();
   useEffect(() => {
     if (loggedInUser) {
+      setToken(() => {
+        return localStorage.getItem("token");
+      });
+      setRole(() => {
+        return localStorage.getItem("role");
+      });
+      if (localStorage.getItem("role") == "Customer") {
+        setMerchant(() => {
+          return JSON.parse(localStorage.getItem("merchant"));
+        });
+      }
       navigate("/products");
       axios.get(`/customers/${loggedInUser._id}/cart`).then((response) => {
         setCartProducts((prev) => {

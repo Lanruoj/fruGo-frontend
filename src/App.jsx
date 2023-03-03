@@ -13,6 +13,9 @@ import { CartContext } from "./utils/CartContext";
 import { Cart } from "./components/Cart";
 import { Orders } from "./components/Orders";
 import { OrderConfirmation } from "./components/OrderConfirmation";
+import { Stock } from "./components/Stock";
+import { CustomerRoute } from "./utils/CustomerRoute";
+import { Order } from "./components/Order";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -40,17 +43,19 @@ function App() {
         setMerchant(() => {
           return JSON.parse(localStorage.getItem("merchant"));
         });
-      }
-      navigate("/products");
-      axios.get(`/customers/${loggedInUser._id}/cart`).then((response) => {
-        setCartProducts((prev) => {
-          let data = response.data.data._cartProducts;
-          const cartProducts = data.map((cartProduct) => {
-            return { stockProduct: cartProduct, quantity: 1 };
+        navigate("/customer/products");
+        axios.get(`/customers/${loggedInUser._id}/cart`).then((response) => {
+          setCartProducts((prev) => {
+            let data = response.data.data._cartProducts;
+            const cartProducts = data.map((cartProduct) => {
+              return { stockProduct: cartProduct, quantity: 1 };
+            });
+            return cartProducts;
           });
-          return cartProducts;
         });
-      });
+      } else if (localStorage.getItem("role") == "Merchant") {
+        navigate("/merchant/stock");
+      }
     } else if (!loggedInUser) {
       navigate("/");
     }
@@ -73,18 +78,39 @@ function App() {
           >
             <NavBar />
             <Routes>
-              {/* {`/${role[0].toLowerCase() + role.slice(1) + "s"}`} */}
-              {/* Customer routes */}
               <Route exact path="/" element={<HomePage />} />
-              <Route exact path="/products" element={<Products />} />
               <Route exact path="/login" element={<Login />} />
-              <Route exact path="/register/customer" element={<Register />} />
-              <Route exact path="/cart" element={<Cart />} />
-              <Route exact path="/orders" element={<Orders />} />
+              <Route exact path="/customer/register" element={<Register />} />
+              {/* {CUSTOMER ROUTES} */}
+              <Route exact path="/customer/products" element={<Products />} />
               <Route
-                path={`/orderConfirmation/${newOrder}`}
-                element={<OrderConfirmation />}
+                exact
+                path="/customer/cart"
+                element={
+                  <CustomerRoute>
+                    <Cart />
+                  </CustomerRoute>
+                }
               />
+              <Route
+                exact
+                path="/customer/orders"
+                element={
+                  <CustomerRoute>
+                    <Orders />
+                  </CustomerRoute>
+                }
+              />
+              <Route
+                path={`/customer/orderConfirmation/${newOrder}`}
+                element={
+                  <CustomerRoute>
+                    <OrderConfirmation />
+                  </CustomerRoute>
+                }
+              />
+              {/* {MERCHANT ROUTES} */}
+              <Route exact path="/merchant/stock" element={<Stock />} />
             </Routes>
           </CartContext.Provider>
         </MerchantContext.Provider>

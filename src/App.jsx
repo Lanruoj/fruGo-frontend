@@ -13,6 +13,9 @@ import { CartContext } from "./utils/CartContext";
 import { Cart } from "./components/Cart";
 import { Orders } from "./components/Orders";
 import { OrderConfirmation } from "./components/OrderConfirmation";
+import { Stock } from "./components/Stock";
+import { CustomerRoute } from "./utils/CustomerRoute";
+import { Order } from "./components/Order";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -73,18 +76,39 @@ function App() {
           >
             <NavBar />
             <Routes>
-              {/* {`/${role[0].toLowerCase() + role.slice(1) + "s"}`} */}
-              {/* Customer routes */}
               <Route exact path="/" element={<HomePage />} />
-              <Route exact path="/products" element={<Products />} />
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/register/customer" element={<Register />} />
-              <Route exact path="/cart" element={<Cart />} />
-              <Route exact path="/orders" element={<Orders />} />
+              {/* {CUSTOMER ROUTES} */}
+              <Route exact path="/products" element={<Products />} />
+              <Route
+                exact
+                path="/cart"
+                element={
+                  <CustomerRoute>
+                    <Cart />
+                  </CustomerRoute>
+                }
+              />
+              <Route
+                exact
+                path="/orders"
+                element={
+                  <CustomerRoute>
+                    <Orders />
+                  </CustomerRoute>
+                }
+              />
               <Route
                 path={`/orderConfirmation/${newOrder}`}
-                element={<OrderConfirmation />}
+                element={
+                  <CustomerRoute>
+                    <OrderConfirmation />
+                  </CustomerRoute>
+                }
               />
+              {/* {MERCHANT ROUTES} */}
+              <Route exact path="/merchant/stock" element={<Stock />} />
             </Routes>
           </CartContext.Provider>
         </MerchantContext.Provider>

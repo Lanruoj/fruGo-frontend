@@ -1,7 +1,21 @@
 import { AppBar, Box, Container, Toolbar, Button } from "@mui/material";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { useAuthContext } from "../utils/AuthContext";
+
+const NavContainer = styled(Container)`
+  background-color: green;
+`;
+
+const Header = styled(NavLink)`
+  display: block;
+  text-decoration: none;
+`;
+
+const MenuLink = styled(NavLink)`
+  color: red;
+`;
 
 export const NavBar = () => {
   const { loggedInUser, setLoggedInUser, role } = useAuthContext();
@@ -22,24 +36,40 @@ export const NavBar = () => {
 
   return (
     <>
-      <NavLink
-        key="fruGo-title"
-        style={{
-          textDecoration: "none",
-        }}
-        to="/"
-      >
+      <Header>
         <h1 className="fruGo-title">fruGo</h1>
-      </NavLink>
-      <AppBar position="static">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <Box sx={{ flexGrow: 1, display: "flex" }}>
-              <NavLink
+      </Header>
+      <NavContainer maxWidth="xl">
+        <Toolbar disableGutters>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <MenuLink
+              style={{
+                textDecoration: "none",
+              }}
+              to={"/"}
+            >
+              <Button
+                sx={{
+                  my: 1,
+                  color: "white",
+                  display: "block",
+                }}
+              >
+                Home
+              </Button>
+            </MenuLink>
+            {localStorage.getItem("role") !== "Merchant" && (
+              <MenuLink
                 style={{
                   textDecoration: "none",
                 }}
-                to={"/"}
+                to={"/customer/products"}
               >
                 <Button
                   sx={{
@@ -48,15 +78,17 @@ export const NavBar = () => {
                     display: "block",
                   }}
                 >
-                  Home
+                  Products
                 </Button>
-              </NavLink>
-              {localStorage.getItem("role") !== "Merchant" && (
-                <NavLink
+              </MenuLink>
+            )}
+            {loggedInUser && role == "Customer" && (
+              <>
+                <MenuLink
                   style={{
                     textDecoration: "none",
                   }}
-                  to={"/customer/products"}
+                  to={"/customer/cart"}
                 >
                   <Button
                     sx={{
@@ -65,52 +97,14 @@ export const NavBar = () => {
                       display: "block",
                     }}
                   >
-                    Products
+                    Cart
                   </Button>
-                </NavLink>
-              )}
-              {loggedInUser && role == "Customer" && (
-                <>
-                  <NavLink
-                    style={{
-                      textDecoration: "none",
-                    }}
-                    to={"/customer/cart"}
-                  >
-                    <Button
-                      sx={{
-                        my: 1,
-                        color: "white",
-                        display: "block",
-                      }}
-                    >
-                      Cart
-                    </Button>
-                  </NavLink>
-                  <NavLink
-                    style={{
-                      textDecoration: "none",
-                    }}
-                    to={"/customer/orders"}
-                  >
-                    <Button
-                      sx={{
-                        my: 1,
-                        color: "white",
-                        display: "block",
-                      }}
-                    >
-                      Orders
-                    </Button>
-                  </NavLink>
-                </>
-              )}
-              {loggedInUser && role == "Merchant" && (
-                <NavLink
+                </MenuLink>
+                <MenuLink
                   style={{
                     textDecoration: "none",
                   }}
-                  to={"/merchant/stock"}
+                  to={"/customer/orders"}
                 >
                   <Button
                     sx={{
@@ -119,15 +113,17 @@ export const NavBar = () => {
                       display: "block",
                     }}
                   >
-                    Stock
+                    Orders
                   </Button>
-                </NavLink>
-              )}
-              <NavLink
+                </MenuLink>
+              </>
+            )}
+            {loggedInUser && role == "Merchant" && (
+              <MenuLink
                 style={{
                   textDecoration: "none",
                 }}
-                to={loggedInUser ? "/logout" : "/login"}
+                to={"/merchant/stock"}
               >
                 <Button
                   sx={{
@@ -135,34 +131,50 @@ export const NavBar = () => {
                     color: "white",
                     display: "block",
                   }}
-                  onClick={loggedInUser ? handleLogout : null}
                 >
-                  {loggedInUser ? "Logout" : "Login"}
+                  Stock
                 </Button>
-              </NavLink>
-              {!loggedInUser && (
-                <NavLink
-                  style={{
-                    textDecoration: "none",
+              </MenuLink>
+            )}
+            <MenuLink
+              style={{
+                textDecoration: "none",
+              }}
+              to={loggedInUser ? "/logout" : "/login"}
+            >
+              <Button
+                sx={{
+                  my: 1,
+                  color: "white",
+                  display: "block",
+                }}
+                onClick={loggedInUser ? handleLogout : null}
+              >
+                {loggedInUser ? "Logout" : "Login"}
+              </Button>
+            </MenuLink>
+            {!loggedInUser && (
+              <MenuLink
+                style={{
+                  textDecoration: "none",
+                }}
+                to={"/customer/register"}
+              >
+                <Button
+                  sx={{
+                    my: 1,
+                    color: "white",
+                    display: "block",
                   }}
-                  to={"/customer/register"}
                 >
-                  <Button
-                    sx={{
-                      my: 1,
-                      color: "white",
-                      display: "block",
-                    }}
-                  >
-                    Register
-                  </Button>
-                </NavLink>
-              )}
-              {loggedInUser && <p>{loggedInUser.username}</p>}
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
+                  Register
+                </Button>
+              </MenuLink>
+            )}
+            {loggedInUser && <p>{loggedInUser.username}</p>}
+          </Box>
+        </Toolbar>
+      </NavContainer>
     </>
   );
 };

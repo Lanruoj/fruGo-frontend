@@ -11,12 +11,14 @@ import { Register } from "./components/Register";
 import "./App.css";
 import { CartContext } from "./utils/CartContext";
 import { Cart } from "./components/Cart";
-import { Orders } from "./components/Orders";
+import { OrderList, Orders } from "./components/OrderList";
 import { OrderConfirmation } from "./components/OrderConfirmation";
 import { Stock } from "./components/Stock";
 import { CustomerRoute } from "./utils/CustomerRoute";
 import { Order } from "./components/Order";
 import { Main } from "./components/styled/Main";
+import { MerchantOrders } from "./components/MerchantOrders";
+import { MerchantRoute } from "./utils/MerchantRoute";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -99,7 +101,7 @@ function App() {
                   path="/customer/orders"
                   element={
                     <CustomerRoute>
-                      <Orders />
+                      <OrderList />
                     </CustomerRoute>
                   }
                 />
@@ -112,12 +114,24 @@ function App() {
                   }
                 />
                 {/* {MERCHANT ROUTES} */}
-                <Route exact path="/merchant/stock" element={<Stock />} />
-                {/* <Route
-                exact
-                path="/merchant/orders"
-                element={<MerchantOrders />}
-              /> */}
+                <Route
+                  exact
+                  path="/merchant/stock"
+                  element={
+                    <MerchantRoute>
+                      <Stock />
+                    </MerchantRoute>
+                  }
+                />
+                <Route
+                  exact
+                  path="/merchant/orders"
+                  element={
+                    <MerchantRoute>
+                      <MerchantOrders />
+                    </MerchantRoute>
+                  }
+                />
               </Routes>
             </Main>
           </CartContext.Provider>

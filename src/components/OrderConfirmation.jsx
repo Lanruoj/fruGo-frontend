@@ -7,16 +7,14 @@ export const OrderConfirmation = (props) => {
   const { newOrder } = useCartContext();
   const [order, setOrder] = useState("");
   useEffect(() => {
-    axios.get(`/orders/${newOrder}`).then((response) => {
-      setOrder(() => {
-        return response.data.data;
-      });
+    setOrder(() => {
+      return newOrder;
     });
   }, [newOrder]);
   return (
     <>
       <h1>Order confirmation</h1>
-      <Order order={order} />
+      {order && <Order order={order} />}
     </>
   );
 };

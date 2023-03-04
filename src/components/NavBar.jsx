@@ -5,28 +5,101 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuthContext } from "../utils/AuthContext";
 
-const NavContainer = styled(Container)`
+const NavContainer = styled.nav`
+  width: 100vw;
+  height: 3rem;
+  display: flex;
   background-color: green;
+  justify-content: space-between;
+  position: fixed;
 `;
 
-const Header = styled.a`
+const Title = styled.h1`
+  text-align: center;
+  margin: 0;
+  color: blue;
+`;
+
+const NavButtonContainer = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
+const AuthButtonContainer = styled.div`
+  padding-right: 2rem;
+  width: 10%;
+  display: flex;
+  align-items: center;
+`;
+
+const CustomerButtonContainer = styled.div`
+  padding-right: 2rem;
+  width: 50%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+`;
+
+const MerchantButtonContainer = styled.div`
+  padding-right: 2rem;
+  width: 50%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+`;
+
+const Header = styled.div`
+  height: 4rem;
+  width: 100vw;
+  background-color: red;
   display: block;
-  text-decoration: none;
+  position: fixed;
+  top: 0px;
 `;
 
 const NavButton = styled.button`
-  color: ${({ currentPage, value }) => (currentPage == value ? "red" : "blue")};
+  height: 2rem;
+  margin: 1rem;
+  font-size: 1rem;
+  background: none;
+  border: none;
+  color: ${({ currentPage, value }) =>
+    currentPage == value ? "white" : "black"};
+  :disabled {
+    visibility: hidden;
+  }
 `;
 
-const NavLink = ({ text, url, currentPage, setCurrentPage }) => {
+const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
+  const { loggedInUser, setLoggedInUser, role } = useAuthContext();
   const navigate = useNavigate();
   const handleNavigate = (event) => {
-    console.log(event.target.value);
     navigate(event.target.value);
     setCurrentPage(url);
   };
+  const handleLogout = (event) => {
+    event.preventDefault();
+    axios
+      .post("/auth/logout")
+      .then((response) => {
+        if (response.status == 200) {
+          localStorage.clear();
+          setLoggedInUser("");
+          setCurrentPage("/");
+          navigate("/");
+        }
+      })
+      .catch((error) => console.log(error));
+  };
   return (
-    <NavButton onClick={handleNavigate} value={url} currentPage={currentPage}>
+    <NavButton
+      onClick={text == "Logout" ? handleLogout : handleNavigate}
+      value={url}
+      currentPage={currentPage}
+      disabled={!active}
+    >
       {text}
     </NavButton>
   );
@@ -36,65 +109,72 @@ export const NavBar = () => {
   const { loggedInUser, setLoggedInUser, role } = useAuthContext();
   const [currentPage, setCurrentPage] = useState("");
   const navigate = useNavigate();
-  const handleLogout = (event) => {
-    event.preventDefault();
-    axios
-      .post("auth/logout")
-      .then((response) => {
-        if (response.status == 200) {
-          localStorage.clear();
-          setLoggedInUser("");
-          navigate("/");
-        }
-      })
-      .catch((error) => console.log(error));
-  };
-
   return (
-    <>
-      <Header>
-        <h1 className="fruGo-title">fruGo</h1>
-      </Header>
+    <Header>
+      <Title>fruGo</Title>
       <NavContainer maxWidth="xl">
-        <Toolbar disableGutters>
+        <NavButtonContainer>
           <NavLink
             text="Home"
             url="/"
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
+            active={true}
           />
           <NavLink
             text="Products"
             url="/customer/products"
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
+            active={!loggedInUser || role == "Customer"}
           />
+        </NavButtonContainer>
+
+        {role == "Customer" && (
+          <CustomerButtonContainer>
+            <NavLink
+              text="Cart"
+              url="/customer/cart"
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              active={loggedInUser && role == "Customer"}
+            />
+            <NavLink
+              text="Orders"
+              url="/customer/orders"
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              active={loggedInUser && role == "Customer"}
+            />
+          </CustomerButtonContainer>
+        )}
+        {role == "Merchant" && (
+          <MerchantButtonContainer>
+            <NavLink
+              text="Stock"
+              url="/merchant/stock"
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              active={loggedInUser && role == "Merchant"}
+            />
+          </MerchantButtonContainer>
+        )}
+        <AuthButtonContainer>
           <NavLink
-            text="Cart"
-            url="/customer/cart"
+            text={!loggedInUser ? "Login" : "Logout"}
+            url={!loggedInUser ? "/login" : null}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
+            active={!loggedInUser || loggedInUser}
           />
-          <NavLink
-            text="Orders"
-            url="/customer/orders"
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-          />
-          <NavLink
-            text="Login"
-            url="/login"
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-          />
-          <NavLink
+        </AuthButtonContainer>
+        {/* <NavLink
             text="Logout"
-            url="/logout"
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
-          />
-        </Toolbar>
+            active={loggedInUser}
+          /> */}
       </NavContainer>
-    </>
+    </Header>
   );
 };

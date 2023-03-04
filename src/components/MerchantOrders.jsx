@@ -4,18 +4,23 @@ import { useAuthContext } from "../utils/AuthContext";
 import { Order } from "./Order";
 
 export const MerchantOrders = (props) => {
-  const { loggedInUser } = useAuthContext();
+  const { loggedInUser, role } = useAuthContext();
   const [orders, setOrders] = useState([]);
   const [statusFilter, setStatusFilter] = useState("");
   useEffect(() => {
-    axios
-      .get(`/merchants/${loggedInUser._id}/orders${statusFilter}`)
-      .then((response) => {
+    if (role == "Customer") {
+      axios.get(`/customers/${loggedInUser._id}/orders`).then((response) => {
         setOrders(() => {
-          console.log(response.data.data);
           return response.data.data;
         });
       });
+    } else if (role == "Merchant") {
+      axios.get(`/customers/${loggedInUser._id}/orders`).then((response) => {
+        setOrders(() => {
+          return response.data.data;
+        });
+      });
+    }
   }, [statusFilter]);
   const handleStatusFilter = (event) => {
     event.preventDefault();

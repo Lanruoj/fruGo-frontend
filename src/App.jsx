@@ -106,7 +106,7 @@ function App() {
                   }
                 />
                 <Route
-                  path={`/customer/orderConfirmation/${newOrder}`}
+                  path={`/customer/orderConfirmation`}
                   element={
                     <CustomerRoute>
                       <OrderConfirmation />
@@ -128,7 +128,7 @@ function App() {
                   path="/merchant/orders"
                   element={
                     <MerchantRoute>
-                      <MerchantOrders />
+                      <OrderList />
                     </MerchantRoute>
                   }
                 />

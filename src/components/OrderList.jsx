@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuthContext } from "../utils/AuthContext";
 import { Order } from "./Order";
 
@@ -49,6 +50,19 @@ export const OrderList = (props) => {
           <p>You currently have no {statusFilter.split("=")[1]} orders</p>
         )}
       </div>
+      {/* <ul>
+        {orders.length ? (
+          orders.map((order) => {
+            return (
+              <Link to={`/orders/${order._id}`}>
+                <li key={order._id}>{order._id}</li>
+              </Link>
+            );
+          })
+        ) : (
+          <p>You currently have no {statusFilter.split("=")[1]} orders</p>
+        )}
+      </ul> */}
     </>
   );
 };

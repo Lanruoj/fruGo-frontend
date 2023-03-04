@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { useAuthContext } from "../utils/AuthContext";
 
 const OrderContainer = styled.div`
-  border: solid red;
+  border: solid black;
+  border-radius: 0.3rem;
 `;
 
 const OrderDetails = styled.ul`
@@ -60,6 +61,7 @@ export const Order = (props) => {
           </div>
         </CustomerDetails>
         <OrderProducts>
+          <h3>Products</h3>
           {order &&
             order._orderProducts.map((orderProduct) => {
               return (

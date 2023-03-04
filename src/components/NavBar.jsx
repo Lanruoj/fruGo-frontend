@@ -9,7 +9,7 @@ const NavContainer = styled.nav`
   width: 100vw;
   height: 3rem;
   display: flex;
-  background-color: green;
+  background-color: #b6e5b6;
   justify-content: space-between;
   position: fixed;
 `;
@@ -17,7 +17,7 @@ const NavContainer = styled.nav`
 const Title = styled.h1`
   text-align: center;
   margin: 0;
-  color: blue;
+  color: #4d643f;
 `;
 
 const NavButtonContainer = styled.div`
@@ -53,7 +53,7 @@ const MerchantButtonContainer = styled.div`
 const Header = styled.div`
   height: 4rem;
   width: 100vw;
-  background-color: red;
+  background-color: #b6e5b6;
   display: block;
   position: fixed;
   top: 0px;
@@ -63,10 +63,16 @@ const NavButton = styled.button`
   height: 2rem;
   margin: 1rem;
   font-size: 1rem;
+  font-family: monospace;
   background: none;
   border: none;
   color: ${({ currentPage, value }) =>
     currentPage == value ? "white" : "black"};
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    color: grey;
+  }
   :disabled {
     visibility: hidden;
   }

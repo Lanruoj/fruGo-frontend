@@ -6,7 +6,7 @@ import { useCartContext } from "../utils/CartContext";
 import { Wrapper } from "./styled/Wrapper";
 import styled from "styled-components";
 
-const ProductImg = styled.img`
+export const ProductImg = styled.img`
   width: 150px;
   height: 150px;
   object-fit: cover;

@@ -49,7 +49,6 @@ export const Order = (props) => {
                   <div>
                     <b>Serial no:</b> {orderProduct.stockProduct._id}
                   </div>
-
                   <div>
                     <b>Quantity:</b> {orderProduct.quantity}
                   </div>
@@ -66,6 +65,10 @@ export const Order = (props) => {
         </OrderProducts>
         <div>
           <b>Total price: </b>${Number.parseFloat(order.totalPrice).toFixed(2)}
+        </div>
+        <div>
+          <b>Status: </b>
+          {order.status}
         </div>
       </OrderDetails>
     </OrderContainer>

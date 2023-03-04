@@ -6,7 +6,7 @@ import { Order } from "./Order";
 export const OrderList = (props) => {
   const { loggedInUser, role } = useAuthContext();
   const [orders, setOrders] = useState([]);
-  const [statusFilter, setStatusFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("?status=pending");
   useEffect(() => {
     if (role == "Customer") {
       axios
@@ -18,9 +18,8 @@ export const OrderList = (props) => {
         });
     } else if (role == "Merchant") {
       axios
-        .get(`/customers/${loggedInUser._id}/orders${statusFilter}`)
+        .get(`/merchants/${loggedInUser._id}/orders${statusFilter}`)
         .then((response) => {
-          console.log(response.data.data);
           setOrders(() => {
             return response.data.data;
           });
@@ -36,7 +35,7 @@ export const OrderList = (props) => {
   return (
     <>
       <h1>Orders</h1>
-      <select onChange={handleStatusFilter}>
+      <select onChange={handleStatusFilter} defaultValue="?status=pending">
         <option value="?status=pending">Pending</option>
         <option value="?status=complete">Complete</option>
         <option value="?status=cancelled">Cancelled</option>

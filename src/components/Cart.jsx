@@ -30,9 +30,7 @@ export const Cart = () => {
         cartProducts: cartProducts,
       })
       .then((response) => {
-        setNewOrder(response.data.data._id);
-
-        navigate(`/customer/orderConfirmation/${response.data.data._id}`);
+        setNewOrder(response.data.data);
       })
       .then(() => {
         for (let cartProduct of cartProducts) {
@@ -42,7 +40,8 @@ export const Cart = () => {
           });
           setCartProducts([]);
         }
-      });
+      })
+      .then(() => navigate(`/customer/orderConfirmation`));
   };
   const handleClearCart = () => {
     axios

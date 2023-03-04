@@ -157,6 +157,13 @@ export const NavBar = () => {
               currentPage={currentPage}
               active={loggedInUser && role == "Merchant"}
             />
+            <NavLink
+              text="Orders"
+              url="/merchant/orders"
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              active={loggedInUser && role == "Merchant"}
+            />
           </MerchantButtonContainer>
         )}
         <AuthButtonContainer>
@@ -168,12 +175,6 @@ export const NavBar = () => {
             active={!loggedInUser || loggedInUser}
           />
         </AuthButtonContainer>
-        {/* <NavLink
-            text="Logout"
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            active={loggedInUser}
-          /> */}
       </NavContainer>
     </Header>
   );

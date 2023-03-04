@@ -1,180 +1,180 @@
 import { AppBar, Box, Container, Toolbar, Button } from "@mui/material";
 import axios from "axios";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuthContext } from "../utils/AuthContext";
 
-const NavContainer = styled(Container)`
+const NavContainer = styled.nav`
+  width: 100vw;
+  height: 3rem;
+  display: flex;
   background-color: green;
+  justify-content: space-between;
+  position: fixed;
 `;
 
-const Header = styled(NavLink)`
+const Title = styled.h1`
+  text-align: center;
+  margin: 0;
+  color: blue;
+`;
+
+const NavButtonContainer = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
+const AuthButtonContainer = styled.div`
+  padding-right: 2rem;
+  width: 10%;
+  display: flex;
+  align-items: center;
+`;
+
+const CustomerButtonContainer = styled.div`
+  padding-right: 2rem;
+  width: 50%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+`;
+
+const MerchantButtonContainer = styled.div`
+  padding-right: 2rem;
+  width: 50%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+`;
+
+const Header = styled.div`
+  height: 4rem;
+  width: 100vw;
+  background-color: red;
   display: block;
-  text-decoration: none;
+  position: fixed;
+  top: 0px;
 `;
 
-const MenuLink = styled(NavLink)`
-  color: red;
+const NavButton = styled.button`
+  height: 2rem;
+  margin: 1rem;
+  font-size: 1rem;
+  background: none;
+  border: none;
+  color: ${({ currentPage, value }) =>
+    currentPage == value ? "white" : "black"};
+  :disabled {
+    visibility: hidden;
+  }
 `;
 
-export const NavBar = () => {
+const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
   const { loggedInUser, setLoggedInUser, role } = useAuthContext();
   const navigate = useNavigate();
+  const handleNavigate = (event) => {
+    navigate(event.target.value);
+    setCurrentPage(url);
+  };
   const handleLogout = (event) => {
     event.preventDefault();
     axios
-      .post("auth/logout")
+      .post("/auth/logout")
       .then((response) => {
         if (response.status == 200) {
           localStorage.clear();
           setLoggedInUser("");
+          setCurrentPage("/");
           navigate("/");
         }
       })
       .catch((error) => console.log(error));
   };
-
   return (
-    <>
-      <Header>
-        <h1 className="fruGo-title">fruGo</h1>
-      </Header>
+    <NavButton
+      onClick={text == "Logout" ? handleLogout : handleNavigate}
+      value={url}
+      currentPage={currentPage}
+      disabled={!active}
+    >
+      {text}
+    </NavButton>
+  );
+};
+
+export const NavBar = () => {
+  const { loggedInUser, setLoggedInUser, role } = useAuthContext();
+  const [currentPage, setCurrentPage] = useState("");
+  const navigate = useNavigate();
+  return (
+    <Header>
+      <Title>fruGo</Title>
       <NavContainer maxWidth="xl">
-        <Toolbar disableGutters>
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <MenuLink
-              style={{
-                textDecoration: "none",
-              }}
-              to={"/"}
-            >
-              <Button
-                sx={{
-                  my: 1,
-                  color: "white",
-                  display: "block",
-                }}
-              >
-                Home
-              </Button>
-            </MenuLink>
-            {localStorage.getItem("role") !== "Merchant" && (
-              <MenuLink
-                style={{
-                  textDecoration: "none",
-                }}
-                to={"/customer/products"}
-              >
-                <Button
-                  sx={{
-                    my: 1,
-                    color: "white",
-                    display: "block",
-                  }}
-                >
-                  Products
-                </Button>
-              </MenuLink>
-            )}
-            {loggedInUser && role == "Customer" && (
-              <>
-                <MenuLink
-                  style={{
-                    textDecoration: "none",
-                  }}
-                  to={"/customer/cart"}
-                >
-                  <Button
-                    sx={{
-                      my: 1,
-                      color: "white",
-                      display: "block",
-                    }}
-                  >
-                    Cart
-                  </Button>
-                </MenuLink>
-                <MenuLink
-                  style={{
-                    textDecoration: "none",
-                  }}
-                  to={"/customer/orders"}
-                >
-                  <Button
-                    sx={{
-                      my: 1,
-                      color: "white",
-                      display: "block",
-                    }}
-                  >
-                    Orders
-                  </Button>
-                </MenuLink>
-              </>
-            )}
-            {loggedInUser && role == "Merchant" && (
-              <MenuLink
-                style={{
-                  textDecoration: "none",
-                }}
-                to={"/merchant/stock"}
-              >
-                <Button
-                  sx={{
-                    my: 1,
-                    color: "white",
-                    display: "block",
-                  }}
-                >
-                  Stock
-                </Button>
-              </MenuLink>
-            )}
-            <MenuLink
-              style={{
-                textDecoration: "none",
-              }}
-              to={loggedInUser ? "/logout" : "/login"}
-            >
-              <Button
-                sx={{
-                  my: 1,
-                  color: "white",
-                  display: "block",
-                }}
-                onClick={loggedInUser ? handleLogout : null}
-              >
-                {loggedInUser ? "Logout" : "Login"}
-              </Button>
-            </MenuLink>
-            {!loggedInUser && (
-              <MenuLink
-                style={{
-                  textDecoration: "none",
-                }}
-                to={"/customer/register"}
-              >
-                <Button
-                  sx={{
-                    my: 1,
-                    color: "white",
-                    display: "block",
-                  }}
-                >
-                  Register
-                </Button>
-              </MenuLink>
-            )}
-            {loggedInUser && <p>{loggedInUser.username}</p>}
-          </Box>
-        </Toolbar>
+        <NavButtonContainer>
+          <NavLink
+            text="Home"
+            url="/"
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            active={true}
+          />
+          <NavLink
+            text="Products"
+            url="/customer/products"
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            active={!loggedInUser || role == "Customer"}
+          />
+        </NavButtonContainer>
+
+        {role == "Customer" && (
+          <CustomerButtonContainer>
+            <NavLink
+              text="Cart"
+              url="/customer/cart"
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              active={loggedInUser && role == "Customer"}
+            />
+            <NavLink
+              text="Orders"
+              url="/customer/orders"
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              active={loggedInUser && role == "Customer"}
+            />
+          </CustomerButtonContainer>
+        )}
+        {role == "Merchant" && (
+          <MerchantButtonContainer>
+            <NavLink
+              text="Stock"
+              url="/merchant/stock"
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              active={loggedInUser && role == "Merchant"}
+            />
+          </MerchantButtonContainer>
+        )}
+        <AuthButtonContainer>
+          <NavLink
+            text={!loggedInUser ? "Login" : "Logout"}
+            url={!loggedInUser ? "/login" : null}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            active={!loggedInUser || loggedInUser}
+          />
+        </AuthButtonContainer>
+        {/* <NavLink
+            text="Logout"
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            active={loggedInUser}
+          /> */}
       </NavContainer>
-    </>
+    </Header>
   );
 };

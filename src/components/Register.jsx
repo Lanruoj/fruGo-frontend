@@ -3,13 +3,12 @@ import { useEffect, useState } from "react";
 import { Title } from "./styled/Title";
 import { InputWrapper } from "./styled/InputWrapper";
 import { useAuthContext } from "../utils/AuthContext";
-import { useMerchantContext } from "../utils/MerchantContext";
+import { useCustomerContext } from "../utils/CustomerContext";
 import { useCartContext } from "../utils/CartContext";
 
 export const Register = () => {
   const { setLoggedInUser, setRole, setToken } = useAuthContext();
-  const { setMerchant } = useMerchantContext();
-  const { setCart } = useCartContext();
+  const { setMerchant, setCart } = useCustomerContext();
   const [cities, setCities] = useState("");
   const [formData, setFormData] = useState({
     email: "",

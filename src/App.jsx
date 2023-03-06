@@ -5,7 +5,7 @@ import { HomePage } from "./pages/HomePage";
 import { Products } from "./components/Products";
 import { Login } from "./components/Login";
 import { AuthContext } from "./utils/AuthContext";
-import { MerchantContext } from "./utils/MerchantContext";
+import { CustomerContext } from "./utils/CustomerContext";
 import { NavBar } from "./components/NavBar";
 import { Register } from "./components/Register";
 import "./App.css";
@@ -75,67 +75,72 @@ function App() {
           setToken,
         }}
       >
-        <MerchantContext.Provider value={{ merchant, setMerchant }}>
-          <CartContext.Provider
-            value={{ cartProducts, setCartProducts, newOrder, setNewOrder }}
-          >
-            <NavBar />
-            <Main>
-              <Routes>
-                <Route exact path="/" element={<HomePage />} />
-                <Route exact path="/login" element={<Login />} />
-                <Route exact path="/customer/register" element={<Register />} />
-                {/* {CUSTOMER ROUTES} */}
-                <Route exact path="/customer/products" element={<Products />} />
-                <Route
-                  exact
-                  path="/customer/cart"
-                  element={
-                    <CustomerRoute>
-                      <Cart />
-                    </CustomerRoute>
-                  }
-                />
-                <Route
-                  exact
-                  path="/customer/orders"
-                  element={
-                    <CustomerRoute>
-                      <OrderList />
-                    </CustomerRoute>
-                  }
-                />
-                <Route
-                  path={`/customer/orderConfirmation`}
-                  element={
-                    <CustomerRoute>
-                      <OrderConfirmation />
-                    </CustomerRoute>
-                  }
-                />
-                {/* {MERCHANT ROUTES} */}
-                <Route
-                  exact
-                  path="/merchant/stock"
-                  element={
-                    <MerchantRoute>
-                      <Stock />
-                    </MerchantRoute>
-                  }
-                />
-                <Route
-                  exact
-                  path="/merchant/orders"
-                  element={
-                    <MerchantRoute>
-                      <OrderList />
-                    </MerchantRoute>
-                  }
-                />
-              </Routes>
-            </Main>
-          </CartContext.Provider>
-        </MerchantContext.Provider>
+        <CustomerContext.Provider
+          value={{
+            merchant,
+            setMerchant,
+            cartProducts,
+            setCartProducts,
+            newOrder,
+            setNewOrder,
+          }}
+        >
+          <NavBar />
+          <Main>
+            <Routes>
+              <Route exact path="/" element={<HomePage />} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/customer/register" element={<Register />} />
+              {/* {CUSTOMER ROUTES} */}
+              <Route exact path="/customer/products" element={<Products />} />
+              <Route
+                exact
+                path="/customer/cart"
+                element={
+                  <CustomerRoute>
+                    <Cart />
+                  </CustomerRoute>
+                }
+              />
+              <Route
+                exact
+                path="/customer/orders"
+                element={
+                  <CustomerRoute>
+                    <OrderList />
+                  </CustomerRoute>
+                }
+              />
+              <Route
+                path={`/customer/orderConfirmation`}
+                element={
+                  <CustomerRoute>
+                    <OrderConfirmation />
+                  </CustomerRoute>
+                }
+              />
+              {/* {MERCHANT ROUTES} */}
+              <Route
+                exact
+                path="/merchant/stock"
+                element={
+                  <MerchantRoute>
+                    <Stock />
+                  </MerchantRoute>
+                }
+              />
+              <Route
+                exact
+                path="/merchant/orders"
+                element={
+                  <MerchantRoute>
+                    <OrderList />
+                  </MerchantRoute>
+                }
+              />
+            </Routes>
+          </Main>
+        </CustomerContext.Provider>
       </AuthContext.Provider>
     </div>
   );

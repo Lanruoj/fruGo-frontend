@@ -2,7 +2,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../utils/AuthContext";
-import { useMerchantContext } from "../utils/MerchantContext";
+import { useCustomerContext } from "../utils/CustomerContext";
 import { GridBox } from "./styled/GridBox";
 import { Product } from "./Product";
 import { useCartContext } from "../utils/CartContext";
@@ -14,8 +14,7 @@ export const CustomGrid = styled(GridBox)`
 
 export function Products() {
   const { loggedInUser } = useAuthContext();
-  const { cartProducts } = useCartContext();
-  const { merchant } = useMerchantContext();
+  const { merchant, cartProducts } = useCustomerContext();
   const [products, setProducts] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {

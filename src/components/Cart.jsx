@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useCartContext } from "../utils/CartContext";
-import { useMerchantContext } from "../utils/MerchantContext";
+import { useCustomerContext } from "../utils/CustomerContext";
 import { CartProduct } from "./CartProduct";
 import { useAuthContext } from "../utils/AuthContext";
 
@@ -21,8 +21,8 @@ const CartProductList = styled.ul`
 
 export const Cart = () => {
   const { loggedInUser } = useAuthContext();
-  const { cartProducts, setCartProducts, setNewOrder } = useCartContext();
-  const { merchant } = useMerchantContext();
+  const { merchant, cartProducts, setCartProducts, setNewOrder } =
+    useCustomerContext();
   const navigate = useNavigate();
   const handleSubmitOrder = (event) => {
     axios

@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useCartContext } from "../utils/CartContext";
+import { useCustomerContext } from "../utils/CustomerContext";
 import { Order } from "./Order";
 
 export const OrderConfirmation = (props) => {
-  const { newOrder } = useCartContext();
+  const { newOrder } = useCustomerContext();
   const [order, setOrder] = useState("");
   useEffect(() => {
     setOrder(() => {

@@ -16,6 +16,7 @@ import { Main } from "./components/styled/Main";
 import { MerchantRoute } from "./utils/MerchantRoute";
 import { UserContext } from "./utils/UserContext";
 import { AddNewStockProduct } from "./components/AddNewStockProduct";
+import { CustomerProfile } from "./components/CustomerProfile";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -85,7 +86,15 @@ function App() {
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/customer/register" element={<Register />} />
             <Route path="customer">
-              <Route path="products" element={<Products />} />
+              <Route
+                path="profile"
+                element={
+                  <CustomerRoute>
+                    <CustomerProfile />
+                  </CustomerRoute>
+                }
+              />
+              <Route index path="products" element={<Products />} />
               <Route
                 path="cart"
                 element={

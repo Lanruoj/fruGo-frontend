@@ -67,6 +67,7 @@ const NavButton = styled.button`
   border: none;
   color: ${({ currentPage, value }) =>
     currentPage == value ? "white" : "black"};
+  cursor: pointer;
   :disabled {
     visibility: hidden;
   }

@@ -19,7 +19,6 @@ import { Order } from "./components/Order";
 import { Main } from "./components/styled/Main";
 import { MerchantOrders } from "./components/MerchantOrders";
 import { MerchantRoute } from "./utils/MerchantRoute";
-import { CustomerRoutes } from "./components/CustomerRoutes";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -123,7 +122,7 @@ function App() {
               {/* {MERCHANT ROUTES} */}
               <Route path="merchant">
                 <Route
-                  path="/merchant/stock"
+                  path="stock"
                   element={
                     <MerchantRoute>
                       <Stock />
@@ -131,7 +130,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/merchant/orders"
+                  path="orders"
                   element={
                     <MerchantRoute>
                       <OrderList />

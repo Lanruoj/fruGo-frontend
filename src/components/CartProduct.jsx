@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { useCartContext } from "../utils/CartContext";
-import { useCustomerContext } from "../utils/CustomerContext";
+import { useUserContext } from "../utils/UserContext";
 import { Button } from "./styled/Button";
 
 const CartProductName = styled.div`
@@ -29,7 +28,7 @@ const CartProductLi = styled.li`
 `;
 
 export const CartProduct = (props) => {
-  const { cartProducts, setCartProducts, setNewOrder } = useCustomerContext();
+  const { cartProducts, setCartProducts, setNewOrder } = useUserContext();
   const { cartProduct } = props;
   const handleIncrementQuantity = (event) => {
     event.preventDefault();

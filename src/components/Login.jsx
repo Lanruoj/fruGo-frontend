@@ -1,13 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
 import { Title } from "./styled/Title";
-import { useAuthContext } from "../utils/AuthContext";
-import { useCustomerContext } from "../utils/CustomerContext";
 import { InputWrapper } from "./styled/InputWrapper";
+import { useUserContext } from "../utils/UserContext";
 
 export const Login = () => {
-  const { setLoggedInUser, setRole, setToken } = useAuthContext();
-  const { setMerchant } = useCustomerContext();
+  const { setLoggedInUser, setRole, setToken, setMerchant } = useUserContext();
   const [userFormDetails, setUserFormDetails] = useState({
     email: "",
     password: "",

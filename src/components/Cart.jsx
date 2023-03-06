@@ -3,10 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useCartContext } from "../utils/CartContext";
-import { useCustomerContext } from "../utils/CustomerContext";
 import { CartProduct } from "./CartProduct";
-import { useAuthContext } from "../utils/AuthContext";
+import { useUserContext } from "../utils/UserContext";
 
 const CartContainer = styled.div`
   height: 100%;
@@ -20,9 +18,8 @@ const CartProductList = styled.ul`
 `;
 
 export const Cart = () => {
-  const { loggedInUser } = useAuthContext();
-  const { merchant, cartProducts, setCartProducts, setNewOrder } =
-    useCustomerContext();
+  const { loggedInUser, merchant, cartProducts, setCartProducts, setNewOrder } =
+    useUserContext();
   const navigate = useNavigate();
   const handleSubmitOrder = (event) => {
     axios

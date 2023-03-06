@@ -1,20 +1,19 @@
 import axios from "axios";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useAuthContext } from "../utils/AuthContext";
 import { useCustomerContext } from "../utils/CustomerContext";
 import { GridBox } from "./styled/GridBox";
 import { Product } from "./Product";
-import { useCartContext } from "../utils/CartContext";
 import { SearchBar } from "./styled/SearchBar";
+import { useUserContext } from "../utils/UserContext";
 
 export const CustomGrid = styled(GridBox)`
   padding: 30px;
 `;
 
 export function Products() {
-  const { loggedInUser } = useAuthContext();
-  const { merchant, cartProducts } = useCustomerContext();
+  const { loggedInUser, merchant, cartProducts } = useUserContext();
+  const {} = useCustomerContext();
   const [products, setProducts] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {

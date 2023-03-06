@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useAuthContext } from "../utils/AuthContext";
+import { useUserContext } from "../utils/UserContext";
 import { Order } from "./Order";
 
 export const OrderList = (props) => {
-  const { loggedInUser, role } = useAuthContext();
+  const { loggedInUser, role } = useUserContext();
   const [orders, setOrders] = useState([]);
   const [statusFilter, setStatusFilter] = useState("?status=pending");
   useEffect(() => {

@@ -2,13 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Title } from "./styled/Title";
 import { InputWrapper } from "./styled/InputWrapper";
-import { useAuthContext } from "../utils/AuthContext";
-import { useCustomerContext } from "../utils/CustomerContext";
-import { useCartContext } from "../utils/CartContext";
+import { useUserContext } from "../utils/UserContext";
 
 export const Register = () => {
-  const { setLoggedInUser, setRole, setToken } = useAuthContext();
-  const { setMerchant, setCart } = useCustomerContext();
+  const { setLoggedInUser, setRole, setToken, setMerchant, setCart } =
+    useUserContext();
   const [cities, setCities] = useState("");
   const [formData, setFormData] = useState({
     email: "",

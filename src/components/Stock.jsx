@@ -1,12 +1,12 @@
 import axios from "axios";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useAuthContext } from "../utils/AuthContext";
 import { SearchBar } from "./styled/SearchBar";
 import { StockProduct } from "./StockProduct";
+import { useUserContext } from "../utils/UserContext";
 
 export function Stock() {
-  const { loggedInUser } = useAuthContext();
+  const { loggedInUser } = useUserContext();
   const [products, setProducts] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {

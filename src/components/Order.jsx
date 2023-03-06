@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useAuthContext } from "../utils/AuthContext";
+import { useUserContext } from "../utils/UserContext";
 
 const OrderContainer = styled.div`
   border: solid black;
@@ -29,7 +29,7 @@ const StatusLabel = styled.label`
 `;
 
 export const Order = (props) => {
-  const { role } = useAuthContext();
+  const { role } = useUserContext();
   const { order } = props;
   const [status, setStatus] = useState("");
   const handleStatusChange = (event) => {

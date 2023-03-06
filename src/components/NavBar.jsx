@@ -1,9 +1,8 @@
-import { AppBar, Box, Container, Toolbar, Button } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useAuthContext } from "../utils/AuthContext";
+import { useUserContext } from "../utils/UserContext";
 
 const NavContainer = styled.nav`
   width: 100vw;
@@ -79,7 +78,7 @@ const NavButton = styled.button`
 `;
 
 const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
-  const { loggedInUser, setLoggedInUser, role } = useAuthContext();
+  const { loggedInUser, setLoggedInUser, role } = useUserContext();
   const navigate = useNavigate();
   const handleNavigate = (event) => {
     navigate(event.target.value);
@@ -112,7 +111,7 @@ const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
 };
 
 export const NavBar = () => {
-  const { loggedInUser, setLoggedInUser, role } = useAuthContext();
+  const { loggedInUser, setLoggedInUser, role } = useUserContext();
   const [currentPage, setCurrentPage] = useState("");
   const navigate = useNavigate();
   return (

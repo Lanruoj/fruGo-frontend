@@ -1,11 +1,11 @@
 import { Button } from "./styled/Button";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useAuthContext } from "../utils/AuthContext";
 import styled from "styled-components";
 import { NumberInput } from "./styled/NumberInput";
 import { List } from "./styled/List";
 import { Wrapper } from "./styled/Wrapper";
+import { useUserContext } from "../utils/UserContext";
 
 const HorizontalContainer = styled.div`
   width: 75vw;
@@ -25,7 +25,7 @@ const QuantityUpdateForm = styled.form`
 `;
 
 export const StockProduct = (props) => {
-  const { loggedInUser } = useAuthContext();
+  const { loggedInUser } = useUserContext();
   const { product } = props;
   const [stockQuantity, setStockQuantity] = useState("");
   const [canUpdate, setCanUpdate] = useState(false);

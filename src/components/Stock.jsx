@@ -4,6 +4,13 @@ import { useEffect, useState } from "react";
 import { SearchBar } from "./styled/SearchBar";
 import { StockProduct } from "./StockProduct";
 import { useUserContext } from "../utils/UserContext";
+import { Button } from "./styled/Button";
+import { NavLink } from "./NavBar";
+import { Link } from "react-router-dom";
+
+const SubNavLink = styled(Link)`
+  color: blue;
+`;
 
 export function Stock() {
   const { loggedInUser } = useUserContext();
@@ -30,6 +37,11 @@ export function Stock() {
   };
   return (
     <>
+      <nav>
+        <SubNavLink to="/merchant/stock/add">
+          Add new product to stock
+        </SubNavLink>
+      </nav>
       <h1>Stock</h1>
       <form>
         <SearchBar

@@ -15,6 +15,7 @@ import { CustomerRoute } from "./utils/CustomerRoute";
 import { Main } from "./components/styled/Main";
 import { MerchantRoute } from "./utils/MerchantRoute";
 import { UserContext } from "./utils/UserContext";
+import { AddNewStockProduct } from "./components/AddNewStockProduct";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -113,14 +114,24 @@ function App() {
 
             {/* {MERCHANT ROUTES} */}
             <Route path="merchant">
-              <Route
-                path="stock"
-                element={
-                  <MerchantRoute>
-                    <Stock />
-                  </MerchantRoute>
-                }
-              />
+              <Route path="stock">
+                <Route
+                  index
+                  element={
+                    <MerchantRoute>
+                      <Stock />
+                    </MerchantRoute>
+                  }
+                />
+                <Route
+                  path="add"
+                  element={
+                    <MerchantRoute>
+                      <AddNewStockProduct />
+                    </MerchantRoute>
+                  }
+                />
+              </Route>
               <Route
                 path="orders"
                 element={

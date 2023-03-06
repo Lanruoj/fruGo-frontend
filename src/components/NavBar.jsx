@@ -77,7 +77,7 @@ const NavButton = styled.button`
   }
 `;
 
-const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
+export const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
   const { loggedInUser, setLoggedInUser, role } = useUserContext();
   const navigate = useNavigate();
   const handleNavigate = (event) => {

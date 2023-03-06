@@ -30,7 +30,10 @@ const AuthButtonContainer = styled.div`
   padding-right: 2rem;
   width: 10%;
   display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
+  height: 10rem;
 `;
 
 const CustomerButtonContainer = styled.div`
@@ -66,7 +69,7 @@ const NavButton = styled.button`
   background: none;
   border: none;
   color: ${({ currentPage, value }) =>
-    currentPage == value ? "white" : "black"};
+    currentPage == value ? "gray" : "black"};
   cursor: pointer;
   transition: 0.3s;
   :hover {
@@ -172,6 +175,13 @@ export const NavBar = () => {
           </MerchantButtonContainer>
         )}
         <AuthButtonContainer>
+          <NavLink
+            text={"Profile"}
+            url={`/${role.toLowerCase()}/profile`}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            active={loggedInUser}
+          />
           <NavLink
             text={!loggedInUser ? "Login" : "Logout"}
             url={!loggedInUser ? "/login" : null}

@@ -51,7 +51,6 @@ export const StockProduct = (props) => {
       })
       .then((response) => {
         setStockQuantity(() => {
-          console.log("SETSTOCK");
           return response.data.data.quantity;
         });
         setCanUpdate(() => false);

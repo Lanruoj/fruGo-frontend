@@ -2,9 +2,9 @@ import { Button } from "./styled/Button";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../utils/AuthContext";
-import { useCartContext } from "../utils/CartContext";
 import { Wrapper } from "./styled/Wrapper";
 import styled from "styled-components";
+import { useCustomerContext } from "../utils/CustomerContext";
 
 const ProductImg = styled.img`
   width: 150px;
@@ -19,7 +19,7 @@ const ProductWrapper = styled(Wrapper)`
 export const Product = (props) => {
   const { loggedInUser } = useAuthContext();
   const { product, existingProduct } = props;
-  const { setCartProducts, cartProducts } = useCartContext();
+  const { setCartProducts, cartProducts } = useCustomerContext();
   const handleAddToCart = (event) => {
     event.preventDefault();
     axios

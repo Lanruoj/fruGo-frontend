@@ -26,6 +26,7 @@ export const Login = () => {
       .catch((error) => console.log(error));
     if (response.status == 200) {
       setLoggedInUser(() => {
+        response.data.user.city = response.data.city;
         localStorage.setItem("user", JSON.stringify(response.data.user));
         localStorage.setItem("token", response.data.accessToken);
         localStorage.setItem("role", response.data.role);

@@ -6,8 +6,11 @@ import { Product } from "./Product";
 import { SearchBar } from "./styled/SearchBar";
 import { useUserContext } from "../utils/UserContext";
 
-export const CustomGrid = styled(GridBox)`
-  padding: 30px;
+export const RowWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
 `;
 
 export function Products() {
@@ -18,7 +21,6 @@ export function Products() {
     setCustomerProducts,
     customerProducts,
   } = useUserContext();
-  // const [products, setProducts] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     if (loggedInUser) {
@@ -47,26 +49,24 @@ export function Products() {
           placeholder="Search for products"
         />
       </form>
-      <div id="products">
-        <GridBox>
-          {customerProducts &&
-            customerProducts.map((product) => {
-              const existingProduct = cartProducts.find(
-                (cartProduct) => cartProduct.stockProduct._id == product._id
-              );
-              return (
-                <Product
-                  key={product._id}
-                  product={product}
-                  existingProduct={existingProduct}
-                />
-              );
-            })}
-          {!customerProducts.length && (
-            <h2>No products matching that criteria</h2>
-          )}
-        </GridBox>
-      </div>
+      <RowWrapper>
+        {customerProducts &&
+          customerProducts.map((product) => {
+            const existingProduct = cartProducts.find(
+              (cartProduct) => cartProduct.stockProduct._id == product._id
+            );
+            return (
+              <Product
+                key={product._id}
+                product={product}
+                existingProduct={existingProduct}
+              />
+            );
+          })}
+        {!customerProducts.length && (
+          <h2>No products matching that criteria</h2>
+        )}
+      </RowWrapper>
     </>
   );
 }

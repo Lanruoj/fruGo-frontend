@@ -16,6 +16,7 @@ const CartProductQuantity = styled.div`
 
 const CartProductImg = styled.img`
   width: 100px;
+  border-radius: 0.3rem;
 `;
 
 const CartProductLi = styled.li`

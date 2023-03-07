@@ -1,11 +1,33 @@
 import styled from "styled-components";
 
-const StyledForm = styled.form`
-  background-color: red;
-  height: 100px;
-  width: 100px;
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50vw;
 `;
 
-export const Form = (props) => {
-  return <StyledForm>HELLO</StyledForm>;
-};
+export const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 10px;
+`;
+
+export const Input = styled.input`
+  border-style: solid;
+  border-color: #c8c8c8;
+  border-width: 0.2px;
+  height: 1.5rem;
+  margin: 1rem;
+  min-width: 15rem;
+  border-radius: 0.3rem;
+`;
+
+export const Label = styled.label`
+  display: inline-block;
+  width: 8rem;
+  height: 1.5rem;
+`;

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useUserContext } from "../utils/UserContext";
 import { Button } from "./styled/Button";
@@ -7,7 +8,6 @@ import { Dropdown } from "./styled/Dropdown";
 import { Form, Input, InputWrapper, Label } from "./styled/Form";
 
 const UpdateButton = styled(Button)`
-  background-color: blue;
   width: 7rem;
   text-align: center;
   margin: 0;
@@ -68,6 +68,7 @@ const UpdateFieldForm = (props) => {
 export const CustomerProfile = () => {
   const { loggedInUser } = useUserContext();
   const [cities, setCities] = useState("");
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get("/cities")
@@ -76,6 +77,12 @@ export const CustomerProfile = () => {
         setCities(data.data);
       });
   }, []);
+  const handleDeleteProfile = () => {
+    axios.delete(`/customers/${loggedInUser._id}`, { data: null }).then(() => {
+      localStorage.clear();
+      navigate("/login");
+    });
+  };
   return (
     <div>
       <h1>Profile</h1>
@@ -111,6 +118,7 @@ export const CustomerProfile = () => {
         default="*************"
         fieldName="password"
       />
+      <Button onClick={handleDeleteProfile}>Delete profile</Button>
     </div>
   );
 };

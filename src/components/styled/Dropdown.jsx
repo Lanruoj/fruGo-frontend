@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Select = styled.select`
+export const Dropdown = styled.select`
   border: none;
   border-style: solid;
   border-color: #c8c8c8;
@@ -12,29 +12,3 @@ const Select = styled.select`
     color: black;
   }
 `;
-
-export const Dropdown = ({
-  options,
-  name,
-  handleChange,
-  formData,
-  disabled,
-}) => {
-  return (
-    <Select
-      name={name}
-      onChange={handleChange}
-      value={formData}
-      disabled={disabled}
-    >
-      {options &&
-        options.map((option) => {
-          return (
-            <option key={option._id} value={option._id}>
-              {option.name}
-            </option>
-          );
-        })}
-    </Select>
-  );
-};

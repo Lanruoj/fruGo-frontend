@@ -32,6 +32,7 @@ function App() {
   const [cartProducts, setCartProducts] = useState([]);
   const [newOrder, setNewOrder] = useState("");
   const [customerProducts, setCustomerProducts] = useState([]);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     if (loggedInUser) {
@@ -89,6 +90,8 @@ function App() {
           setNewOrder,
           customerProducts,
           setCustomerProducts,
+          error,
+          setError,
         }}
       >
         <NavBar />

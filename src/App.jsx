@@ -2,7 +2,7 @@ import axios from "axios";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { HomePage } from "./pages/HomePage";
-import { Products } from "./components/Products";
+import { CustomerProducts } from "./components/CustomerProducts";
 import { Login } from "./components/Login";
 import { NavBar } from "./components/NavBar";
 import { Register } from "./components/Register";
@@ -52,7 +52,6 @@ function App() {
             }/stock/products`
           )
           .then((response) => {
-            console.log(response.data.data);
             setCustomerProducts(response.data.data);
           });
         navigate("/customer/products");
@@ -107,7 +106,7 @@ function App() {
                   </CustomerRoute>
                 }
               />
-              <Route index path="products" element={<Products />} />
+              <Route index path="products" element={<CustomerProducts />} />
               <Route
                 path="cart"
                 element={

@@ -8,6 +8,7 @@ import { Product } from "./Product";
 import { StockProduct } from "./StockProduct";
 import { Button } from "./styled/Button";
 import { Form } from "./styled/Form";
+import { PageHeading } from "./styled/PageHeading";
 
 const NewProductImg = styled.img`
   width: 100px;
@@ -59,7 +60,7 @@ export const AddNewStockProduct = () => {
 
   return (
     <>
-      <h1>Add new product</h1>
+      <PageHeading>Add new product</PageHeading>
       <List>
         {productsNotInStock.map((product) => {
           return (

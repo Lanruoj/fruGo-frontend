@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Title } from "./styled/Title";
 import { Form, Input, InputWrapper, Label } from "./styled/Form";
 import { useUserContext } from "../utils/UserContext";
+import { PageHeading } from "./styled/PageHeading";
 
 export const Register = () => {
   const { setLoggedInUser, setRole, setToken, setMerchant, setCart } =
@@ -59,7 +60,7 @@ export const Register = () => {
   };
   return (
     <>
-      <Title>Register</Title>
+      <PageHeading>Register</PageHeading>
       <Form onSubmit={handleSubmit} autoComplete="off" multi>
         <InputWrapper>
           <Label htmlFor="email">Email:</Label>

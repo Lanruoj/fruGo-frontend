@@ -7,31 +7,29 @@ import { useUserContext } from "../utils/UserContext";
 const Header = styled.div`
   height: 5.5rem;
   width: 100vw;
-  background-color: #052f05;
+  /* background-color: #052f05; */
   display: block;
   position: fixed;
   top: 0px;
 `;
 
 const NavContainer = styled.nav`
-  /* background-color: red; */
   width: 100vw;
   height: 2rem;
   display: flex;
-  /* background-color: #b6e5b6; */
   justify-content: space-between;
   position: fixed;
 `;
 
 const Title = styled.h1`
-  /* background-color: green; */
   text-align: center;
   margin: 0.5rem 0 0 0;
-  color: white;
+  color: #052f05;
+  font-size: 3rem;
+  font-family: "Unbounded", cursive;
 `;
 
 const NavButtonContainer = styled.div`
-  /* background-color: yellow; */
   width: 33.33%;
   display: flex;
   justify-content: space-evenly;
@@ -39,47 +37,23 @@ const NavButtonContainer = styled.div`
 `;
 
 const AuthButtonContainer = styled.div`
-  /* background-color: violet; */
-  /* padding-right: 2rem; */
   width: 33.33%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  /* position: relative;
-  top: -3rem;
-  right: 0; */
-`;
-
-const CustomerButtonContainer = styled.div`
-  /* background-color: purple; */
-  /* padding-right: 2rem; */
-  width: 33.33%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const MerchantButtonContainer = styled.div`
-  /* background-color: gray; */
-  /* padding-right: 2rem; */
-  width: 25%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const NavButton = styled.button`
-  /* background-color: brown; */
+  font-family: "Unbounded", cursive;
   height: 2rem;
   margin: 1rem;
   font-size: 1rem;
-  font-family: monospace;
   background: none;
   border: none;
+  text-transform: uppercase;
   color: ${({ currentPage, value }) =>
-    currentPage == value ? "gray" : "white"};
+    currentPage == value ? "black" : "red"};
   cursor: pointer;
   transition: 0.3s;
   :hover {
@@ -148,43 +122,43 @@ export const NavBar = () => {
           />
         </NavButtonContainer>
 
-        {role == "Customer" && (
-          <CustomerButtonContainer>
-            <NavLink
-              text="Cart"
-              url="/customer/cart"
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              active={loggedInUser && role == "Customer"}
-            />
-            <NavLink
-              text="Orders"
-              url="/customer/orders"
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              active={loggedInUser && role == "Customer"}
-            />
-          </CustomerButtonContainer>
-        )}
-        {role == "Merchant" && (
-          <MerchantButtonContainer>
-            <NavLink
-              text="Stock"
-              url="/merchant/stock"
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              active={loggedInUser && role == "Merchant"}
-            />
-            <NavLink
-              text="Orders"
-              url="/merchant/orders"
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              active={loggedInUser && role == "Merchant"}
-            />
-          </MerchantButtonContainer>
-        )}
         <AuthButtonContainer>
+          {role == "Customer" && (
+            <>
+              <NavLink
+                text="Cart"
+                url="/customer/cart"
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                active={loggedInUser && role == "Customer"}
+              />
+              <NavLink
+                text="Orders"
+                url="/customer/orders"
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                active={loggedInUser && role == "Customer"}
+              />
+            </>
+          )}
+          {role == "Merchant" && (
+            <>
+              <NavLink
+                text="Stock"
+                url="/merchant/stock"
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                active={loggedInUser && role == "Merchant"}
+              />
+              <NavLink
+                text="Orders"
+                url="/merchant/orders"
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                active={loggedInUser && role == "Merchant"}
+              />
+            </>
+          )}
           <NavLink
             text={"Profile"}
             url={`/${role.toLowerCase()}/profile`}

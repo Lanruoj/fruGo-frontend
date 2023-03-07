@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useUserContext } from "../utils/UserContext";
 import { Order } from "./Order";
+import { PageHeading } from "./styled/PageHeading";
 
 export const OrderConfirmation = (props) => {
   const { newOrder } = useUserContext();
@@ -13,7 +14,7 @@ export const OrderConfirmation = (props) => {
   }, [newOrder]);
   return (
     <>
-      <h1>Order confirmation</h1>
+      <PageHeading>Order confirmation</PageHeading>
       {order && <Order order={order} />}
     </>
   );

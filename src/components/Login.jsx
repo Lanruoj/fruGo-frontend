@@ -7,6 +7,7 @@ import { Form, Input, InputWrapper, Label } from "./styled/Form";
 import { NavLink } from "./NavBar";
 import { useNavigate } from "react-router-dom";
 import { Error } from "./Error";
+import { PageHeading } from "./styled/PageHeading";
 
 export const Login = () => {
   const {
@@ -69,7 +70,7 @@ export const Login = () => {
   };
   return (
     <>
-      <Title>Login</Title>
+      <PageHeading>Login</PageHeading>
       <Form onSubmit={handleSubmit} multi>
         <InputWrapper>
           <Label htmlFor="email">Email:</Label>

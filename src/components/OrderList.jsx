@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useUserContext } from "../utils/UserContext";
 import { Order } from "./Order";
+import { PageHeading } from "./styled/PageHeading";
 
 export const OrderList = (props) => {
   const { loggedInUser, role } = useUserContext();
@@ -34,7 +35,7 @@ export const OrderList = (props) => {
   };
   return (
     <>
-      <h1>Orders</h1>
+      <PageHeading>Orders</PageHeading>
       <select onChange={handleStatusFilter} defaultValue="?status=pending">
         <option value="?status=pending">Pending</option>
         <option value="?status=complete">Complete</option>
@@ -49,19 +50,6 @@ export const OrderList = (props) => {
           <p>You currently have no {statusFilter.split("=")[1]} orders</p>
         )}
       </div>
-      {/* <ul>
-        {orders.length ? (
-          orders.map((order) => {
-            return (
-              <Link to={`/orders/${order._id}`}>
-                <li key={order._id}>{order._id}</li>
-              </Link>
-            );
-          })
-        ) : (
-          <p>You currently have no {statusFilter.split("=")[1]} orders</p>
-        )}
-      </ul> */}
     </>
   );
 };

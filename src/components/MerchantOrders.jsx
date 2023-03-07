@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useUserContext } from "../utils/UserContext";
 import { Order } from "./Order";
+import { PageHeading } from "./styled/PageHeading";
 
 export const MerchantOrders = (props) => {
   const { loggedInUser, role } = useUserContext();
@@ -30,7 +31,7 @@ export const MerchantOrders = (props) => {
   };
   return (
     <>
-      <h1>Orders</h1>
+      <PageHeading>Orders</PageHeading>
       <select onChange={handleStatusFilter}>
         <option value="?status=pending">Pending</option>
         <option value="?status=complete">Complete</option>

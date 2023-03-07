@@ -5,6 +5,7 @@ import { SearchBar } from "./styled/SearchBar";
 import { StockProduct } from "./StockProduct";
 import { useUserContext } from "../utils/UserContext";
 import { Link } from "react-router-dom";
+import { PageHeading } from "./styled/PageHeading";
 
 const SubNavLink = styled(Link)`
   color: blue;
@@ -40,7 +41,7 @@ export function Stock() {
           Add new product to stock
         </SubNavLink>
       </nav>
-      <h1>Stock</h1>
+      <PageHeading>Stock</PageHeading>
       <form>
         <SearchBar
           value={searchQuery}

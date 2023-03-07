@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { CartProduct } from "./CartProduct";
 import { useUserContext } from "../utils/UserContext";
+import { PageHeading } from "./styled/PageHeading";
 
 const CartContainer = styled.div`
   height: 100%;
@@ -51,7 +52,7 @@ export const Cart = () => {
 
   return (
     <CartContainer>
-      <h1>Cart</h1>
+      <PageHeading>Cart</PageHeading>
       <CartProductList>
         {cartProducts.length
           ? cartProducts.map((cartProduct) => {

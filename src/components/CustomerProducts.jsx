@@ -5,6 +5,7 @@ import { GridBox } from "./styled/GridBox";
 import { Product } from "./Product";
 import { SearchBar } from "./styled/SearchBar";
 import { useUserContext } from "../utils/UserContext";
+import { PageHeading } from "./styled/PageHeading";
 
 export const RowWrapper = styled.div`
   display: flex;
@@ -37,7 +38,7 @@ export const CustomerProducts = () => {
   };
   return (
     <>
-      <h1>PRODUCTS</h1>
+      <PageHeading>PRODUCTS</PageHeading>
       <form>
         <SearchBar
           value={searchQuery}

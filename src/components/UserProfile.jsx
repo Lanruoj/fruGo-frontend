@@ -6,6 +6,7 @@ import { useUserContext } from "../utils/UserContext";
 import { Button } from "./styled/Button";
 import { Dropdown } from "./styled/Dropdown";
 import { Form, Input, InputWrapper, Label } from "./styled/Form";
+import { PageHeading } from "./styled/PageHeading";
 
 const UpdateButton = styled(Button)`
   width: 7rem;
@@ -105,7 +106,7 @@ export const UserProfile = () => {
   };
   return (
     <div>
-      <h1>Profile</h1>
+      <PageHeading>Profile</PageHeading>
       {role == "Merchant" && (
         <>
           <UpdateFieldForm

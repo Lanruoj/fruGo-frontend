@@ -6,10 +6,18 @@ import { Button } from "./styled/Button";
 import { Form, Input, InputWrapper, Label } from "./styled/Form";
 import { NavLink } from "./NavBar";
 import { useNavigate } from "react-router-dom";
+import { Error } from "./Error";
 
 export const Login = () => {
-  const { loggedInUser, setLoggedInUser, setRole, setToken, setMerchant } =
-    useUserContext();
+  const {
+    loggedInUser,
+    setLoggedInUser,
+    setRole,
+    setToken,
+    setMerchant,
+    error,
+    setError,
+  } = useUserContext();
   const [userFormDetails, setUserFormDetails] = useState({
     email: "",
     password: "",
@@ -26,24 +34,34 @@ export const Login = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await axios
+    axios
       .post("/auth/login", userFormDetails)
-      .catch((error) => console.log(error));
-    if (response.status == 200) {
-      setLoggedInUser(() => {
-        response.data.user.city = response.data.city;
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        localStorage.setItem("token", response.data.accessToken);
-        localStorage.setItem("role", response.data.role);
-        if (localStorage.getItem("role") == "Customer") {
-          localStorage.setItem(
-            "merchant",
-            JSON.stringify(response.data.merchant)
-          );
+      .then((response) => {
+        if (response.status == 200) {
+          setLoggedInUser(() => {
+            response.data.user.city = response.data.city;
+            localStorage.setItem("user", JSON.stringify(response.data.user));
+            localStorage.setItem("token", response.data.accessToken);
+            localStorage.setItem("role", response.data.role);
+            if (localStorage.getItem("role") == "Customer") {
+              localStorage.setItem(
+                "merchant",
+                JSON.stringify(response.data.merchant)
+              );
+            }
+            return response.data.user;
+          });
+          navigate("/");
         }
-        return response.data.user;
+      })
+      .catch((error) => {
+        console.log(error.response.data.error.message);
+        setError(error.response.data.error.message);
+        setUserFormDetails({
+          email: "",
+          password: "",
+        });
       });
-    }
   };
   const handleRegister = (event) => {
     event.preventDefault();
@@ -76,6 +94,7 @@ export const Login = () => {
           <Button onClick={handleRegister}>Register</Button>
         </div>
       </Form>
+      <Error error={error} />
     </>
   );
 };

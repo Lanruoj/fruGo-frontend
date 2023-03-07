@@ -52,7 +52,7 @@ export const Login = () => {
   return (
     <>
       <Title>Login</Title>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} multi>
         <InputWrapper>
           <Label htmlFor="email">Email:</Label>
           <Input

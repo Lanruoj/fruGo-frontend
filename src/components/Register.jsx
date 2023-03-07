@@ -60,7 +60,7 @@ export const Register = () => {
   return (
     <>
       <Title>Register</Title>
-      <Form onSubmit={handleSubmit} autoComplete="off">
+      <Form onSubmit={handleSubmit} autoComplete="off" multi>
         <InputWrapper>
           <Label htmlFor="email">Email:</Label>
           <Input

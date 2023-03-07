@@ -1,7 +1,6 @@
 import axios from "axios";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useCustomerContext } from "../utils/CustomerContext";
 import { GridBox } from "./styled/GridBox";
 import { Product } from "./Product";
 import { SearchBar } from "./styled/SearchBar";
@@ -12,21 +11,26 @@ export const CustomGrid = styled(GridBox)`
 `;
 
 export function Products() {
-  const { loggedInUser, merchant, cartProducts } = useUserContext();
-  const {} = useCustomerContext();
-  const [products, setProducts] = useState("");
+  const {
+    loggedInUser,
+    merchant,
+    cartProducts,
+    setCustomerProducts,
+    customerProducts,
+  } = useUserContext();
+  // const [products, setProducts] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     if (loggedInUser) {
       axios
         .get(`/merchants/${merchant._id}/stock/products?name=${searchQuery}`)
         .then((response) => {
-          setProducts(response.data.data);
+          setCustomerProducts(response.data.data);
         });
     } else {
       axios
         .get(`products?name=${searchQuery}`)
-        .then((response) => setProducts(response.data.data));
+        .then((response) => setCustomerProducts(response.data.data));
     }
   }, [searchQuery]);
   const handleSearchQueryChange = (event) => {
@@ -45,8 +49,8 @@ export function Products() {
       </form>
       <div id="products">
         <GridBox>
-          {products &&
-            products.map((product) => {
+          {customerProducts &&
+            customerProducts.map((product) => {
               const existingProduct = cartProducts.find(
                 (cartProduct) => cartProduct.stockProduct._id == product._id
               );
@@ -58,7 +62,9 @@ export function Products() {
                 />
               );
             })}
-          {!products.length && <h2>No products matching that criteria</h2>}
+          {!customerProducts.length && (
+            <h2>No products matching that criteria</h2>
+          )}
         </GridBox>
       </div>
     </>

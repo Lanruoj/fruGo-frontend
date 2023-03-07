@@ -31,6 +31,7 @@ function App() {
   );
   const [cartProducts, setCartProducts] = useState([]);
   const [newOrder, setNewOrder] = useState("");
+  const [customerProducts, setCustomerProducts] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     if (loggedInUser) {
@@ -44,6 +45,16 @@ function App() {
         setMerchant(() => {
           return JSON.parse(localStorage.getItem("merchant"));
         });
+        axios
+          .get(
+            `/merchants/${
+              JSON.parse(localStorage.getItem("merchant"))._id
+            }/stock/products`
+          )
+          .then((response) => {
+            console.log(response.data.data);
+            setCustomerProducts(response.data.data);
+          });
         navigate("/customer/products");
         axios.get(`/customers/${loggedInUser._id}/cart`).then((response) => {
           setCartProducts((prev) => {
@@ -77,6 +88,8 @@ function App() {
           setCartProducts,
           newOrder,
           setNewOrder,
+          customerProducts,
+          setCustomerProducts,
         }}
       >
         <NavBar />
@@ -120,8 +133,6 @@ function App() {
                 }
               />
             </Route>
-
-            {/* {MERCHANT ROUTES} */}
             <Route path="merchant">
               <Route path="stock">
                 <Route

@@ -4,7 +4,18 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useUserContext } from "../utils/UserContext";
 
+const Header = styled.div`
+  background-color: aqua;
+  height: 4rem;
+  width: 100vw;
+  background-color: #b6e5b6;
+  display: block;
+  position: fixed;
+  top: 0px;
+`;
+
 const NavContainer = styled.nav`
+  /* background-color: red; */
   width: 100vw;
   height: 3rem;
   display: flex;
@@ -14,54 +25,55 @@ const NavContainer = styled.nav`
 `;
 
 const Title = styled.h1`
+  /* background-color: green; */
   text-align: center;
   margin: 0;
   color: #4d643f;
 `;
 
 const NavButtonContainer = styled.div`
-  width: 50%;
+  /* background-color: yellow; */
+  width: 33.33%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 `;
 
 const AuthButtonContainer = styled.div`
-  padding-right: 2rem;
-  width: 10%;
+  /* background-color: violet; */
+  /* padding-right: 2rem; */
+  width: 33.33%;
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
-  height: 10rem;
+  height: 3rem;
+  /* position: relative;
+  top: -3rem;
+  right: 0; */
 `;
 
 const CustomerButtonContainer = styled.div`
-  padding-right: 2rem;
-  width: 50%;
+  /* background-color: purple; */
+  /* padding-right: 2rem; */
+  width: 33.33%;
+
   display: flex;
-  justify-content: end;
+  justify-content: center;
   align-items: center;
 `;
 
 const MerchantButtonContainer = styled.div`
-  padding-right: 2rem;
-  width: 50%;
+  /* background-color: gray; */
+  /* padding-right: 2rem; */
+  width: 25%;
   display: flex;
-  justify-content: end;
+  justify-content: center;
   align-items: center;
 `;
 
-const Header = styled.div`
-  height: 4rem;
-  width: 100vw;
-  background-color: #b6e5b6;
-  display: block;
-  position: fixed;
-  top: 0px;
-`;
-
 const NavButton = styled.button`
+  /* background-color: brown; */
   height: 2rem;
   margin: 1rem;
   font-size: 1rem;

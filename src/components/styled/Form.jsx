@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Form = styled.form`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ multi }) => (multi ? "column" : "row")};
   justify-content: center;
   align-items: center;
   width: 50vw;
@@ -14,6 +14,7 @@ export const InputWrapper = styled.div`
   justify-content: center;
   width: 100%;
   margin-bottom: 10px;
+  margin: 1rem;
 `;
 
 export const Input = styled.input`
@@ -21,7 +22,6 @@ export const Input = styled.input`
   border-color: #c8c8c8;
   border-width: 0.2px;
   height: 1.5rem;
-  margin: 1rem;
   min-width: 15rem;
   border-radius: 0.3rem;
 `;

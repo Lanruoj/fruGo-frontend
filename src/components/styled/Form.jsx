@@ -18,12 +18,16 @@ export const InputWrapper = styled.div`
 `;
 
 export const Input = styled.input`
+  background-color: white;
   border-style: solid;
   border-color: #c8c8c8;
   border-width: 0.2px;
   height: 1.5rem;
   min-width: 15rem;
   border-radius: 0.3rem;
+  :disabled {
+    color: black;
+  }
 `;
 
 export const Label = styled.label`

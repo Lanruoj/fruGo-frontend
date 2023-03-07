@@ -5,10 +5,9 @@ import styled from "styled-components";
 import { useUserContext } from "../utils/UserContext";
 
 const Header = styled.div`
-  background-color: aqua;
-  height: 4rem;
+  height: 5.5rem;
   width: 100vw;
-  background-color: #b6e5b6;
+  background-color: #052f05;
   display: block;
   position: fixed;
   top: 0px;
@@ -17,9 +16,9 @@ const Header = styled.div`
 const NavContainer = styled.nav`
   /* background-color: red; */
   width: 100vw;
-  height: 3rem;
+  height: 2rem;
   display: flex;
-  background-color: #b6e5b6;
+  /* background-color: #b6e5b6; */
   justify-content: space-between;
   position: fixed;
 `;
@@ -27,8 +26,8 @@ const NavContainer = styled.nav`
 const Title = styled.h1`
   /* background-color: green; */
   text-align: center;
-  margin: 0;
-  color: #4d643f;
+  margin: 0.5rem 0 0 0;
+  color: white;
 `;
 
 const NavButtonContainer = styled.div`
@@ -47,7 +46,6 @@ const AuthButtonContainer = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  height: 3rem;
   /* position: relative;
   top: -3rem;
   right: 0; */
@@ -81,7 +79,7 @@ const NavButton = styled.button`
   background: none;
   border: none;
   color: ${({ currentPage, value }) =>
-    currentPage == value ? "gray" : "black"};
+    currentPage == value ? "gray" : "white"};
   cursor: pointer;
   transition: 0.3s;
   :hover {

@@ -124,7 +124,7 @@ export const UserProfile = () => {
         <>
           {" "}
           <UpdateFieldForm
-            label=""
+            label="First name"
             default={loggedInUser.firstName}
             fieldName="firstName"
           />

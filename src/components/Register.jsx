@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Title } from "./styled/Title";
-import { InputWrapper } from "./styled/InputWrapper";
+import { Form, Input, InputWrapper, Label } from "./styled/Form";
 import { useUserContext } from "../utils/UserContext";
 
 export const Register = () => {
@@ -60,70 +60,69 @@ export const Register = () => {
   return (
     <>
       <Title>Register</Title>
-      <form
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-        onSubmit={handleSubmit}
-      >
+      <Form onSubmit={handleSubmit} autoComplete="off">
         <InputWrapper>
-          <label htmlFor="email">Email:</label>
-          <input
+          <Label htmlFor="email">Email:</Label>
+          <Input
             type="email"
             name="email"
             onChange={handleChange}
             value={formData.email}
+            autoComplete="off"
           />
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="password">Password:</label>
-          <input
+          <Label htmlFor="password">Password:</Label>
+          <Input
             type="password"
             name="password"
             onChange={handleChange}
             value={formData.password}
+            autoComplete="new-password"
           />
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="username">Username:</label>
-          <input
+          <Label htmlFor="username">Username:</Label>
+          <Input
             type="username"
             name="username"
             onChange={handleChange}
             value={formData.username}
+            autoComplete="off"
           />
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="firstName">First name:</label>
-          <input
+          <Label htmlFor="firstName">First name:</Label>
+          <Input
             type="text"
             name="firstName"
             onChange={handleChange}
             value={formData.firstName}
+            autoComplete="off"
           />
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="lastName">Last name:</label>
-          <input
+          <Label htmlFor="lastName">Last name:</Label>
+          <Input
             type="text"
             name="lastName"
             onChange={handleChange}
             value={formData.lastName}
+            autoComplete="off"
           />
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="streetAddress">Street address:</label>
-          <input
+          <Label htmlFor="streetAddress">Street address:</Label>
+          <Input
             type="text"
             name="streetAddress"
             onChange={handleChange}
             value={formData.streetAddress}
+            autoComplete="off"
           />
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="_city">City:</label>
+          <Label htmlFor="_city">City:</Label>
           <select
             name="_city"
             id="_city"
@@ -143,7 +142,7 @@ export const Register = () => {
         <div>
           <input type="submit" value="Register" />
         </div>
-      </form>
+      </Form>
     </>
   );
 };

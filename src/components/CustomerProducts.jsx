@@ -27,7 +27,6 @@ export const CustomerProducts = () => {
       axios
         .get(`/merchants/${merchant._id}/stock/products?name=${searchQuery}`)
         .then((response) => {
-          console.log(response.data.data);
           setCustomerProducts(response.data.data);
         });
     }

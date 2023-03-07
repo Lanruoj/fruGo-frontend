@@ -1,15 +1,20 @@
 import axios from "axios";
 import { useState } from "react";
 import { Title } from "./styled/Title";
-import { InputWrapper } from "./styled/InputWrapper";
 import { useUserContext } from "../utils/UserContext";
+import { Button } from "./styled/Button";
+import { Form, Input, InputWrapper, Label } from "./styled/Form";
+import { NavLink } from "./NavBar";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-  const { setLoggedInUser, setRole, setToken, setMerchant } = useUserContext();
+  const { loggedInUser, setLoggedInUser, setRole, setToken, setMerchant } =
+    useUserContext();
   const [userFormDetails, setUserFormDetails] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
   const handleChange = (event) => {
     event.preventDefault();
     setUserFormDetails((prevDetails) => {
@@ -40,20 +45,17 @@ export const Login = () => {
       });
     }
   };
+  const handleRegister = (event) => {
+    event.preventDefault();
+    navigate("/customer/register");
+  };
   return (
     <>
       <Title>Login</Title>
-      <form
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-        onSubmit={handleSubmit}
-      >
+      <Form onSubmit={handleSubmit}>
         <InputWrapper>
-          <label htmlFor="email">Email:</label>
-          <input
+          <Label htmlFor="email">Email:</Label>
+          <Input
             type="email"
             name="email"
             onChange={handleChange}
@@ -61,8 +63,8 @@ export const Login = () => {
           />
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="password">Password:</label>
-          <input
+          <Label htmlFor="password">Password:</Label>
+          <Input
             type="password"
             name="password"
             onChange={handleChange}
@@ -70,9 +72,10 @@ export const Login = () => {
           />
         </InputWrapper>
         <div>
-          <input className="login-button" type="submit" value="SUBMIT" />
+          <Button type="submit">Login</Button>
+          <Button onClick={handleRegister}>Register</Button>
         </div>
-      </form>
+      </Form>
     </>
   );
 };

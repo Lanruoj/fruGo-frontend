@@ -9,10 +9,13 @@ export const ProductImg = styled.img`
   width: 150px;
   height: 150px;
   object-fit: cover;
+  border-radius: 0.3rem;
 `;
 
 const ProductWrapper = styled(Wrapper)`
   padding: 1rem;
+  background-color: white;
+  margin: 1rem;
 `;
 
 export const Product = (props) => {

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useUserContext } from "../utils/UserContext";
 import { Button } from "./styled/Button";
+import { Dropdown } from "./styled/Dropdown";
 import { Form, Input, InputWrapper, Label } from "./styled/Form";
 
 const UpdateButton = styled(Button)`
@@ -43,24 +44,13 @@ const UpdateFieldForm = (props) => {
       <InputWrapper>
         <Label>{props.label}: </Label>
         {props.id ? (
-          <>
-            {" "}
-            <select
-              name="_city"
-              id="_city"
-              onChange={handleChange}
-              value={formData}
-            >
-              {cities &&
-                cities.map((city) => {
-                  return (
-                    <option key={city._id} value={city._id}>
-                      {city.name}
-                    </option>
-                  );
-                })}
-            </select>
-          </>
+          <Dropdown
+            name="_city"
+            onChange={handleChange}
+            formData={formData}
+            options={cities}
+            disabled={updateButton == "Update"}
+          />
         ) : (
           <Input
             type="text"

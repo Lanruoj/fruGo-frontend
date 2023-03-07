@@ -6,6 +6,7 @@ import { NumberInput } from "./styled/NumberInput";
 import { List } from "./styled/List";
 import { Wrapper } from "./styled/Wrapper";
 import { useUserContext } from "../utils/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const HorizontalContainer = styled.div`
   width: 75vw;
@@ -25,10 +26,11 @@ const QuantityUpdateForm = styled.form`
 `;
 
 export const StockProduct = (props) => {
-  const { loggedInUser } = useUserContext();
-  const { product } = props;
+  const { loggedInUser, error, setError } = useUserContext();
+  const { product, setProducts } = props;
   const [stockQuantity, setStockQuantity] = useState("");
   const [canUpdate, setCanUpdate] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     setStockQuantity(() => {
       return product.quantity;
@@ -63,6 +65,15 @@ export const StockProduct = (props) => {
       return event.target.value;
     });
   };
+  const handleDeleteStockProduct = (event) => {
+    event.preventDefault();
+    axios
+      .delete(`/merchants/${loggedInUser._id}/stock/products`, {
+        data: { stockProduct: product._id },
+      })
+      .then(() => navigate(0))
+      .catch((error) => setError(error));
+  };
   return (
     <Wrapper>
       <HorizontalContainer>
@@ -88,6 +99,7 @@ export const StockProduct = (props) => {
           >
             {!canUpdate ? "Update" : "Submit"}
           </Button>
+          <Button onClick={handleDeleteStockProduct}>Remove</Button>
         </QuantityUpdateForm>
       </HorizontalContainer>
     </Wrapper>

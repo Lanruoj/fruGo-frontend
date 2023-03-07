@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import { SearchBar } from "./styled/SearchBar";
 import { StockProduct } from "./StockProduct";
 import { useUserContext } from "../utils/UserContext";
-import { Button } from "./styled/Button";
-import { NavLink } from "./NavBar";
 import { Link } from "react-router-dom";
 
 const SubNavLink = styled(Link)`
@@ -53,7 +51,13 @@ export function Stock() {
       <div>
         {products &&
           products.map((product) => {
-            return <StockProduct key={product._id} product={product} />;
+            return (
+              <StockProduct
+                key={product._id}
+                product={product}
+                setProducts={setProducts}
+              />
+            );
           })}
         {!products.length && <h2>No products matching that criteria</h2>}
       </div>

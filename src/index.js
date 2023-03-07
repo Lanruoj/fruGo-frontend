@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 import App from "./App";
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = "https://frugo-backend-production.up.railway.app/";
 
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");

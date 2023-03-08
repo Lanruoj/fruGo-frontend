@@ -26,6 +26,10 @@ export const CustomerProducts = () => {
         .then((response) => {
           setProducts(response.data.data);
         });
+    } else {
+      axios.get(`/products?name=${searchQuery}`).then((response) => {
+        setProducts(response.data.data);
+      });
     }
   }, [currentUser, searchQuery]);
   const handleSearchQueryChange = (event) => {

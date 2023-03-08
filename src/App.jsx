@@ -1,5 +1,11 @@
 import axios from "axios";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Home } from "./components/Home";
 import { CustomerProducts } from "./components/CustomerProducts";
@@ -26,8 +32,24 @@ function App() {
         <Main>
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/customer/register" element={<Register />} />
+            <Route
+              exact
+              path="/login"
+              element={
+                localStorage.getItem("user") ? <Navigate to="/" /> : <Login />
+              }
+            />
+            <Route
+              exact
+              path="/customer/register"
+              element={
+                localStorage.getItem("role") == "Customer" ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Register />
+                )
+              }
+            />
             <Route path="customer">
               <Route
                 path="profile"

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { logout } from "../utils/auth";
 import { useUserContext } from "../utils/UserContext";
 
 const Header = styled.div`
@@ -72,20 +73,11 @@ export const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
     navigate(event.target.value);
     setCurrentPage(url);
   };
-  const handleLogout = (event) => {
+  const handleLogout = async (event) => {
     event.preventDefault();
-    axios
-      .post("/auth/logout")
-      .then((response) => {
-        if (response.status == 200) {
-          localStorage.clear();
-          setCurrentUser("");
-          setCurrentRole("");
-          setCurrentPage("/");
-          navigate("/");
-        }
-      })
-      .catch((error) => console.log(error));
+    await logout();
+    setCurrentUser("");
+    navigate("/");
   };
   return (
     <NavButton

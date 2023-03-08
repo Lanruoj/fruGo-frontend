@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { authenticateUser } from "./auth";
 import { Login } from "../components/Login";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 export const UserContext = createContext();
 
@@ -10,6 +11,7 @@ export const UserContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState("");
   const [currentRole, setCurrentRole] = useState("");
   const [cart, setCart] = useState("");
+  const [cartProducts, setCartProducts] = useState([]);
   const [session, setSession] = useState(1);
   useEffect(() => {
     const isLoggedIn = async () => {
@@ -28,9 +30,30 @@ export const UserContextProvider = ({ children }) => {
       setCurrentUser(user);
       setCurrentRole(role);
       setCart(cart);
+      if (role == "Customer") {
+      }
     };
     isLoggedIn();
   }, [session]);
+  useEffect(() => {
+    if (currentRole == "Customer") {
+      if (!cart) {
+        axios.get(`/customers/${currentUser._id}/cart`).then((response) => {
+          setCart(response);
+        });
+      } else {
+        if (cart._cartProducts) {
+          const productsWithQuantity = cart._cartProducts.map((cartProduct) => {
+            return {
+              stockProduct: cartProduct,
+              quantity: 1,
+            };
+          });
+          setCartProducts(productsWithQuantity);
+        }
+      }
+    }
+  }, [cart]);
   return (
     <UserContext.Provider
       value={{
@@ -42,6 +65,8 @@ export const UserContextProvider = ({ children }) => {
         setCurrentRole,
         cart,
         setCart,
+        cartProducts,
+        setCartProducts,
         session,
         setSession,
       }}

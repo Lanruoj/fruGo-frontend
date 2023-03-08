@@ -11,7 +11,7 @@ import { PageHeading } from "./styled/PageHeading";
 import { login, registerCustomer } from "../utils/auth";
 
 export const Login = () => {
-  const { error, setError, setSession, session } = useUserContext();
+  const { setSession, session, currentRole } = useUserContext();
   const [userFormDetails, setUserFormDetails] = useState({
     email: "",
     password: "",
@@ -35,7 +35,11 @@ export const Login = () => {
       } else {
         setSession(1);
       }
-      navigate("/customer/products");
+      if (currentRole == "Customer") {
+        navigate("/customer/products");
+      } else if (currentRole == "Merchant") {
+        navigate("/merchant/stock");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -71,7 +75,7 @@ export const Login = () => {
           <Button onClick={goToRegister}>Register</Button>
         </div>
       </Form>
-      <Error error={error} />
+      {/* <Error error={error} /> */}
     </>
   );
 };

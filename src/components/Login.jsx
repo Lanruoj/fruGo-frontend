@@ -11,7 +11,7 @@ import { PageHeading } from "./styled/PageHeading";
 import { login, registerCustomer } from "../utils/auth";
 
 export const Login = () => {
-  const { error, setError } = useUserContext();
+  const { error, setError, setSession, session } = useUserContext();
   const [userFormDetails, setUserFormDetails] = useState({
     email: "",
     password: "",
@@ -30,6 +30,11 @@ export const Login = () => {
     event.preventDefault();
     try {
       await login(userFormDetails);
+      if (session) {
+        setSession(0);
+      } else {
+        setSession(1);
+      }
       navigate("/customer/products");
     } catch (error) {
       console.log(error);

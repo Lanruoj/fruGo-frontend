@@ -22,25 +22,13 @@ export const Cart = () => {
   const { currentUser, cart, setCart, cartProducts, setCartProducts } =
     useUserContext();
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   console.log(cart);
-  //   if (cart._cartProducts.length) {
-  //     const productsWithQuantity = cart._cartProducts.map((cartProduct) => {
-  //       return {
-  //         stockProduct: cartProduct,
-  //         quantity: 1,
-  //       };
-  //     });
-  //     setCartProducts(productsWithQuantity);
-  //   }
-  // }, [cart]);
   const handleSubmitOrder = (event) => {
     axios
       .post("/orders", {
         cartProducts: cartProducts,
       })
       .then((response) => {
-        navigate(`/orderConfirmation/${response.data.data}`);
+        navigate(`/customer/orderConfirmation/${response.data.data._id}`);
       })
       .then(() => {
         for (let cartProduct of cart._cartProducts) {
@@ -51,8 +39,7 @@ export const Cart = () => {
           setCartProducts([]);
           setCart("");
         }
-      })
-      .then(() => navigate(`/customer/orderConfirmation`));
+      });
   };
   const handleClearCart = () => {
     axios

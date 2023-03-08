@@ -1,13 +1,10 @@
-import { List } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useUserContext } from "../utils/UserContext";
-import { Product } from "./Product";
-import { StockProduct } from "./StockProduct";
 import { Button } from "./styled/Button";
-import { Form } from "./styled/Form";
+import { List } from "./styled/List";
 import { PageHeading } from "./styled/PageHeading";
 
 const NewProductImg = styled.img`

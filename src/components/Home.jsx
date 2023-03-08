@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
+import { PageHeading } from "./styled/PageHeading";
 
 export const Home = () => {
   return (
     <>
-      <h1>Home</h1>
+      <PageHeading>WELCOME</PageHeading>
       <Outlet />
     </>
   );

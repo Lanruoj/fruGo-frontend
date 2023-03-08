@@ -39,21 +39,23 @@ export const UserContextProvider = ({ children }) => {
   }, []);
   useEffect(() => {
     if (currentRole == "Customer") {
-      if (!cart) {
-        axios.get(`/customers/${currentUser._id}/cart`).then((response) => {
-          setCart(response);
-        });
-      } else {
-        if (cart._cartProducts) {
-          const productsWithQuantity = cart._cartProducts.map((cartProduct) => {
-            return {
-              stockProduct: cartProduct,
-              quantity: 1,
-            };
-          });
-          setCartProducts(productsWithQuantity);
-        }
-      }
+      axios
+        .get(`/customers/${currentUser._id}/cart`)
+        .then((response) => {
+          const fetchedCartProducts = response.data.data._cartProducts;
+          if (fetchedCartProducts.length) {
+            const productsWithQuantity = fetchedCartProducts.map(
+              (cartProduct) => {
+                return {
+                  stockProduct: cartProduct,
+                  quantity: 1,
+                };
+              }
+            );
+            setCartProducts(productsWithQuantity);
+          }
+        })
+        .then(() => {});
     }
   }, [cart]);
   return (

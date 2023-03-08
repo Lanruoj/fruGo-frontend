@@ -1,6 +1,5 @@
 import { Button } from "./styled/Button";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { CartProduct } from "./CartProduct";
@@ -22,16 +21,13 @@ export const Cart = () => {
   const { currentUser, cart, setCart, cartProducts, setCartProducts } =
     useUserContext();
   const navigate = useNavigate();
-  const handleSubmitOrder = (event) => {
+  const handleSubmitOrder = () => {
     axios
       .post("/orders", {
         cartProducts: cartProducts,
       })
       .then((response) => {
-        navigate(`/customer/orderConfirmation/${response.data.data._id}`);
-      })
-      .then(() => {
-        for (let cartProduct of cart._cartProducts) {
+        for (let cartProduct of cartProducts) {
           axios.put(`/merchants/${currentUser._merchant._id}/stock/products`, {
             stockProduct: cartProduct.stockProduct._id,
             quantity: cartProduct.stockProduct.quantity - cartProduct.quantity,
@@ -39,6 +35,7 @@ export const Cart = () => {
           setCartProducts([]);
           setCart("");
         }
+        navigate(`/customer/orderConfirmation/${response.data.data._id}`);
       });
   };
   const handleClearCart = () => {
@@ -50,7 +47,6 @@ export const Cart = () => {
       })
       .catch((error) => console.log(error));
   };
-
   return (
     <CartContainer>
       <PageHeading>Cart</PageHeading>

@@ -14,7 +14,7 @@ export const RowWrapper = styled.div`
 `;
 
 export const CustomerProducts = () => {
-  const { currentUser, cart, cartProducts } = useUserContext();
+  const { currentUser, cartProducts } = useUserContext();
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
@@ -26,8 +26,12 @@ export const CustomerProducts = () => {
         .then((response) => {
           setProducts(response.data.data);
         });
+    } else {
+      axios.get(`/products?name=${searchQuery}`).then((response) => {
+        setProducts(response.data.data);
+      });
     }
-  }, [currentUser]);
+  }, [currentUser, searchQuery]);
   const handleSearchQueryChange = (event) => {
     event.preventDefault();
     setSearchQuery(event.target.value);
@@ -43,7 +47,7 @@ export const CustomerProducts = () => {
         />
       </form>
       <RowWrapper>
-        {products &&
+        {!!products &&
           products.map((product) => {
             const existingProduct = cartProducts.find(
               (cartProduct) => cartProduct.stockProduct._id == product._id

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -8,7 +7,6 @@ import { useUserContext } from "../utils/UserContext";
 const Header = styled.div`
   height: 5.5rem;
   width: 100vw;
-  /* background-color: #052f05; */
   display: block;
   position: fixed;
   top: 0px;

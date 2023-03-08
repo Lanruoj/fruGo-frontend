@@ -1,17 +1,14 @@
-import axios from "axios";
 import { useState } from "react";
-import { Title } from "./styled/Title";
 import { useUserContext } from "../utils/UserContext";
 import { Button } from "./styled/Button";
 import { Form, Input, InputWrapper, Label } from "./styled/Form";
-import { NavLink } from "./NavBar";
 import { useNavigate } from "react-router-dom";
 import { Error } from "./Error";
 import { PageHeading } from "./styled/PageHeading";
-import { login, registerCustomer } from "../utils/auth";
+import { login } from "../utils/auth";
 
 export const Login = () => {
-  const { setSession, session, currentRole, setCurrentUser } = useUserContext();
+  const { setCurrentUser } = useUserContext();
   const [userFormDetails, setUserFormDetails] = useState({
     email: "",
     password: "",

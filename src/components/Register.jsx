@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Title } from "./styled/Title";
 import { Form, Input, InputWrapper, Label } from "./styled/Form";
 import { useUserContext } from "../utils/UserContext";
 import { PageHeading } from "./styled/PageHeading";
+import { registerCustomer } from "../utils/auth";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
-  const { setLoggedInUser, setRole, setToken, setMerchant, setCart } =
-    useUserContext();
+  const { setCurrentUser } = useUserContext();
   const [cities, setCities] = useState("");
   const [formData, setFormData] = useState({
     email: "",
@@ -18,6 +18,7 @@ export const Register = () => {
     streetAddress: "",
     _city: "",
   });
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get("/cities")
@@ -38,25 +39,15 @@ export const Register = () => {
       return { ...prev, [event.target.name]: event.target.value };
     });
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    axios
-      .post("/customers/register", formData)
-      .then((response) => response)
-      .then((response) => {
-        setLoggedInUser(() => {
-          localStorage.setItem("user", JSON.stringify(response.data.user));
-          localStorage.setItem("token", response.data.accessToken);
-          localStorage.setItem("role", response.data.role);
-          if (localStorage.getItem("role") == "Customer") {
-            localStorage.setItem(
-              "merchant",
-              JSON.stringify(response.data.merchant)
-            );
-          }
-          return response.data.user;
-        });
-      });
+    try {
+      const user = await registerCustomer(formData);
+      setCurrentUser(user);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>

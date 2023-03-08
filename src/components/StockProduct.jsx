@@ -26,7 +26,7 @@ const QuantityUpdateForm = styled.form`
 `;
 
 export const StockProduct = (props) => {
-  const { loggedInUser, error, setError } = useUserContext();
+  const { currentUser, error, setError } = useUserContext();
   const { product, setProducts } = props;
   const [stockQuantity, setStockQuantity] = useState("");
   const [canUpdate, setCanUpdate] = useState(false);
@@ -35,7 +35,7 @@ export const StockProduct = (props) => {
     setStockQuantity(() => {
       return product.quantity;
     });
-  }, [loggedInUser]);
+  }, [currentUser]);
   const handleSetUpdateButton = (event) => {
     event.preventDefault();
     if (canUpdate) {
@@ -47,7 +47,7 @@ export const StockProduct = (props) => {
   const handleUpdateStockQuantity = (event) => {
     event.preventDefault();
     axios
-      .put(`/merchants/${loggedInUser._id}/stock/products`, {
+      .put(`/merchants/${currentUser._id}/stock/products`, {
         stockProduct: product._id,
         quantity: stockQuantity,
       })
@@ -68,7 +68,7 @@ export const StockProduct = (props) => {
   const handleDeleteStockProduct = (event) => {
     event.preventDefault();
     axios
-      .delete(`/merchants/${loggedInUser._id}/stock/products`, {
+      .delete(`/merchants/${currentUser._id}/stock/products`, {
         data: { stockProduct: product._id },
       })
       .then(() => navigate(0))

@@ -1,157 +1,53 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import { logout } from "../utils/auth";
 import { useUserContext } from "../utils/UserContext";
 import { Button } from "./styled/Button";
-import { Dropdown } from "./styled/Dropdown";
-import { Form, Input, InputWrapper, Label } from "./styled/Form";
 import { PageHeading } from "./styled/PageHeading";
-
-const UpdateButton = styled(Button)`
-  width: 7rem;
-  text-align: center;
-  margin: 0;
-`;
-
-const UpdateFieldForm = (props) => {
-  const { loggedInUser, setLoggedInUser, role } = useUserContext();
-  const [updateButton, setUpdateButton] = useState("Update");
-  const [formData, setFormData] = useState(props.default);
-  const [cities, setCities] = useState([]);
-  useEffect(() => {
-    axios
-      .get("/cities")
-      .then((response) => response.data)
-      .then((data) => {
-        setCities(data.data);
-      });
-  }, []);
-  const handleUpdate = async (event) => {
-    event.preventDefault();
-    if (updateButton == "Update") {
-      setUpdateButton("Submit");
-    } else {
-      const response = await axios.put(
-        `/${role[0].toLowerCase() + role.slice(1, role.length) + "s"}/${
-          loggedInUser._id
-        }`,
-        {
-          [props.fieldName]: formData,
-        }
-      );
-      console.log(response);
-      setLoggedInUser((prev) => {
-        return {
-          ...prev,
-          [props.fieldName]: formData,
-        };
-      });
-      setUpdateButton("Update");
-    }
-  };
-  const handleChange = (event) => {
-    event.preventDefault();
-    setFormData(event.target.value);
-  };
-  return (
-    <Form onSubmit={handleUpdate}>
-      <InputWrapper>
-        <Label>{props.label}: </Label>
-        {props.ids ? (
-          <Dropdown
-            value={props.default}
-            onChange={handleChange}
-            disabled={updateButton == "Update"}
-          >
-            {cities.map((option) => {
-              return (
-                <option value={option._id} key={option._id}>
-                  {option.name}
-                </option>
-              );
-            })}
-          </Dropdown>
-        ) : (
-          <Input
-            type="text"
-            value={formData}
-            onChange={handleChange}
-            disabled={updateButton == "Update"}
-          />
-        )}
-      </InputWrapper>
-      <UpdateButton>{updateButton}</UpdateButton>
-    </Form>
-  );
-};
+import { UpdateFieldForm } from "./UpdateFieldForm";
 
 export const UserProfile = () => {
-  const { loggedInUser, role } = useUserContext();
+  const { currentUser, setCurrentUser, currentRole, currentToken } =
+    useUserContext();
   const navigate = useNavigate();
-  const handleDeleteProfile = () => {
-    axios
+  const handleDeleteProfile = async () => {
+    const tempAxios = axios.create();
+    const tempUserID = currentUser._id;
+    const tempRole = currentRole;
+    const tempToken = currentToken;
+    await logout();
+    await tempAxios
       .delete(
-        `/${role[0].toLowerCase() + role.slice(1, role.length) + "s"}/${
-          loggedInUser._id
-        }`,
+        `/${
+          tempRole[0].toLowerCase() + tempRole.slice(1, tempRole.length) + "s"
+        }/${tempUserID}`,
+        { headers: { "Authorization": `Bearer ${tempToken}` } },
         {
           data: null,
         }
       )
-      .then(() => {
-        localStorage.clear();
-        navigate("/login");
-      });
+      .then(() => setCurrentUser(""))
+      .then(() => navigate("/"));
   };
   return (
     <div>
       <PageHeading>Profile</PageHeading>
-      {role == "Merchant" && (
+      {currentRole == "Merchant" && (
         <>
-          <UpdateFieldForm
-            label="Name"
-            default={loggedInUser.name}
-            fieldName="name"
-          />
-          <UpdateFieldForm
-            label="Description"
-            default={loggedInUser.description}
-            fieldName="description"
-          />
+          <UpdateFieldForm label="Name" fieldName="name" />
+          <UpdateFieldForm label="Description" fieldName="description" />
         </>
       )}
-      {role == "Customer" && (
+      {currentRole == "Customer" && (
         <>
           {" "}
-          <UpdateFieldForm
-            label="First name"
-            default={loggedInUser.firstName}
-            fieldName="firstName"
-          />
-          <UpdateFieldForm
-            label="Last name"
-            default={loggedInUser.lastName}
-            fieldName="lastName"
-          />
+          <UpdateFieldForm label="First name" fieldName="firstName" />
+          <UpdateFieldForm label="Last name" fieldName="lastName" />
+          <UpdateFieldForm label="City" fieldName="_city" ids />
         </>
       )}{" "}
-      <UpdateFieldForm
-        label="Street address"
-        default={loggedInUser.streetAddress}
-        fieldName="streetAddress"
-      />
-      <UpdateFieldForm
-        label="City"
-        default={loggedInUser._city}
-        fieldName="_city"
-        ids
-      />
-      <UpdateFieldForm
-        label="Email"
-        default={loggedInUser.email}
-        fieldName="email"
-      />
+      <UpdateFieldForm label="Street address" fieldName="streetAddress" />
+      <UpdateFieldForm label="Email" fieldName="email" />
       <UpdateFieldForm
         label="Password"
         default="*************"

@@ -2,7 +2,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useUserContext } from "./UserContext";
 
 export const CustomerRoute = ({ children }) => {
-  const { currentUser, currentRole } = useUserContext();
+  const { currentRole } = useUserContext();
   const location = useLocation();
   if (!currentRole && currentRole != "Customer") {
     console.log("Bananas");

@@ -42,5 +42,5 @@ export const authenticateUser = () => {
   if (!user) {
     return {};
   }
-  return [JSON.parse(user), role, cart];
+  return { user: JSON.parse(user), role: role, cart: cart };
 };

@@ -65,7 +65,8 @@ const NavButton = styled.button`
 `;
 
 export const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
-  const { loggedInUser, setLoggedInUser, role } = useUserContext();
+  const { currentUser, currentRole, setCurrentUser, setCurrentRole } =
+    useUserContext();
   const navigate = useNavigate();
   const handleNavigate = (event) => {
     navigate(event.target.value);
@@ -78,7 +79,8 @@ export const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
       .then((response) => {
         if (response.status == 200) {
           localStorage.clear();
-          setLoggedInUser("");
+          setCurrentUser("");
+          setCurrentRole("");
           setCurrentPage("/");
           navigate("/");
         }
@@ -98,7 +100,8 @@ export const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
 };
 
 export const NavBar = () => {
-  const { loggedInUser, setLoggedInUser, role } = useUserContext();
+  const { currentUser, currentRole, setCurrentUser, setCurrentRole } =
+    useUserContext();
   const [currentPage, setCurrentPage] = useState("");
   const navigate = useNavigate();
   return (
@@ -118,60 +121,60 @@ export const NavBar = () => {
             url="/customer/products"
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
-            active={!loggedInUser || role == "Customer"}
+            active={!currentUser || currentRole == "Customer"}
           />
         </NavButtonContainer>
 
         <AuthButtonContainer>
-          {role == "Customer" && (
+          {currentRole == "Customer" && (
             <>
               <NavLink
                 text="Cart"
                 url="/customer/cart"
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
-                active={loggedInUser && role == "Customer"}
+                active="true"
               />
               <NavLink
                 text="Orders"
                 url="/customer/orders"
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
-                active={loggedInUser && role == "Customer"}
+                active="true"
               />
             </>
           )}
-          {role == "Merchant" && (
+          {currentRole == "Merchant" && (
             <>
               <NavLink
                 text="Stock"
                 url="/merchant/stock"
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
-                active={loggedInUser && role == "Merchant"}
+                active="true"
               />
               <NavLink
                 text="Orders"
                 url="/merchant/orders"
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
-                active={loggedInUser && role == "Merchant"}
+                active="true"
               />
             </>
           )}
           <NavLink
             text={"Profile"}
-            url={`/${role.toLowerCase()}/profile`}
+            url={`/${currentRole.toLowerCase()}/profile`}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
-            active={loggedInUser}
+            active={currentUser}
           />
           <NavLink
-            text={!loggedInUser ? "Login" : "Logout"}
-            url={!loggedInUser ? "/login" : null}
+            text={!currentUser ? "Login" : "Logout"}
+            url={!currentUser ? "/login" : null}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
-            active={!loggedInUser || loggedInUser}
+            active={!currentUser || currentUser}
           />
         </AuthButtonContainer>
       </NavContainer>

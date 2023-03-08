@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { HomePage } from "./pages/HomePage";
+import { Home } from "./components/Home";
 import { CustomerProducts } from "./components/CustomerProducts";
 import { Login } from "./components/Login";
 import { NavBar } from "./components/NavBar";
@@ -97,7 +97,7 @@ function App() {
         <NavBar />
         <Main>
           <Routes>
-            <Route exact path="/" element={<HomePage />} />
+            <Route exact path="/" element={<Home />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/customer/register" element={<Register />} />
             <Route path="customer">

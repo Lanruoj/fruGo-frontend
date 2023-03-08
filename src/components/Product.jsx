@@ -29,6 +29,7 @@ export const Product = (props) => {
         product: event.target.value,
       })
       .then((response) => {
+        console.log(response);
         setCartProducts((prev) => {
           return [
             ...prev,

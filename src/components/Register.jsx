@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Title } from "./styled/Title";
 import { Form, Input, InputWrapper, Label } from "./styled/Form";
 import { useUserContext } from "../utils/UserContext";
 import { PageHeading } from "./styled/PageHeading";

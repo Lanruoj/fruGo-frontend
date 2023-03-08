@@ -12,15 +12,13 @@ const SubNavLink = styled(Link)`
 `;
 
 export function Stock() {
-  const { loggedInUser } = useUserContext();
+  const { currentUser } = useUserContext();
   const [products, setProducts] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
-    if (loggedInUser) {
+    if (currentUser) {
       axios
-        .get(
-          `/merchants/${loggedInUser._id}/stock/products?name=${searchQuery}`
-        )
+        .get(`/merchants/${currentUser._id}/stock/products?name=${searchQuery}`)
         .then((response) => {
           setProducts(response.data.data);
         });

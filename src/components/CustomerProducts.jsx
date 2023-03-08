@@ -14,7 +14,7 @@ export const RowWrapper = styled.div`
 `;
 
 export const CustomerProducts = () => {
-  const { currentUser, cart, cartProducts } = useUserContext();
+  const { currentUser, cartProducts } = useUserContext();
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {

@@ -14,15 +14,14 @@ const NewProductImg = styled.img`
 const AvailableProduct = styled.li``;
 
 export const AddNewStockProduct = () => {
-  const { loggedInUser } = useUserContext();
+  const { currentUser } = useUserContext();
   const [productsNotInStock, setProductsNotInStock] = useState([]);
-  const [productsUpdated, setProductsUpdated] = useState(1);
   const navigate = useNavigate();
   useEffect(() => {
     const filterProducts = async () => {
       const allProductsResponse = await axios.get("/products");
       const stockProductsResponse = await axios.get(
-        `/merchants/${loggedInUser._id}/stock/products`
+        `/merchants/${currentUser._id}/stock/products`
       );
       const allProducts = allProductsResponse.data.data.map((product) => {
         return product;
@@ -46,11 +45,11 @@ export const AddNewStockProduct = () => {
   const handleAddNewProductToStock = (event) => {
     event.preventDefault();
     axios
-      .post(`/merchants/${loggedInUser._id}/stock/products`, {
+      .post(`/merchants/${currentUser._id}/stock/products`, {
         _product: event.target.value,
         quantity: 1,
       })
-      .then((response) => {
+      .then(() => {
         navigate(0);
       });
   };

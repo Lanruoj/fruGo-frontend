@@ -1,12 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { logout } from "../utils/auth";
 import { useUserContext } from "../utils/UserContext";
 import { Button } from "./styled/Button";
-import { Dropdown } from "./styled/Dropdown";
-import { Form, Input, InputWrapper, Label } from "./styled/Form";
 import { PageHeading } from "./styled/PageHeading";
 import { UpdateFieldForm } from "./UpdateFieldForm";
 
@@ -47,10 +43,10 @@ export const UserProfile = () => {
           {" "}
           <UpdateFieldForm label="First name" fieldName="firstName" />
           <UpdateFieldForm label="Last name" fieldName="lastName" />
+          <UpdateFieldForm label="City" fieldName="_city" ids />
         </>
       )}{" "}
       <UpdateFieldForm label="Street address" fieldName="streetAddress" />
-      <UpdateFieldForm label="City" fieldName="_city" ids />
       <UpdateFieldForm label="Email" fieldName="email" />
       <UpdateFieldForm
         label="Password"

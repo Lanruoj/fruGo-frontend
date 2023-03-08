@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useUserContext } from "../utils/UserContext";
 import { Order } from "./Order";
 import { PageHeading } from "./styled/PageHeading";
 

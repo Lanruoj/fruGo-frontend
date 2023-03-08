@@ -4,19 +4,19 @@ import { useUserContext } from "../utils/UserContext";
 import { Order } from "./Order";
 import { PageHeading } from "./styled/PageHeading";
 
-export const MerchantOrders = (props) => {
-  const { loggedInUser, role } = useUserContext();
+export const MerchantOrders = () => {
+  const { currentUser, role } = useUserContext();
   const [orders, setOrders] = useState([]);
   const [statusFilter, setStatusFilter] = useState("");
   useEffect(() => {
     if (role == "Customer") {
-      axios.get(`/customers/${loggedInUser._id}/orders`).then((response) => {
+      axios.get(`/customers/${currentUser._id}/orders`).then((response) => {
         setOrders(() => {
           return response.data.data;
         });
       });
     } else if (role == "Merchant") {
-      axios.get(`/customers/${loggedInUser._id}/orders`).then((response) => {
+      axios.get(`/customers/${currentUser._id}/orders`).then((response) => {
         setOrders(() => {
           return response.data.data;
         });

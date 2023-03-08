@@ -27,14 +27,11 @@ export const UserContextProvider = ({ children }) => {
         cart = "";
       }
       setCurrentToken(token);
-      setCurrentUser(user);
       setCurrentRole(role);
       setCart(cart);
-      if (role == "Customer") {
-      }
     };
     isLoggedIn();
-  }, [session]);
+  }, [currentUser]);
   useEffect(() => {
     if (currentRole == "Customer") {
       if (!cart) {

@@ -19,19 +19,15 @@ const ProductWrapper = styled(Wrapper)`
 `;
 
 export const Product = (props) => {
-  const { loggedInUser, setCartProducts, cartProducts } = useUserContext();
+  const { currentUser, setCart, cartProducts, setCartProducts } =
+    useUserContext();
   const { product, existingProduct } = props;
   const handleAddToCart = (event) => {
     event.preventDefault();
     axios
-      .post(
-        `/customers/${
-          JSON.parse(localStorage.getItem("user"))._id
-        }/cart/products`,
-        {
-          product: event.target.value,
-        }
-      )
+      .post(`/customers/${currentUser._id}/cart/products`, {
+        product: event.target.value,
+      })
       .then((response) => {
         setCartProducts((prev) => {
           return [
@@ -75,34 +71,34 @@ export const Product = (props) => {
   return (
     <ProductWrapper>
       <ProductImg
-        src={loggedInUser ? product.product.img : product.img}
-        alt={loggedInUser ? product.product.name : product.name}
+        src={currentUser ? product.product.img : product.img}
+        alt={currentUser ? product.product.name : product.name}
       ></ProductImg>
-      <div>{loggedInUser ? product.product.name : product.name}</div>
+      <div>{currentUser ? product.product.name : product.name}</div>
       <div
         style={{
           fontFamily: "Verdana, sans-serif",
         }}
       >
-        ${loggedInUser ? product.product.price : product.price}
+        ${currentUser ? product.product.price : product.price}
       </div>
       {!existingProduct ? (
         <Button
           value={product._id}
           onClick={handleAddToCart}
-          disabled={(product.quantity <= 0 || !loggedInUser) && true}
+          disabled={(product.quantity <= 0 || !currentUser) && true}
         >
           Add to cart
         </Button>
       ) : (
         <Button
-          value={loggedInUser && product._id}
+          value={currentUser && product._id}
           onClick={handleRemoveFromCart}
         >
           Remove
         </Button>
       )}
-      {loggedInUser && <div>Stock quantity: {product.quantity}</div>}
+      {currentUser && <div>Stock quantity: {product.quantity}</div>}
     </ProductWrapper>
   );
 };

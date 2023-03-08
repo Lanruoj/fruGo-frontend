@@ -61,7 +61,7 @@ export const Order = (props) => {
           </div>
         </CustomerDetails>
         <OrderProducts>
-          <h3>Products</h3>
+          <h3>Items</h3>
           {order &&
             order._orderProducts.map((orderProduct) => {
               return (

@@ -1,17 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useUserContext } from "../utils/UserContext";
 import { Order } from "./Order";
 import { PageHeading } from "./styled/PageHeading";
 
 export const OrderConfirmation = (props) => {
-  const { newOrder } = useUserContext();
+  const { orderID } = useParams();
   const [order, setOrder] = useState("");
   useEffect(() => {
-    setOrder(() => {
-      return newOrder;
+    axios.get(`/orders/${orderID}`).then((response) => {
+      setOrder(() => {
+        return response.data.data;
+      });
     });
-  }, [newOrder]);
+  }, []);
   return (
     <>
       <PageHeading>Order confirmation</PageHeading>

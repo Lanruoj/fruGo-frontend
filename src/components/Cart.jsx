@@ -19,7 +19,7 @@ const CartProductList = styled.ul`
 `;
 
 export const Cart = () => {
-  const { loggedInUser, merchant, cartProducts, setCartProducts, setNewOrder } =
+  const { currentUser, cart, setCart, cartProducts, setCartProducts } =
     useUserContext();
   const navigate = useNavigate();
   const handleSubmitOrder = (event) => {
@@ -28,24 +28,25 @@ export const Cart = () => {
         cartProducts: cartProducts,
       })
       .then((response) => {
-        setNewOrder(response.data.data);
+        navigate(`/customer/orderConfirmation/${response.data.data._id}`);
       })
       .then(() => {
-        for (let cartProduct of cartProducts) {
-          axios.put(`/merchants/${merchant._id}/stock/products`, {
+        for (let cartProduct of cart._cartProducts) {
+          axios.put(`/merchants/${currentUser._merchant._id}/stock/products`, {
             stockProduct: cartProduct.stockProduct._id,
             quantity: cartProduct.stockProduct.quantity - cartProduct.quantity,
           });
           setCartProducts([]);
+          setCart("");
         }
-      })
-      .then(() => navigate(`/customer/orderConfirmation`));
+      });
   };
   const handleClearCart = () => {
     axios
-      .delete(`/customers/${loggedInUser._id}/cart/products?all=true`)
+      .delete(`/customers/${currentUser._id}/cart/products?all=true`)
       .then(() => {
         setCartProducts([]);
+        setCart("");
       })
       .catch((error) => console.log(error));
   };
@@ -60,6 +61,7 @@ export const Cart = () => {
                 <CartProduct
                   key={cartProduct.stockProduct._id + "CartProduct"}
                   cartProduct={cartProduct}
+                  // setCartProducts={setCartProducts}
                 />
               );
             })

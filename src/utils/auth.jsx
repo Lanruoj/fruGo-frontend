@@ -8,6 +8,7 @@ export const login = async ({ email, password }) => {
   console.log(response);
   if (response.data.accessToken) {
     localStorage.setItem("user", JSON.stringify(response.data.user));
+    localStorage.setItem("role", response.data.role);
   }
   return response.data.user;
 };
@@ -17,6 +18,7 @@ export const registerCustomer = async (data) => {
   console.log(response);
   if (response.data.accessToken) {
     localStorage.setItem("user", JSON.stringify(response.data.user));
+    localStorage.setItem("role", response.data.role);
   }
   return response.data.user;
 };

@@ -17,6 +17,12 @@ export const login = async ({ email, password }) => {
   return response.data.user;
 };
 
+export const logout = async () => {
+  await axios.post("/auth/logout");
+  localStorage.clear();
+  return "";
+};
+
 export const registerCustomer = async (data) => {
   const response = await axios.post("/customers/register", data);
   console.log(response);

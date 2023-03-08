@@ -30,16 +30,10 @@ export const Login = () => {
     event.preventDefault();
     try {
       await login(userFormDetails);
-      if (session) {
-        setSession(0);
-      } else {
-        setSession(1);
-      }
-      if (currentRole == "Customer") {
-        navigate("/customer/products");
-      } else if (currentRole == "Merchant") {
-        navigate("/merchant/stock");
-      }
+      setSession((prev) => {
+        return prev + 1;
+      });
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

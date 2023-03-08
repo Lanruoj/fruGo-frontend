@@ -15,20 +15,19 @@ export const RowWrapper = styled.div`
 `;
 
 export const CustomerProducts = () => {
-  const {
-    loggedInUser,
-    merchant,
-    cartProducts,
-    setCustomerProducts,
-    customerProducts,
-  } = useUserContext();
+  const { currentUser, currentRole, setCurrentUser, setCurrentRole, cart } =
+    useUserContext();
+  const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
-    if (loggedInUser) {
+    if (currentUser) {
       axios
-        .get(`/merchants/${merchant._id}/stock/products?name=${searchQuery}`)
+        .get(
+          `/merchants/${currentUser._merchant._id}/stock/products?name=${searchQuery}`
+        )
         .then((response) => {
-          setCustomerProducts(response.data.data);
+          console.log(response.data.data);
+          setProducts(response.data.data);
         });
     }
   }, [searchQuery]);
@@ -47,9 +46,9 @@ export const CustomerProducts = () => {
         />
       </form>
       <RowWrapper>
-        {customerProducts &&
-          customerProducts.map((product) => {
-            const existingProduct = cartProducts.find(
+        {products &&
+          products.map((product) => {
+            const existingProduct = cart.find(
               (cartProduct) => cartProduct.stockProduct._id == product._id
             );
             return (
@@ -60,9 +59,7 @@ export const CustomerProducts = () => {
               />
             );
           })}
-        {!customerProducts.length && (
-          <h2>No products matching that criteria</h2>
-        )}
+        {!products.length && <h2>No products matching that criteria</h2>}
       </RowWrapper>
     </>
   );

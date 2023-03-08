@@ -33,6 +33,11 @@ export const UserContextProvider = ({ children }) => {
     isLoggedIn();
   }, [currentUser]);
   useEffect(() => {
+    if (localStorage.getItem("user")) {
+      setCurrentUser(JSON.parse(localStorage.getItem("user")));
+    }
+  }, []);
+  useEffect(() => {
     if (currentRole == "Customer") {
       if (!cart) {
         axios.get(`/customers/${currentUser._id}/cart`).then((response) => {

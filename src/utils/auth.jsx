@@ -25,6 +25,12 @@ export const registerCustomer = async (data) => {
   if (response.data.accessToken) {
     localStorage.setItem("user", JSON.stringify(response.data.user));
     localStorage.setItem("role", response.data.role);
+    if (response.data.role == "Customer") {
+      localStorage.setItem(
+        "cart",
+        JSON.stringify(response.data.user._cart._cartProducts)
+      );
+    }
   }
   return response.data.user;
 };

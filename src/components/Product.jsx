@@ -19,21 +19,17 @@ const ProductWrapper = styled(Wrapper)`
 `;
 
 export const Product = (props) => {
-  const { currentUser, setCart } = useUserContext();
+  const { currentUser, setCart, cartProducts, setCartProducts } =
+    useUserContext();
   const { product, existingProduct } = props;
   const handleAddToCart = (event) => {
     event.preventDefault();
     axios
-      .post(
-        `/customers/${
-          JSON.parse(localStorage.getItem("user"))._id
-        }/cart/products`,
-        {
-          product: event.target.value,
-        }
-      )
+      .post(`/customers/${currentUser._id}/cart/products`, {
+        product: event.target.value,
+      })
       .then((response) => {
-        setCart((prev) => {
+        setCartProducts((prev) => {
           return [
             ...prev,
             {
@@ -61,7 +57,7 @@ export const Product = (props) => {
         }
       )
       .then((response) => {
-        setCart((prev) => {
+        setCartProducts((prev) => {
           const cartProducts = [...prev];
           const index = cartProducts.findIndex(
             (cartProduct) => cartProduct.stockProduct._id == event.target.value

@@ -5,21 +5,21 @@ import { Order } from "./Order";
 import { PageHeading } from "./styled/PageHeading";
 
 export const OrderList = (props) => {
-  const { loggedInUser, role } = useUserContext();
+  const { currentUser, currentRole } = useUserContext();
   const [orders, setOrders] = useState([]);
   const [statusFilter, setStatusFilter] = useState("?status=pending");
   useEffect(() => {
-    if (role == "Customer") {
+    if (currentRole == "Customer") {
       axios
-        .get(`/customers/${loggedInUser._id}/orders${statusFilter}`)
+        .get(`/customers/${currentUser._id}/orders${statusFilter}`)
         .then((response) => {
           setOrders(() => {
             return response.data.data;
           });
         });
-    } else if (role == "Merchant") {
+    } else if (currentRole == "Merchant") {
       axios
-        .get(`/merchants/${loggedInUser._id}/orders${statusFilter}`)
+        .get(`/merchants/${currentUser._id}/orders${statusFilter}`)
         .then((response) => {
           setOrders(() => {
             return response.data.data;

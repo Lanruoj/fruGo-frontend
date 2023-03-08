@@ -11,10 +11,7 @@ export const login = async ({ email, password }) => {
     localStorage.setItem("user", JSON.stringify(response.data.user));
     localStorage.setItem("role", response.data.role);
     if (response.data.role == "Customer") {
-      localStorage.setItem(
-        "cart",
-        JSON.stringify(response.data.user._cart._cartProducts)
-      );
+      localStorage.setItem("cart", JSON.stringify(response.data.user._cart));
     }
   }
   return response.data.user;
@@ -28,10 +25,7 @@ export const registerCustomer = async (data) => {
     localStorage.setItem("user", JSON.stringify(response.data.user));
     localStorage.setItem("role", response.data.role);
     if (response.data.role == "Customer") {
-      localStorage.setItem(
-        "cart",
-        JSON.stringify(response.data.user._cart._cartProducts)
-      );
+      localStorage.setItem("cart", JSON.stringify(response.data.user._cart));
     }
   }
   return response.data.user;

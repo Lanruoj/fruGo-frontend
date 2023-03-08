@@ -29,7 +29,7 @@ const CartProductLi = styled.li`
 `;
 
 export const CartProduct = (props) => {
-  const { cartProducts, setCartProducts, setNewOrder } = useUserContext();
+  const { cart, setCart, setCartProducts, cartProducts } = useUserContext();
   const { cartProduct } = props;
   const handleIncrementQuantity = (event) => {
     event.preventDefault();

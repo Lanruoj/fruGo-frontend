@@ -55,7 +55,7 @@ function App() {
                 }
               />
               <Route
-                path={`orderConfirmation`}
+                path={`orderConfirmation/:orderID`}
                 element={
                   <CustomerRoute>
                     <OrderConfirmation />

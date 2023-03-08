@@ -14,7 +14,7 @@ export const RowWrapper = styled.div`
 `;
 
 export const CustomerProducts = () => {
-  const { currentUser, cart } = useUserContext();
+  const { currentUser, cart, cartProducts } = useUserContext();
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
@@ -45,11 +45,9 @@ export const CustomerProducts = () => {
       <RowWrapper>
         {products &&
           products.map((product) => {
-            const existingProduct = cart.length
-              ? cart.find(
-                  (cartProduct) => cartProduct.stockProduct._id == product._id
-                )
-              : null;
+            const existingProduct = cartProducts.find(
+              (cartProduct) => cartProduct.stockProduct._id == product._id
+            );
             return (
               <Product
                 key={product._id}

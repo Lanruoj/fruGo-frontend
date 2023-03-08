@@ -27,7 +27,7 @@ export const CustomerProducts = () => {
           setProducts(response.data.data);
         });
     }
-  }, [currentUser]);
+  }, [currentUser, searchQuery]);
   const handleSearchQueryChange = (event) => {
     event.preventDefault();
     setSearchQuery(event.target.value);
@@ -43,7 +43,7 @@ export const CustomerProducts = () => {
         />
       </form>
       <RowWrapper>
-        {products &&
+        {!!products &&
           products.map((product) => {
             const existingProduct = cartProducts.find(
               (cartProduct) => cartProduct.stockProduct._id == product._id

@@ -25,6 +25,14 @@ import { AddNewStockProduct } from "./components/AddNewStockProduct";
 import { UserProfile } from "./components/UserProfile";
 
 function App() {
+  const [userLoggedIn, setUserLoggedIn] = useState("");
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      setUserLoggedIn(true);
+    } else {
+      setUserLoggedIn(false);
+    }
+  });
   return (
     <div className="App">
       <UserContextProvider>
@@ -35,19 +43,13 @@ function App() {
             <Route
               exact
               path="/login"
-              element={
-                localStorage.getItem("user") ? <Navigate to="/" /> : <Login />
-              }
+              element={userLoggedIn ? <Navigate to="/" /> : <Login />}
             />
             <Route
               exact
               path="/customer/register"
               element={
-                localStorage.getItem("role") == "Customer" ? (
-                  <Navigate to="/" />
-                ) : (
-                  <Register />
-                )
+                userLoggedIn == "Customer" ? <Navigate to="/" /> : <Register />
               }
             />
             <Route path="customer">

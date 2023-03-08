@@ -8,17 +8,10 @@ import { NavLink } from "./NavBar";
 import { useNavigate } from "react-router-dom";
 import { Error } from "./Error";
 import { PageHeading } from "./styled/PageHeading";
+import { login, registerCustomer } from "../utils/auth";
 
 export const Login = () => {
-  const {
-    loggedInUser,
-    setLoggedInUser,
-    setRole,
-    setToken,
-    setMerchant,
-    error,
-    setError,
-  } = useUserContext();
+  const { error, setError } = useUserContext();
   const [userFormDetails, setUserFormDetails] = useState({
     email: "",
     password: "",
@@ -35,36 +28,14 @@ export const Login = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    axios
-      .post("/auth/login", userFormDetails)
-      .then((response) => {
-        if (response.status == 200) {
-          setLoggedInUser(() => {
-            response.data.user.city = response.data.city;
-            localStorage.setItem("user", JSON.stringify(response.data.user));
-            localStorage.setItem("token", response.data.accessToken);
-            localStorage.setItem("role", response.data.role);
-            if (localStorage.getItem("role") == "Customer") {
-              localStorage.setItem(
-                "merchant",
-                JSON.stringify(response.data.merchant)
-              );
-            }
-            return response.data.user;
-          });
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        console.log(error.response.data.error.message);
-        setError(error.response.data.error.message);
-        setUserFormDetails({
-          email: "",
-          password: "",
-        });
-      });
+    try {
+      await login(userFormDetails);
+      navigate("/customer/products");
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const handleRegister = (event) => {
+  const goToRegister = (event) => {
     event.preventDefault();
     navigate("/customer/register");
   };
@@ -92,7 +63,7 @@ export const Login = () => {
         </InputWrapper>
         <div>
           <Button type="submit">Login</Button>
-          <Button onClick={handleRegister}>Register</Button>
+          <Button onClick={goToRegister}>Register</Button>
         </div>
       </Form>
       <Error error={error} />

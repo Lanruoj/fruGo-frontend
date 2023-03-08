@@ -1,14 +1,15 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { authenticateUser } from "./auth";
 import { Login } from "../components/Login";
+import { useLocation } from "react-router-dom";
 
-export const UserContext = createContext("");
-export const useUserContext = () => useContext(UserContext);
+export const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState("");
   const [currentRole, setCurrentRole] = useState("");
   const [cart, setCart] = useState("");
+  const [session, setSession] = useState("");
   useEffect(() => {
     const isLoggedIn = async () => {
       let { user, role, cart } = authenticateUser();
@@ -25,10 +26,7 @@ export const UserContextProvider = ({ children }) => {
       setCart(cart);
     };
     isLoggedIn();
-  }, []);
-  useEffect(() => {
-    console.log(currentUser);
-  }, [currentUser]);
+  }, [session]);
   return (
     <UserContext.Provider
       value={{
@@ -38,9 +36,13 @@ export const UserContextProvider = ({ children }) => {
         setCurrentRole,
         cart,
         setCart,
+        session,
+        setSession,
       }}
     >
       {children}
     </UserContext.Provider>
   );
 };
+
+export const useUserContext = () => useContext(UserContext);

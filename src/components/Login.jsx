@@ -11,7 +11,7 @@ import { PageHeading } from "./styled/PageHeading";
 import { login, registerCustomer } from "../utils/auth";
 
 export const Login = () => {
-  const { setSession, session, currentRole } = useUserContext();
+  const { setSession, session, currentRole, setCurrentUser } = useUserContext();
   const [userFormDetails, setUserFormDetails] = useState({
     email: "",
     password: "",
@@ -29,10 +29,8 @@ export const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await login(userFormDetails);
-      setSession((prev) => {
-        return prev + 1;
-      });
+      const user = await login(userFormDetails);
+      setCurrentUser(user);
       navigate("/");
     } catch (error) {
       console.log(error);

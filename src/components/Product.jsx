@@ -4,6 +4,7 @@ import axios from "axios";
 import { Wrapper } from "./styled/Wrapper";
 import styled from "styled-components";
 import { useUserContext } from "../utils/UserContext";
+import { useEffect, useState } from "react";
 
 export const ProductImg = styled.img`
   width: 150px;
@@ -21,7 +22,20 @@ const ProductWrapper = styled(Wrapper)`
 export const Product = (props) => {
   const { currentUser, setCart, cartProducts, setCartProducts } =
     useUserContext();
-  const { product, existingProduct } = props;
+  const { product, existingProduct, isStockProduct } = props;
+  const [stockProduct, setStockProduct] = useState("");
+  useEffect(() => {
+    if (isStockProduct) {
+      axios
+        .get(
+          `/merchants/${currentUser._merchant._id}/stock/products?_product=${product._id}`
+        )
+        .then((response) => {
+          const [stockProduct] = response.data.data;
+          setStockProduct(stockProduct);
+        });
+    }
+  }, [currentUser]);
   const handleAddToCart = (event) => {
     event.preventDefault();
     axios
@@ -29,7 +43,6 @@ export const Product = (props) => {
         product: event.target.value,
       })
       .then((response) => {
-        console.log(response);
         setCartProducts((prev) => {
           return [
             ...prev,
@@ -71,35 +84,34 @@ export const Product = (props) => {
 
   return (
     <ProductWrapper>
-      <ProductImg
-        src={currentUser ? product.product.img : product.img}
-        alt={currentUser ? product.product.name : product.name}
-      ></ProductImg>
-      <div>{currentUser ? product.product.name : product.name}</div>
+      <ProductImg src={product.img} alt={product.name}></ProductImg>
+      <div>{product.name}</div>
       <div
         style={{
           fontFamily: "Verdana, sans-serif",
         }}
       >
-        ${currentUser ? product.product.price : product.price}
+        ${product.price}
       </div>
       {!existingProduct ? (
         <Button
-          value={product._id}
+          value={!!stockProduct && stockProduct._id}
           onClick={handleAddToCart}
-          disabled={(product.quantity <= 0 || !currentUser) && true}
+          disabled={
+            (!!stockProduct && stockProduct.quantity <= 0) || !currentUser
+          }
         >
           Add to cart
         </Button>
       ) : (
         <Button
-          value={currentUser && product._id}
+          value={!!isStockProduct && stockProduct._id}
           onClick={handleRemoveFromCart}
         >
           Remove
         </Button>
       )}
-      {currentUser && <div>Stock quantity: {product.quantity}</div>}
+      {!!isStockProduct && <div>Stock quantity: {stockProduct.quantity}</div>}
     </ProductWrapper>
   );
 };

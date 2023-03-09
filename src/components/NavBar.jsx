@@ -105,7 +105,7 @@ export const NavBar = () => {
   return (
     <Header>
       {!!currentUser && (
-        <UserLogo>
+        <UserLogo id="test-user-logo">
           Welcome, {currentUser.firstName || currentUser.name}
         </UserLogo>
       )}

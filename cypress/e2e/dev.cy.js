@@ -1,15 +1,7 @@
 // DEVELOPMENT
-const baseURL = "http://localhost:3000";
+// const baseURL = "http://localhost:3000";
 // PRODUCTION
-// const baseURL = "https://frugo.netlify.app";
-const login = () => {
-  cy.visit(baseURL + "/login");
-  cy.get("input[name='email']").clear().type(Cypress.env("TEST_USER_EMAIL"));
-  cy.get("input[name='password']")
-    .clear()
-    .type(Cypress.env("TEST_USER_PASSWORD"));
-  cy.get('button[type="submit"]').contains("Login").click();
-};
+const baseURL = "https://frugo.netlify.app";
 
 describe("Base test", () => {
   it("Loads home page", () => {
@@ -75,7 +67,6 @@ describe("Products", () => {
       .then(($text) => {
         cy.log($text);
         if ($text != "No products in cart") {
-          cy.log("Banana");
           cy.intercept("DELETE", "**/cart/products?all=true**").as("clearCart");
           cy.get("#clear-cart-button").click();
           cy.wait("@clearCart");

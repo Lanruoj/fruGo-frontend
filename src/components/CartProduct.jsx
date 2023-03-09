@@ -57,7 +57,7 @@ export const CartProduct = (props) => {
     });
   };
   return (
-    <>
+    <div className="cart-product">
       <CartProductName>
         {cartProduct.stockProduct._product.name}
       </CartProductName>
@@ -86,6 +86,6 @@ export const CartProduct = (props) => {
           cartProduct.quantity * cartProduct.stockProduct._product.price
         ).toFixed(2)}
       </CartProductPrice>
-    </>
+    </div>
   );
 };

@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useUserContext } from "../utils/UserContext";
 import { Order } from "./Order";
+import { Dropdown } from "./styled/Dropdown";
+import { Form, InputWrapper, Label } from "./styled/Form";
 import { PageHeading } from "./styled/PageHeading";
 
 export const OrderList = (props) => {
@@ -36,11 +38,20 @@ export const OrderList = (props) => {
   return (
     <>
       <PageHeading>Orders</PageHeading>
-      <select onChange={handleStatusFilter} defaultValue="?status=pending">
-        <option value="?status=pending">Pending</option>
-        <option value="?status=complete">Complete</option>
-        <option value="?status=cancelled">Cancelled</option>
-      </select>
+      <Form>
+        <InputWrapper>
+          <Label htmlFor="status-filter">Filter by status:</Label>
+          <Dropdown
+            name="status-filter"
+            onChange={handleStatusFilter}
+            defaultValue="?status=pending"
+          >
+            <option value="?status=pending">Pending</option>
+            <option value="?status=complete">Complete</option>
+            <option value="?status=cancelled">Cancelled</option>
+          </Dropdown>
+        </InputWrapper>
+      </Form>
       <div>
         {orders.length ? (
           orders.map((order) => {

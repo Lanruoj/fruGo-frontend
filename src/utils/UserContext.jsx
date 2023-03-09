@@ -35,6 +35,7 @@ export const UserContextProvider = ({ children }) => {
   useEffect(() => {
     if (localStorage.getItem("user")) {
       setCurrentUser(JSON.parse(localStorage.getItem("user")));
+      setCurrentRole(localStorage.getItem("role"));
     }
   }, []);
   useEffect(() => {

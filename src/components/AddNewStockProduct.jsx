@@ -16,6 +16,7 @@ const AvailableProduct = styled.li``;
 export const AddNewStockProduct = () => {
   const { currentUser } = useUserContext();
   const [productsNotInStock, setProductsNotInStock] = useState([]);
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     const filterProducts = async () => {
@@ -28,7 +29,7 @@ export const AddNewStockProduct = () => {
       });
       const stockProducts = stockProductsResponse.data.data.map(
         (stockProduct) => {
-          return stockProduct.product;
+          return stockProduct._product;
         }
       );
       const filteredProducts = allProducts.filter(
@@ -38,6 +39,9 @@ export const AddNewStockProduct = () => {
           )
       );
       setProductsNotInStock(filteredProducts);
+      if (!filteredProducts.length) {
+        setMessage("You currently stock all available products");
+      }
     };
     filterProducts();
   }, []);
@@ -57,6 +61,7 @@ export const AddNewStockProduct = () => {
   return (
     <>
       <PageHeading>Add new product</PageHeading>
+      {message && <p>{message}</p>}
       <List>
         {productsNotInStock.map((product) => {
           return (

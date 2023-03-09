@@ -18,19 +18,9 @@ export const CustomerProducts = () => {
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
-    if (currentUser) {
-      axios
-        .get(
-          `/merchants/${currentUser._merchant._id}/stock/products?name=${searchQuery}`
-        )
-        .then((response) => {
-          setProducts(response.data.data);
-        });
-    } else {
-      axios.get(`/products?name=${searchQuery}`).then((response) => {
-        setProducts(response.data.data);
-      });
-    }
+    axios.get(`/products?name=${searchQuery}`).then((response) => {
+      setProducts(response.data.data);
+    });
   }, [currentUser, searchQuery]);
   const handleSearchQueryChange = (event) => {
     event.preventDefault();
@@ -49,14 +39,15 @@ export const CustomerProducts = () => {
       <RowWrapper>
         {!!products &&
           products.map((product) => {
-            const existingProduct = cartProducts.find(
-              (cartProduct) => cartProduct.stockProduct._id == product._id
-            );
+            const existingProduct = cartProducts.find((cartProduct) => {
+              return cartProduct.stockProduct._product._id == product._id;
+            });
             return (
               <Product
                 key={product._id}
                 product={product}
                 existingProduct={existingProduct}
+                isStockProduct={!!currentUser}
               />
             );
           })}

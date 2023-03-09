@@ -1,11 +1,19 @@
 // DEVELOPMENT
-// const baseURL = "http://localhost:3000";
+const baseURL = "http://localhost:3000";
 // PRODUCTION
-const baseURL = "https://frugo-backend-production.up.railway.app";
+// const baseURL = "https://frugo.netlify.app";
+const login = () => {
+  cy.visit(baseURL + "/login");
+  cy.get("input[name='email']").clear().type(Cypress.env("TEST_USER_EMAIL"));
+  cy.get("input[name='password']")
+    .clear()
+    .type(Cypress.env("TEST_USER_PASSWORD"));
+  cy.get('button[type="submit"]').contains("Login").click();
+};
 
 describe("Base test", () => {
   it("Loads home page", () => {
-    cy.visit("http://localhost:3000");
+    cy.visit(baseURL);
     cy.get("nav")
       .should("contain", "Home")
       .should("contain", "Login")
@@ -17,7 +25,7 @@ describe("Base test", () => {
 
 describe("Login", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit(baseURL);
     cy.get('[value="/login"]').click();
   });
   it("Loads login page", () => {
@@ -44,8 +52,43 @@ describe("Login", () => {
     cy.get("input[name='password']")
       .clear()
       .type(Cypress.env("TEST_USER_PASSWORD"));
-    cy.get('[type="submit"]').contains("Login").click();
+    cy.get('button[type="submit"]').contains("Login").click();
     cy.get("#test-user-logo").contains("Welcome, John");
     cy.get("button").contains("Logout");
+  });
+});
+
+describe("Products", () => {
+  beforeEach(() => {
+    cy.visit(baseURL + "/login");
+    cy.get("input[name='email']").clear().type(Cypress.env("TEST_USER_EMAIL"));
+    cy.get("input[name='password']")
+      .clear()
+      .type(Cypress.env("TEST_USER_PASSWORD"));
+    cy.intercept("**/auth/login").as("postLogin");
+    cy.get('button[type="submit"]').contains("Login").click();
+    cy.wait("@postLogin");
+    cy.get("button[value='/customer/cart'").contains("Cart").click();
+    cy.get("#cart-product-list")
+      .should("have.length.gte", 0)
+      .invoke("text")
+      .then(($text) => {
+        cy.log($text);
+        if ($text != "No products in cart") {
+          cy.log("Banana");
+          cy.intercept("DELETE", "**/cart/products?all=true**").as("clearCart");
+          cy.get("#clear-cart-button").click();
+          cy.wait("@clearCart");
+        }
+      });
+    cy.get("#cart-product-list").children().should("have.length", 0);
+  });
+  it("Add product to cart", () => {
+    cy.intercept("GET", "**/products**").as("getProducts");
+    cy.get("button[value='/customer/products'").click();
+    cy.wait("@getProducts");
+    cy.get(".add-to-cart-button").first().click();
+    cy.get("button[value='/customer/cart'").contains("Cart").click();
+    cy.get("#cart-product-list>.cart-product").should("have.length", 1);
   });
 });

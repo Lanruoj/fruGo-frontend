@@ -57,7 +57,6 @@ export const Cart = () => {
                 <CartProduct
                   key={cartProduct.stockProduct._id + "CartProduct"}
                   cartProduct={cartProduct}
-                  className="cart-product"
                 />
               );
             })

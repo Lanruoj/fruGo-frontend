@@ -38,7 +38,7 @@ export const UserContextProvider = ({ children }) => {
     }
   }, []);
   useEffect(() => {
-    if (currentRole == "Customer") {
+    if (currentUser && currentRole == "Customer") {
       axios
         .get(`/customers/${currentUser._id}/cart`)
         .then((response) => {
@@ -57,7 +57,7 @@ export const UserContextProvider = ({ children }) => {
         })
         .then(() => {});
     }
-  }, [cart]);
+  }, [currentUser, cart]);
   return (
     <UserContext.Provider
       value={{

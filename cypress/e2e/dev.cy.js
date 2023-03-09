@@ -17,7 +17,7 @@ describe("Login", () => {
   });
   it("Loads login page", () => {
     cy.contains("Login");
-    cy.get(".sc-gswNZR").should("contain", "Email:");
-    cy.get(".sc-gswNZR").should("contain", "Password:");
+    cy.get(".sc-hBxehG").should("contain", "Email:");
+    cy.get(".sc-hBxehG").should("contain", "Password:");
   });
 });

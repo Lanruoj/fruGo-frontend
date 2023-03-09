@@ -1,7 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { authenticateUser } from "./auth";
-import { Login } from "../components/Login";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 export const UserContext = createContext();
@@ -12,7 +10,7 @@ export const UserContextProvider = ({ children }) => {
   const [currentRole, setCurrentRole] = useState("");
   const [cart, setCart] = useState("");
   const [cartProducts, setCartProducts] = useState([]);
-  const [session, setSession] = useState(1);
+  const [error, setError] = useState("");
   useEffect(() => {
     const isLoggedIn = async () => {
       let { token, user, role, cart } = authenticateUser();
@@ -72,8 +70,8 @@ export const UserContextProvider = ({ children }) => {
         setCart,
         cartProducts,
         setCartProducts,
-        session,
-        setSession,
+        error,
+        setError,
       }}
     >
       {children}

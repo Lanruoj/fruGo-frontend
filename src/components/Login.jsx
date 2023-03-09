@@ -8,7 +8,7 @@ import { PageHeading } from "./styled/PageHeading";
 import { login } from "../utils/auth";
 
 export const Login = () => {
-  const { setCurrentUser } = useUserContext();
+  const { setCurrentUser, error, setError } = useUserContext();
   const [userFormDetails, setUserFormDetails] = useState({
     email: "",
     password: "",
@@ -25,12 +25,19 @@ export const Login = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const user = await login(userFormDetails);
-      setCurrentUser(user);
-      navigate("/");
-    } catch (error) {
-      console.log(error);
+    if (!userFormDetails.email) {
+      setError("Please enter an email address");
+    } else if (!userFormDetails.password) {
+      setError("Please enter a password");
+    } else {
+      try {
+        const user = await login(userFormDetails);
+        setCurrentUser(user);
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+        setError(error.response.data.error.message);
+      }
     }
   };
   const goToRegister = (event) => {
@@ -63,8 +70,8 @@ export const Login = () => {
           <Button type="submit">Login</Button>
           <Button onClick={goToRegister}>Register</Button>
         </div>
+        {!!error && <Error error={error} />}
       </Form>
-      {/* <Error error={error} /> */}
     </>
   );
 };

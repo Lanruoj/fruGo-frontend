@@ -25,13 +25,19 @@ export const Login = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const user = await login(userFormDetails);
-      setCurrentUser(user);
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-      setError(error.response.data.error.message);
+    if (!userFormDetails.email) {
+      setError("Please enter an email address");
+    } else if (!userFormDetails.password) {
+      setError("Please enter a password");
+    } else {
+      try {
+        const user = await login(userFormDetails);
+        setCurrentUser(user);
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+        setError(error.response.data.error.message);
+      }
     }
   };
   const goToRegister = (event) => {

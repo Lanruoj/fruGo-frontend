@@ -83,7 +83,7 @@ export const Product = (props) => {
   };
 
   return (
-    <ProductWrapper>
+    <ProductWrapper className="product">
       <ProductImg src={product.img} alt={product.name}></ProductImg>
       <div>{product.name}</div>
       <div
@@ -95,6 +95,7 @@ export const Product = (props) => {
       </div>
       {!existingProduct ? (
         <Button
+          className="add-to-cart-button"
           value={!!stockProduct && stockProduct._id}
           onClick={handleAddToCart}
           disabled={

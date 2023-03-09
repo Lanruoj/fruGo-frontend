@@ -18,7 +18,7 @@ const CartProductList = styled.ul`
 `;
 
 export const Cart = () => {
-  const { currentUser, cart, setCart, cartProducts, setCartProducts } =
+  const { currentUser, setCart, cartProducts, setCartProducts } =
     useUserContext();
   const navigate = useNavigate();
   const handleSubmitOrder = () => {
@@ -50,14 +50,14 @@ export const Cart = () => {
   return (
     <CartContainer>
       <PageHeading>Cart</PageHeading>
-      <CartProductList>
+      <CartProductList id="cart-product-list">
         {cartProducts.length
           ? cartProducts.map((cartProduct) => {
               return (
                 <CartProduct
                   key={cartProduct.stockProduct._id + "CartProduct"}
                   cartProduct={cartProduct}
-                  // setCartProducts={setCartProducts}
+                  className="cart-product"
                 />
               );
             })
@@ -65,8 +65,12 @@ export const Cart = () => {
       </CartProductList>
       {!!cartProducts.length && (
         <>
-          <Button onClick={handleSubmitOrder}>Checkout</Button>
-          <Button onClick={handleClearCart}>Clear cart</Button>
+          <Button id="checkout-button" onClick={handleSubmitOrder}>
+            Checkout
+          </Button>
+          <Button id="clear-cart-button" onClick={handleClearCart}>
+            Clear cart
+          </Button>
         </>
       )}
     </CartContainer>

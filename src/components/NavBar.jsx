@@ -101,7 +101,6 @@ export const NavBar = () => {
   const { currentUser, currentRole, setCurrentUser, setCurrentRole } =
     useUserContext();
   const [currentPage, setCurrentPage] = useState("");
-  const navigate = useNavigate();
   return (
     <Header>
       {!!currentUser && (

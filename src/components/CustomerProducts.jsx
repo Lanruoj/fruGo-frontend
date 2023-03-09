@@ -36,7 +36,7 @@ export const CustomerProducts = () => {
           placeholder="Search for products"
         />
       </form>
-      <RowWrapper>
+      <RowWrapper id="product-list">
         {!!products &&
           products.map((product) => {
             const existingProduct = cartProducts.find((cartProduct) => {

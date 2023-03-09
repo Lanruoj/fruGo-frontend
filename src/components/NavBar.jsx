@@ -12,6 +12,14 @@ const Header = styled.div`
   top: 0px;
 `;
 
+const UserLogo = styled.span`
+  font-family: "Unbounded", sans-serif;
+  display: inline-block;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+`;
+
 const NavContainer = styled.nav`
   width: 100vw;
   height: 2rem;
@@ -96,6 +104,11 @@ export const NavBar = () => {
   const navigate = useNavigate();
   return (
     <Header>
+      {!!currentUser && (
+        <UserLogo>
+          Welcome, {currentUser.firstName || currentUser.name}
+        </UserLogo>
+      )}
       <Title>fruGo</Title>
       <NavContainer maxWidth="xl">
         <NavButtonContainer>

@@ -1,10 +1,11 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useUserContext } from "../utils/UserContext";
 import { Button } from "./styled/Button";
 import { Dropdown } from "./styled/Dropdown";
-import { Form, InputWrapper, Label } from "./styled/Form";
+import { Form, Input, InputWrapper, Label } from "./styled/Form";
 
 const OrderContainer = styled.div`
   border: solid black;
@@ -31,6 +32,10 @@ export const Order = (props) => {
   const { currentRole } = useUserContext();
   const { order } = props;
   const [status, setStatus] = useState("");
+  const navigate = useNavigate();
+  useEffect(() => {
+    setStatus(order.status);
+  }, [order]);
   const handleStatusChange = (event) => {
     setStatus(() => {
       return event.target.value;
@@ -42,6 +47,13 @@ export const Order = (props) => {
         status: status,
       })
       .then((response) => console.log(response));
+  };
+  const handleCancelOrder = () => {
+    axios
+      .put(`/orders/${order._id}`, {
+        status: "cancelled",
+      })
+      .then((response) => navigate(0));
   };
   return (
     <OrderContainer>
@@ -88,24 +100,33 @@ export const Order = (props) => {
         <div>
           <b>Total price: </b>${Number.parseFloat(order.totalPrice).toFixed(2)}
         </div>
-        <Form onSubmit={handleSubmitStatus}>
-          <InputWrapper>
-            <Label htmlFor="status">Status: </Label>
-            <Dropdown
-              name="status"
-              id="status"
-              onChange={handleStatusChange}
-              value={status}
-            >
-              <option value="pending">Pending</option>
-              {currentRole == "Merchant" && (
+        {currentRole == "Merchant" && (
+          <Form onSubmit={handleSubmitStatus}>
+            <InputWrapper>
+              <Label htmlFor="status">Status: </Label>
+              <Dropdown
+                name="status"
+                id="status"
+                onChange={handleStatusChange}
+                value={status}
+                disabled={
+                  order.status == "complete" || order.status == "cancelled"
+                }
+              >
+                <option value="pending">Pending</option>
                 <option value="complete">Complete</option>
-              )}
-              <option value="cancelled">Cancelled</option>
-            </Dropdown>
-            <Button type="submit">Submit</Button>
-          </InputWrapper>
-        </Form>
+                <option value="cancelled">Cancelled</option>
+              </Dropdown>
+              <Button type="submit">Submit</Button>
+            </InputWrapper>
+          </Form>
+        )}
+        {currentRole == "Customer" && (
+          <>
+            <p>Status: {order.status}</p>
+            <Button onClick={handleCancelOrder}>Cancel order</Button>
+          </>
+        )}
       </OrderDetails>
     </OrderContainer>
   );

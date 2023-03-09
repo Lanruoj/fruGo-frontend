@@ -2,6 +2,9 @@ import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
 import { useUserContext } from "../utils/UserContext";
+import { Button } from "./styled/Button";
+import { Dropdown } from "./styled/Dropdown";
+import { Form, InputWrapper, Label } from "./styled/Form";
 
 const OrderContainer = styled.div`
   border: solid black;
@@ -24,12 +27,8 @@ const OrderProduct = styled.li`
   margin: 1rem 0 1rem 0;
 `;
 
-const StatusLabel = styled.label`
-  display: block;
-`;
-
 export const Order = (props) => {
-  const { role } = useUserContext();
+  const { currentRole } = useUserContext();
   const { order } = props;
   const [status, setStatus] = useState("");
   const handleStatusChange = (event) => {
@@ -89,32 +88,24 @@ export const Order = (props) => {
         <div>
           <b>Total price: </b>${Number.parseFloat(order.totalPrice).toFixed(2)}
         </div>
-        {role == "Customer" && (
-          <div>
-            <b>Status:</b> {order.status}
-          </div>
-        )}
-        {role == "Merchant" && (
-          <form onSubmit={handleSubmitStatus}>
-            <StatusLabel htmlFor="status">
-              <b>Status:</b> {order.status}
-            </StatusLabel>
-            <select
+        <Form onSubmit={handleSubmitStatus}>
+          <InputWrapper>
+            <Label htmlFor="status">Status: </Label>
+            <Dropdown
               name="status"
               id="status"
               onChange={handleStatusChange}
               value={status}
             >
-              <option disabled={true} value="">
-                Update
-              </option>
               <option value="pending">Pending</option>
-              <option value="complete">Complete</option>
+              {currentRole == "Merchant" && (
+                <option value="complete">Complete</option>
+              )}
               <option value="cancelled">Cancelled</option>
-            </select>
-            <button type="submit">Submit</button>
-          </form>
-        )}
+            </Dropdown>
+            <Button type="submit">Submit</Button>
+          </InputWrapper>
+        </Form>
       </OrderDetails>
     </OrderContainer>
   );

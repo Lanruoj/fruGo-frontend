@@ -1,3 +1,8 @@
+// DEVELOPMENT
+// const baseURL = "http://localhost:3000";
+// PRODUCTION
+const baseURL = "https://frugo-backend-production.up.railway.app";
+
 describe("Base test", () => {
   it("Loads home page", () => {
     cy.visit("http://localhost:3000");

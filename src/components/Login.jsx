@@ -8,7 +8,7 @@ import { PageHeading } from "./styled/PageHeading";
 import { login } from "../utils/auth";
 
 export const Login = () => {
-  const { setCurrentUser } = useUserContext();
+  const { setCurrentUser, error, setError } = useUserContext();
   const [userFormDetails, setUserFormDetails] = useState({
     email: "",
     password: "",
@@ -31,6 +31,7 @@ export const Login = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
+      setError(error.response.data.error.message);
     }
   };
   const goToRegister = (event) => {
@@ -63,8 +64,8 @@ export const Login = () => {
           <Button type="submit">Login</Button>
           <Button onClick={goToRegister}>Register</Button>
         </div>
+        {!!error && <Error error={error} />}
       </Form>
-      {/* <Error error={error} /> */}
     </>
   );
 };

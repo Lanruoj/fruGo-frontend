@@ -1,10 +1,17 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import { useUserContext } from "../utils/UserContext";
 import { Order } from "./Order";
 import { Dropdown } from "./styled/Dropdown";
 import { Form, InputWrapper, Label } from "./styled/Form";
 import { PageHeading } from "./styled/PageHeading";
+
+const ModuleContainer = styled.div`
+  background-color: white;
+  border-radius: 0.3rem;
+  padding: 2rem;
+`;
 
 export const OrderList = (props) => {
   const { currentUser, currentRole } = useUserContext();
@@ -36,7 +43,7 @@ export const OrderList = (props) => {
     });
   };
   return (
-    <>
+    <ModuleContainer>
       <PageHeading>Orders</PageHeading>
       <Form>
         <InputWrapper>
@@ -61,6 +68,6 @@ export const OrderList = (props) => {
           <p>You currently have no {statusFilter.split("=")[1]} orders</p>
         )}
       </div>
-    </>
+    </ModuleContainer>
   );
 };

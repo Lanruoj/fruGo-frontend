@@ -86,13 +86,7 @@ export const Product = (props) => {
     <ProductWrapper className="product">
       <ProductImg src={product.img} alt={product.name}></ProductImg>
       <div>{product.name}</div>
-      <div
-        style={{
-          fontFamily: "Verdana, sans-serif",
-        }}
-      >
-        ${product.price}
-      </div>
+      <div style={{ fontFamily: "monospace" }}>${product.price}</div>
       {!existingProduct ? (
         <Button
           className="add-to-cart-button"

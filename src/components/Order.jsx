@@ -10,6 +10,8 @@ import { Form, Input, InputWrapper, Label } from "./styled/Form";
 const OrderContainer = styled.div`
   border: solid black;
   border-radius: 0.3rem;
+  background-color: white;
+  padding: 1rem;
 `;
 
 const OrderDetails = styled.ul`

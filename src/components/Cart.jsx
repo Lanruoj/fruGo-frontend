@@ -11,9 +11,10 @@ const CartContainer = styled.div`
   width: 100vw;
 `;
 
-const CartProductList = styled.ul`
+const CartProductList = styled.div`
   height: 100%;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 

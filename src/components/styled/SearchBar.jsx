@@ -7,4 +7,6 @@ export const SearchBar = styled.input.attrs({ type: "search" })`
   font-family: monospace;
   padding: 0.5rem;
   text-align: center;
+  border-radius: 0.2rem;
+  border: none;
 `;

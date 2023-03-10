@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { logout } from "../utils/auth";
@@ -64,7 +64,7 @@ const NavButton = styled.button`
   border: none;
   text-transform: uppercase;
   color: ${({ currentPage, value }) =>
-    currentPage == value ? "orange" : "#735502"};
+    currentPage === value ? "orange" : "#735502"};
   cursor: pointer;
   transition: 0.3s;
   :disabled {
@@ -73,10 +73,9 @@ const NavButton = styled.button`
 `;
 
 export const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
-  const { currentUser, currentRole, setCurrentUser, setCurrentRole } =
-    useUserContext();
+  const { setCurrentUser } = useUserContext();
   const navigate = useNavigate();
-  const [windowSize, setWindowSize] = useState("");
+  const [windowSize, setWindowSize] = useState(window.innerWidth);
   useEffect(() => {
     const handleWindowResize = () => {
       setWindowSize(window.innerWidth);
@@ -98,7 +97,7 @@ export const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
   };
   return (
     <NavButton
-      onClick={text == "Logout" ? handleLogout : handleNavigate}
+      onClick={text === "Logout" ? handleLogout : handleNavigate}
       value={url}
       currentPage={currentPage}
       disabled={!active}
@@ -114,7 +113,7 @@ export const NavBar = () => {
   const [currentPage, setCurrentPage] = useState("");
   return (
     <Header>
-      {!!currentUser && currentRole == "Customer" && (
+      {!!currentUser && currentRole === "Customer" && (
         <UserLogo id="test-user-logo">
           Welcome, {currentUser.firstName || currentUser.name}
         </UserLogo>
@@ -134,11 +133,11 @@ export const NavBar = () => {
             url="/customer/products"
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
-            active={!currentUser || currentRole == "Customer"}
+            active={!currentUser || currentRole === "Customer"}
           />
         </NavButtonContainer>
         <AuthButtonContainer>
-          {currentRole == "Customer" && (
+          {currentRole === "Customer" && (
             <>
               <NavLink
                 text="Cart"
@@ -156,7 +155,7 @@ export const NavBar = () => {
               />
             </>
           )}
-          {currentRole == "Merchant" && (
+          {currentRole === "Merchant" && (
             <>
               <NavLink
                 text="Stock"

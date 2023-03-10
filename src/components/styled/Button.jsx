@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Button = styled.button`
   height: 2rem;
-  width: 100%;
   margin: 1rem;
   border: none;
   background-color: rgb(58, 149, 32);

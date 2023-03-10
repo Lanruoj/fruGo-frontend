@@ -14,7 +14,7 @@ const CartContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding: 0;
+  padding: 1rem;
 `;
 
 const CartProductList = styled.div`
@@ -56,30 +56,32 @@ export const Cart = () => {
       .catch((error) => console.log(error));
   };
   return (
-    <CartContainer>
+    <>
       <PageHeading>Cart</PageHeading>
-      <CartProductList id="cart-product-list">
-        {cartProducts.length
-          ? cartProducts.map((cartProduct) => {
-              return (
-                <CartProduct
-                  key={cartProduct.stockProduct._id + "CartProduct"}
-                  cartProduct={cartProduct}
-                />
-              );
-            })
-          : "No products in cart"}
-      </CartProductList>
-      {!!cartProducts.length && (
-        <>
-          <Button id="checkout-button" onClick={handleSubmitOrder}>
-            Checkout
-          </Button>
-          <Button id="clear-cart-button" onClick={handleClearCart}>
-            Clear cart
-          </Button>
-        </>
-      )}
-    </CartContainer>
+      <CartContainer>
+        <CartProductList id="cart-product-list">
+          {cartProducts.length
+            ? cartProducts.map((cartProduct) => {
+                return (
+                  <CartProduct
+                    key={cartProduct.stockProduct._id + "CartProduct"}
+                    cartProduct={cartProduct}
+                  />
+                );
+              })
+            : "No products in cart"}
+        </CartProductList>
+        {!!cartProducts.length && (
+          <>
+            <Button id="checkout-button" onClick={handleSubmitOrder}>
+              Checkout
+            </Button>
+            <Button id="clear-cart-button" onClick={handleClearCart}>
+              Clear cart
+            </Button>
+          </>
+        )}
+      </CartContainer>
+    </>
   );
 };

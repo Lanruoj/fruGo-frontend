@@ -5,10 +5,12 @@ export const NumberInput = styled.input.attrs({ type: "number" })`
   width: 5rem;
   text-align: center;
   border-radius: 0.3rem;
-  border: none;
+  border: solid gray 1px;
   color: black;
+  font-size: 1rem;
+  font-family: monospace;
   :disabled {
-    background: grey;
+    background-color: #cdcdcd;
     border: none;
   }
 `;

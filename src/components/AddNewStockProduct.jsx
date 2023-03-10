@@ -11,6 +11,12 @@ const NewProductImg = styled.img`
   width: 100px;
 `;
 
+const ModuleContainer = styled.div`
+  background-color: white;
+  border-radius: 0.3rem;
+  padding: 1rem;
+`;
+
 const AvailableProduct = styled.li``;
 
 export const AddNewStockProduct = () => {
@@ -61,22 +67,27 @@ export const AddNewStockProduct = () => {
   return (
     <>
       <PageHeading>Add new product</PageHeading>
-      {message && <p>{message}</p>}
-      <List>
-        {productsNotInStock.map((product) => {
-          return (
-            <AvailableProduct key={product._id + "productsNotInStock"}>
-              <span>{product.name}</span>
-              <NewProductImg src={product.img} />
-              <span>{product.type}</span>
-              <span>${product.price}</span>
-              <Button onClick={handleAddNewProductToStock} value={product._id}>
-                Add to stock
-              </Button>
-            </AvailableProduct>
-          );
-        })}
-      </List>
+      <ModuleContainer>
+        {message && <p>{message}</p>}
+        <List>
+          {productsNotInStock.map((product) => {
+            return (
+              <AvailableProduct key={product._id + "productsNotInStock"}>
+                <span>{product.name}</span>
+                <NewProductImg src={product.img} />
+                <span>{product.type}</span>
+                <span>${product.price}</span>
+                <Button
+                  onClick={handleAddNewProductToStock}
+                  value={product._id}
+                >
+                  Add to stock
+                </Button>
+              </AvailableProduct>
+            );
+          })}
+        </List>
+      </ModuleContainer>
     </>
   );
 };

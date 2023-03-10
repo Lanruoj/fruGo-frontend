@@ -6,6 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { Error } from "./Error";
 import { PageHeading } from "./styled/PageHeading";
 import { login } from "../utils/auth";
+import styled from "styled-components";
+
+const ModuleContainer = styled.div`
+  background-color: white;
+  border-radius: 0.3rem;
+`;
 
 export const Login = () => {
   const { setCurrentUser, error, setError } = useUserContext();
@@ -48,29 +54,31 @@ export const Login = () => {
   return (
     <>
       <PageHeading>Login</PageHeading>
-      <Form onSubmit={handleSubmit} multi>
-        <InputWrapper>
-          <Input
-            type="email"
-            name="email"
-            onChange={handleChange}
-            value={userFormDetails.email}
-            placeholder="Email"
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <Input
-            type="password"
-            name="password"
-            onChange={handleChange}
-            value={userFormDetails.password}
-            placeholder="Password"
-          />
-        </InputWrapper>
-        <Button type="submit">Login</Button>
-        <Button onClick={goToRegister}>Register</Button>
-        {!!error && <Error error={error} />}
-      </Form>
+      <ModuleContainer>
+        <Form onSubmit={handleSubmit} multi>
+          <InputWrapper>
+            <Input
+              type="email"
+              name="email"
+              onChange={handleChange}
+              value={userFormDetails.email}
+              placeholder="Email"
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <Input
+              type="password"
+              name="password"
+              onChange={handleChange}
+              value={userFormDetails.password}
+              placeholder="Password"
+            />
+          </InputWrapper>
+          <Button type="submit">Login</Button>
+          <Button onClick={goToRegister}>Register</Button>
+          {!!error && <Error error={error} />}
+        </Form>
+      </ModuleContainer>
     </>
   );
 };

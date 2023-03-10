@@ -7,12 +7,19 @@ import { useUserContext } from "../utils/UserContext";
 import { PageHeading } from "./styled/PageHeading";
 
 const CartContainer = styled.div`
-  height: 100%;
-  width: 100vw;
+  width: 50vw;
+  background-color: white;
+  border-radius: 0.3rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 1rem;
 `;
 
 const CartProductList = styled.div`
   height: 100%;
+  width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -49,30 +56,32 @@ export const Cart = () => {
       .catch((error) => console.log(error));
   };
   return (
-    <CartContainer>
+    <>
       <PageHeading>Cart</PageHeading>
-      <CartProductList id="cart-product-list">
-        {cartProducts.length
-          ? cartProducts.map((cartProduct) => {
-              return (
-                <CartProduct
-                  key={cartProduct.stockProduct._id + "CartProduct"}
-                  cartProduct={cartProduct}
-                />
-              );
-            })
-          : "No products in cart"}
-      </CartProductList>
-      {!!cartProducts.length && (
-        <>
-          <Button id="checkout-button" onClick={handleSubmitOrder}>
-            Checkout
-          </Button>
-          <Button id="clear-cart-button" onClick={handleClearCart}>
-            Clear cart
-          </Button>
-        </>
-      )}
-    </CartContainer>
+      <CartContainer>
+        <CartProductList id="cart-product-list">
+          {cartProducts.length
+            ? cartProducts.map((cartProduct) => {
+                return (
+                  <CartProduct
+                    key={cartProduct.stockProduct._id + "CartProduct"}
+                    cartProduct={cartProduct}
+                  />
+                );
+              })
+            : "No products in cart"}
+        </CartProductList>
+        {!!cartProducts.length && (
+          <>
+            <Button id="checkout-button" onClick={handleSubmitOrder}>
+              Checkout
+            </Button>
+            <Button id="clear-cart-button" onClick={handleClearCart}>
+              Clear cart
+            </Button>
+          </>
+        )}
+      </CartContainer>
+    </>
   );
 };

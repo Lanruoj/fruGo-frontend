@@ -1,10 +1,17 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import { useUserContext } from "../utils/UserContext";
 import { Order } from "./Order";
 import { Dropdown } from "./styled/Dropdown";
 import { Form, InputWrapper, Label } from "./styled/Form";
 import { PageHeading } from "./styled/PageHeading";
+
+const ModuleContainer = styled.div`
+  background-color: white;
+  border-radius: 0.3rem;
+  padding: 2rem;
+`;
 
 export const OrderList = (props) => {
   const { currentUser, currentRole } = useUserContext();
@@ -38,29 +45,31 @@ export const OrderList = (props) => {
   return (
     <>
       <PageHeading>Orders</PageHeading>
-      <Form>
-        <InputWrapper>
-          <Label htmlFor="status-filter">Filter by status:</Label>
-          <Dropdown
-            name="status-filter"
-            onChange={handleStatusFilter}
-            defaultValue="?status=pending"
-          >
-            <option value="?status=pending">Pending</option>
-            <option value="?status=complete">Complete</option>
-            <option value="?status=cancelled">Cancelled</option>
-          </Dropdown>
-        </InputWrapper>
-      </Form>
-      <div>
-        {orders.length ? (
-          orders.map((order) => {
-            return <Order key={order._id} order={order} />;
-          })
-        ) : (
-          <p>You currently have no {statusFilter.split("=")[1]} orders</p>
-        )}
-      </div>
+      <ModuleContainer>
+        <Form>
+          <InputWrapper>
+            <Label htmlFor="status-filter">Filter by status:</Label>
+            <Dropdown
+              name="status-filter"
+              onChange={handleStatusFilter}
+              defaultValue="?status=pending"
+            >
+              <option value="?status=pending">Pending</option>
+              <option value="?status=complete">Complete</option>
+              <option value="?status=cancelled">Cancelled</option>
+            </Dropdown>
+          </InputWrapper>
+        </Form>
+        <div>
+          {orders.length ? (
+            orders.map((order) => {
+              return <Order key={order._id} order={order} />;
+            })
+          ) : (
+            <p>You currently have no {statusFilter.split("=")[1]} orders</p>
+          )}
+        </div>
+      </ModuleContainer>
     </>
   );
 };

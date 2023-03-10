@@ -10,14 +10,10 @@ import { useNavigate } from "react-router-dom";
 
 const HorizontalContainer = styled.div`
   width: 75vw;
-  background-color: grey;
-  border: solid black;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0 2rem 0 2rem;
-  align-items: center;
-  height: 5rem;
+  background-color: white;
+  border-radius: 0.3rem;
+  padding: 0 1rem 0 1rem;
+  margin: 0.3rem;
 `;
 const QuantityUpdateForm = styled.form`
   display: flex;
@@ -26,8 +22,8 @@ const QuantityUpdateForm = styled.form`
 `;
 
 export const StockProduct = (props) => {
-  const { currentUser, error, setError } = useUserContext();
-  const { product, setProducts } = props;
+  const { currentUser, setError } = useUserContext();
+  const { product } = props;
   const [stockQuantity, setStockQuantity] = useState("");
   const [canUpdate, setCanUpdate] = useState(false);
   const navigate = useNavigate();
@@ -78,13 +74,9 @@ export const StockProduct = (props) => {
     <Wrapper>
       <HorizontalContainer>
         <h2>{product.product.name}</h2>
-        <List>
-          <li>Serial: {product._id}</li>
-          <li>Type: {product.product.type}</li>
-          <li>Price: ${product.product.price}</li>
-        </List>
+        <List></List>
         <QuantityUpdateForm>
-          <label htmlFor="stock-quantity">Stock quantity:</label>
+          <label htmlFor="stock-quantity">Quantity: &nbsp;</label>
           <NumberInput
             name="stock-quantity"
             id="stock-quantity"

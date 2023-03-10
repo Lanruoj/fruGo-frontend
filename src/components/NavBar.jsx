@@ -1,23 +1,27 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { logout } from "../utils/auth";
 import { useUserContext } from "../utils/UserContext";
 
 const Header = styled.div`
-  height: 5.5rem;
+  height: 6rem;
   width: 100vw;
   display: block;
   position: fixed;
   top: 0px;
+  background-color: rgba(250, 250, 247, 0.744);
 `;
 
 const UserLogo = styled.span`
   font-family: "Unbounded", sans-serif;
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
+  width: 3rem;
   position: absolute;
   top: 2rem;
   right: 2rem;
+  font-size: 0.6rem;
 `;
 
 const NavContainer = styled.nav`
@@ -31,7 +35,7 @@ const NavContainer = styled.nav`
 const Title = styled.h1`
   text-align: center;
   margin: 0.5rem 0 0 0;
-  color: #052f05;
+  color: #438d39;
   font-size: 3rem;
   font-family: "Unbounded", cursive;
 `;
@@ -52,20 +56,17 @@ const AuthButtonContainer = styled.div`
 `;
 
 const NavButton = styled.button`
-  font-family: "Unbounded", cursive;
+  font-family: "Unbounded", monospace;
   height: 2rem;
   margin: 1rem;
-  font-size: 1rem;
+  font-size: ${({ windowSize }) => (windowSize < 700 ? "0.5rem" : "1rem")};
   background: none;
   border: none;
   text-transform: uppercase;
   color: ${({ currentPage, value }) =>
-    currentPage == value ? "black" : "red"};
+    currentPage == value ? "orange" : "#735502"};
   cursor: pointer;
   transition: 0.3s;
-  :hover {
-    color: grey;
-  }
   :disabled {
     visibility: hidden;
   }
@@ -75,6 +76,16 @@ export const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
   const { currentUser, currentRole, setCurrentUser, setCurrentRole } =
     useUserContext();
   const navigate = useNavigate();
+  const [windowSize, setWindowSize] = useState("");
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowSize(window.innerWidth);
+    };
+    window.addEventListener("resize", handleWindowResize);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  });
   const handleNavigate = (event) => {
     navigate(event.target.value);
     setCurrentPage(url);
@@ -91,6 +102,7 @@ export const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
       value={url}
       currentPage={currentPage}
       disabled={!active}
+      windowSize={windowSize}
     >
       {text}
     </NavButton>
@@ -98,12 +110,11 @@ export const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
 };
 
 export const NavBar = () => {
-  const { currentUser, currentRole, setCurrentUser, setCurrentRole } =
-    useUserContext();
+  const { currentUser, currentRole } = useUserContext();
   const [currentPage, setCurrentPage] = useState("");
   return (
     <Header>
-      {!!currentUser && (
+      {!!currentUser && currentRole == "Customer" && (
         <UserLogo id="test-user-logo">
           Welcome, {currentUser.firstName || currentUser.name}
         </UserLogo>
@@ -126,7 +137,6 @@ export const NavBar = () => {
             active={!currentUser || currentRole == "Customer"}
           />
         </NavButtonContainer>
-
         <AuthButtonContainer>
           {currentRole == "Customer" && (
             <>

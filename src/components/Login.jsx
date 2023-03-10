@@ -34,6 +34,7 @@ export const Login = () => {
         const user = await login(userFormDetails);
         setCurrentUser(user);
         navigate("/");
+        setError("");
       } catch (error) {
         console.log(error);
         setError(error.response.data.error.message);
@@ -49,27 +50,25 @@ export const Login = () => {
       <PageHeading>Login</PageHeading>
       <Form onSubmit={handleSubmit} multi>
         <InputWrapper>
-          <Label htmlFor="email">Email:</Label>
           <Input
             type="email"
             name="email"
             onChange={handleChange}
             value={userFormDetails.email}
+            placeholder="Email"
           />
         </InputWrapper>
         <InputWrapper>
-          <Label htmlFor="password">Password:</Label>
           <Input
             type="password"
             name="password"
             onChange={handleChange}
             value={userFormDetails.password}
+            placeholder="Password"
           />
         </InputWrapper>
-        <div>
-          <Button type="submit">Login</Button>
-          <Button onClick={goToRegister}>Register</Button>
-        </div>
+        <Button type="submit">Login</Button>
+        <Button onClick={goToRegister}>Register</Button>
         {!!error && <Error error={error} />}
       </Form>
     </>

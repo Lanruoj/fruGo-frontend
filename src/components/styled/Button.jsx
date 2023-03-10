@@ -2,8 +2,7 @@ import styled from "styled-components";
 
 export const Button = styled.button`
   height: 2rem;
-  min-width: min-content;
-  max-width: max-content;
+  width: 100%;
   margin: 1rem;
   border: none;
   background-color: rgb(58, 149, 32);
@@ -19,6 +18,7 @@ export const Button = styled.button`
     background-color: rgb(68, 172, 39);
   }
   :disabled {
+    background: none;
     border: solid gray;
     color: gray;
     cursor: not-allowed;

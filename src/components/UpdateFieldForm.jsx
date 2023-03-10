@@ -8,7 +8,7 @@ import { Form, Input, InputWrapper, Label } from "./styled/Form";
 
 export const UpdateFieldForm = (props) => {
   const { currentUser, setCurrentUser, currentRole } = useUserContext();
-  const [updateButton, setUpdateButton] = useState("Update");
+  const [updateButton, setUpdateButton] = useState("✎");
   const [formData, setFormData] = useState("");
   const [cities, setCities] = useState([]);
   useEffect(() => {
@@ -24,9 +24,9 @@ export const UpdateFieldForm = (props) => {
   }, [updateButton]);
   const handleUpdate = async (event) => {
     event.preventDefault();
-    if (updateButton == "Update") {
-      setUpdateButton("Submit");
-    } else if (updateButton == "Submit") {
+    if (updateButton == "✎") {
+      setUpdateButton("\u21B5");
+    } else if (updateButton == "\u21B5") {
       await axios.put(
         `/${
           currentRole[0].toLowerCase() +
@@ -41,7 +41,7 @@ export const UpdateFieldForm = (props) => {
         localStorage.setItem("user", JSON.stringify(response.data.data));
         setCurrentUser(response.data.data);
       });
-      setUpdateButton("Update");
+      setUpdateButton("✎");
     }
   };
   const handleChange = (event) => {
@@ -56,7 +56,7 @@ export const UpdateFieldForm = (props) => {
           <Dropdown
             value={formData._id}
             onChange={handleChange}
-            disabled={updateButton == "Update"}
+            disabled={updateButton == "✎"}
           >
             {cities.map((option) => {
               return (
@@ -71,7 +71,7 @@ export const UpdateFieldForm = (props) => {
             type="text"
             value={formData || "********"}
             onChange={handleChange}
-            disabled={updateButton == "Update"}
+            disabled={updateButton == "✎"}
           />
         )}
       </InputWrapper>

@@ -58,8 +58,8 @@ const AuthButtonContainer = styled.div`
 const NavButton = styled.button`
   font-family: "Unbounded", monospace;
   height: 2rem;
-  margin: 1rem;
-  font-size: ${({ windowSize }) => (windowSize < 700 ? "0.5rem" : "1rem")};
+  margin: ${({ windowSize }) => (windowSize < 700 ? "0" : "1rem")};
+  font-size: ${({ windowSize }) => (windowSize < 700 ? "0.6rem" : "1rem")};
   background: none;
   border: none;
   text-transform: uppercase;

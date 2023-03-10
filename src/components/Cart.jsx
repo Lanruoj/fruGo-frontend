@@ -7,12 +7,19 @@ import { useUserContext } from "../utils/UserContext";
 import { PageHeading } from "./styled/PageHeading";
 
 const CartContainer = styled.div`
-  height: 100%;
-  width: 100vw;
+  width: 50vw;
+  background-color: white;
+  border-radius: 0.3rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
 `;
 
 const CartProductList = styled.div`
   height: 100%;
+  width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;

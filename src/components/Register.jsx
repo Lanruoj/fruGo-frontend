@@ -5,10 +5,11 @@ import { useUserContext } from "../utils/UserContext";
 import { PageHeading } from "./styled/PageHeading";
 import { registerCustomer } from "../utils/auth";
 import { useNavigate } from "react-router-dom";
+import { Dropdown } from "./styled/Dropdown";
 
 export const Register = () => {
   const { setCurrentUser } = useUserContext();
-  const [cities, setCities] = useState("");
+  const [cities, setCities] = useState([]);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -28,7 +29,7 @@ export const Register = () => {
         setFormData(() => {
           return {
             ...formData,
-            _city: data.data[0]._id,
+            _city: "default",
           };
         });
       });
@@ -54,73 +55,75 @@ export const Register = () => {
       <PageHeading>Register</PageHeading>
       <Form onSubmit={handleSubmit} autoComplete="off" multi>
         <InputWrapper>
-          <Label htmlFor="email">Email:</Label>
           <Input
             type="email"
             name="email"
+            placeholder="Email"
             onChange={handleChange}
             value={formData.email}
             autoComplete="off"
           />
         </InputWrapper>
         <InputWrapper>
-          <Label htmlFor="password">Password:</Label>
           <Input
             type="password"
             name="password"
+            placeholder="Password"
             onChange={handleChange}
             value={formData.password}
             autoComplete="new-password"
           />
         </InputWrapper>
         <InputWrapper>
-          <Label htmlFor="username">Username:</Label>
           <Input
             type="username"
             name="username"
+            placeholder="Username"
             onChange={handleChange}
             value={formData.username}
             autoComplete="off"
           />
         </InputWrapper>
         <InputWrapper>
-          <Label htmlFor="firstName">First name:</Label>
           <Input
             type="text"
             name="firstName"
+            placeholder="First name"
             onChange={handleChange}
             value={formData.firstName}
             autoComplete="off"
           />
         </InputWrapper>
         <InputWrapper>
-          <Label htmlFor="lastName">Last name:</Label>
           <Input
             type="text"
             name="lastName"
+            placeholder="Last name"
             onChange={handleChange}
             value={formData.lastName}
             autoComplete="off"
           />
         </InputWrapper>
         <InputWrapper>
-          <Label htmlFor="streetAddress">Street address:</Label>
           <Input
             type="text"
             name="streetAddress"
+            placeholder="Street address"
             onChange={handleChange}
             value={formData.streetAddress}
             autoComplete="off"
           />
         </InputWrapper>
         <InputWrapper>
-          <Label htmlFor="_city">City:</Label>
-          <select
+          <Dropdown
             name="_city"
             id="_city"
             onChange={handleChange}
             value={formData._city}
           >
+            <option value="default" disabled>
+              City
+            </option>
             {cities &&
               cities.map((city) => {
                 return (
@@ -129,7 +132,7 @@ export const Register = () => {
                   </option>
                 );
               })}
-          </select>
+          </Dropdown>
         </InputWrapper>
         <div>
           <input type="submit" value="Register" />

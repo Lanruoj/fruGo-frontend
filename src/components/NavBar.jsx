@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { logout } from "../utils/auth";
@@ -98,9 +98,18 @@ export const NavLink = ({ text, url, currentPage, setCurrentPage, active }) => {
 };
 
 export const NavBar = () => {
-  const { currentUser, currentRole, setCurrentUser, setCurrentRole } =
-    useUserContext();
+  const { currentUser, currentRole } = useUserContext();
   const [currentPage, setCurrentPage] = useState("");
+  const [windowSize, setWindowSize] = useState("");
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowSize(window.innerWidth);
+    };
+    window.addEventListener("resize", handleWindowResize);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  });
   return (
     <Header>
       {!!currentUser && (

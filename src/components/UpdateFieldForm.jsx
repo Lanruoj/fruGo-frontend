@@ -49,34 +49,36 @@ export const UpdateFieldForm = (props) => {
     setFormData(event.target.value);
   };
   return (
-    <Form onSubmit={handleUpdate}>
-      <InputWrapper>
-        <Label>{props.label}: </Label>
-        {props.ids ? (
-          <Dropdown
-            value={formData._id}
-            onChange={handleChange}
-            disabled={updateButton == "✎"}
-          >
-            {cities.map((option) => {
-              return (
-                <option value={option._id} key={option._id}>
-                  {option.name}
-                </option>
-              );
-            })}
-          </Dropdown>
-        ) : (
-          <Input
-            type="text"
-            value={formData || "********"}
-            onChange={handleChange}
-            disabled={updateButton == "✎"}
-          />
-        )}
-      </InputWrapper>
-      <UpdateButton>{updateButton}</UpdateButton>
-    </Form>
+    <>
+      <Label>{props.label}</Label>
+      <Form onSubmit={handleUpdate} style={{ padding: "0px" }}>
+        <InputWrapper>
+          {props.ids ? (
+            <Dropdown
+              value={formData._id}
+              onChange={handleChange}
+              disabled={updateButton == "✎"}
+            >
+              {cities.map((option) => {
+                return (
+                  <option value={option._id} key={option._id}>
+                    {option.name}
+                  </option>
+                );
+              })}
+            </Dropdown>
+          ) : (
+            <Input
+              type="text"
+              value={formData || "********"}
+              onChange={handleChange}
+              disabled={updateButton == "✎"}
+            />
+          )}
+        </InputWrapper>
+        <UpdateButton>{updateButton}</UpdateButton>
+      </Form>
+    </>
   );
 };
 

@@ -9,6 +9,7 @@ export const Dropdown = styled.select`
   font-size: 1rem;
   padding: 0 0.3rem 0 0.3rem;
   font-family: monospace;
+  background-color: #f1f1f1;
   :disabled {
     color: gray;
   }

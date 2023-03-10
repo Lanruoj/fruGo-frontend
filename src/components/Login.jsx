@@ -52,31 +52,33 @@ export const Login = () => {
     navigate("/customer/register");
   };
   return (
-    <ModuleContainer>
+    <>
       <PageHeading>Login</PageHeading>
-      <Form onSubmit={handleSubmit} multi>
-        <InputWrapper>
-          <Input
-            type="email"
-            name="email"
-            onChange={handleChange}
-            value={userFormDetails.email}
-            placeholder="Email"
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <Input
-            type="password"
-            name="password"
-            onChange={handleChange}
-            value={userFormDetails.password}
-            placeholder="Password"
-          />
-        </InputWrapper>
-        <Button type="submit">Login</Button>
-        <Button onClick={goToRegister}>Register</Button>
-        {!!error && <Error error={error} />}
-      </Form>
-    </ModuleContainer>
+      <ModuleContainer>
+        <Form onSubmit={handleSubmit} multi>
+          <InputWrapper>
+            <Input
+              type="email"
+              name="email"
+              onChange={handleChange}
+              value={userFormDetails.email}
+              placeholder="Email"
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <Input
+              type="password"
+              name="password"
+              onChange={handleChange}
+              value={userFormDetails.password}
+              placeholder="Password"
+            />
+          </InputWrapper>
+          <Button type="submit">Login</Button>
+          <Button onClick={goToRegister}>Register</Button>
+          {!!error && <Error error={error} />}
+        </Form>
+      </ModuleContainer>
+    </>
   );
 };

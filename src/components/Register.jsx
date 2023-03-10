@@ -6,6 +6,7 @@ import { PageHeading } from "./styled/PageHeading";
 import { registerCustomer } from "../utils/auth";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "./styled/Dropdown";
+import { Button } from "./styled/Button";
 
 export const Register = () => {
   const { setCurrentUser } = useUserContext();
@@ -134,9 +135,7 @@ export const Register = () => {
               })}
           </Dropdown>
         </InputWrapper>
-        <div>
-          <input type="submit" value="Register" />
-        </div>
+        <Button>Register</Button>
       </Form>
     </>
   );

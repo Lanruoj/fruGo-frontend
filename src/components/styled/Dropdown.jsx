@@ -2,13 +2,14 @@ import styled from "styled-components";
 
 export const Dropdown = styled.select`
   border: none;
-  border-style: solid;
-  border-color: #c8c8c8;
-  border-width: 0.2px;
-  height: 1.8rem;
+  height: 2rem;
   min-width: 15.5rem;
+  width: 100%;
   border-radius: 0.3rem;
+  font-size: 1rem;
+  padding: 0 0.3rem 0 0.3rem;
+  font-family: monospace;
   :disabled {
-    color: black;
+    color: gray;
   }
 `;

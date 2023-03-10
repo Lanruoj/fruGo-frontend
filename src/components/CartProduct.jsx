@@ -3,29 +3,40 @@ import { useUserContext } from "../utils/UserContext";
 import { Button } from "./styled/Button";
 
 const CartProductName = styled.div`
-  background-color: orange;
+  /* background-color: orange; */
 `;
 
 const CartProductPrice = styled.div`
   /* background-color: purple; */
 `;
 
-const CartProductQuantity = styled.div`
+const CartProductQuantity = styled.span`
   /* background-color: red; */
 `;
 
 const CartProductImg = styled.img`
-  width: 100px;
+  width: 50px;
   border-radius: 0.3rem;
 `;
 
-const CartProductLi = styled.li`
-  border: solid red;
+const CartProductContainer = styled.span`
   flex-direction: column;
   justify-content: center;
-  width: 400px;
+  align-items: center;
+  width: 20rem;
   list-style: none;
   margin-top: 3rem;
+`;
+
+const QuantityButton = styled(Button)`
+  width: 1rem;
+  max-height: 1.2rem;
+  text-align: center;
+`;
+
+const QuantityForm = styled.form`
+  border-radius: 0.2rem;
+  display: inline;
 `;
 
 export const CartProduct = (props) => {
@@ -57,35 +68,35 @@ export const CartProduct = (props) => {
     });
   };
   return (
-    <div className="cart-product">
+    <CartProductContainer className="cart-product">
       <CartProductName>
         {cartProduct.stockProduct._product.name}
       </CartProductName>
       <CartProductImg
         src={cartProduct.stockProduct._product.img}
       ></CartProductImg>
-      <CartProductQuantity>Quantity:</CartProductQuantity>
-      <form>
-        <Button
+      <div>Quantity: </div>
+      <QuantityForm>
+        <QuantityButton
           onClick={handleIncrementQuantity}
           value={cartProduct.stockProduct._id}
         >
           +
-        </Button>
-        <Button
+        </QuantityButton>
+        <CartProductQuantity>{cartProduct.quantity}</CartProductQuantity>
+        <QuantityButton
           onClick={handleDecrementQuantity}
           value={cartProduct.stockProduct._id}
         >
           -
-        </Button>
-      </form>
-      <p>Quantity: {cartProduct.quantity}</p>
+        </QuantityButton>
+      </QuantityForm>
       <CartProductPrice>
         Subtotal: ${" "}
         {Number.parseFloat(
           cartProduct.quantity * cartProduct.stockProduct._product.price
         ).toFixed(2)}
       </CartProductPrice>
-    </div>
+    </CartProductContainer>
   );
 };

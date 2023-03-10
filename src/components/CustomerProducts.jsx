@@ -33,7 +33,7 @@ export const CustomerProducts = () => {
         <SearchBar
           value={searchQuery}
           onChange={handleSearchQueryChange}
-          placeholder="Search for products"
+          placeholder="Search products"
         />
       </form>
       <RowWrapper id="product-list">

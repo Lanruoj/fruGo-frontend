@@ -2,21 +2,25 @@ import styled from "styled-components";
 
 export const Button = styled.button`
   height: 2rem;
-  min-width: 3rem;
+  width: 100%;
   margin: 1rem;
   border: none;
-  background-color: rgb(103, 132, 95);
-  border-radius: 0.3rem;
+  background-color: rgb(58, 149, 32);
+  border-radius: 0.2rem;
   font-size: 1rem;
   padding: 0px 15px;
   color: white;
+  font-family: "Karla";
+  text-transform: uppercase;
   cursor: pointer;
   transition: 0.3s;
   :hover {
-    background-color: rgb(47, 65, 15);
+    background-color: rgb(68, 172, 39);
   }
   :disabled {
-    background-color: grey;
+    background: none;
+    border: solid gray;
+    color: gray;
     cursor: not-allowed;
   }
 `;

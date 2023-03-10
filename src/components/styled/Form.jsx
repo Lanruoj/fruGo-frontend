@@ -21,7 +21,7 @@ export const InputWrapper = styled.div`
 `;
 
 export const Input = styled.input`
-  background-color: white;
+  background-color: #f1f1f1;
   border: none;
   border-width: 0.2rem;
   height: 2rem;

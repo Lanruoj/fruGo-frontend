@@ -7,6 +7,12 @@ import { registerCustomer } from "../utils/auth";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "./styled/Dropdown";
 import { Button } from "./styled/Button";
+import styled from "styled-components";
+
+const RegisterContainer = styled.div`
+  background-color: white;
+  border-radius: 0.3rem;
+`;
 
 export const Register = () => {
   const { setCurrentUser } = useUserContext();
@@ -52,7 +58,7 @@ export const Register = () => {
     }
   };
   return (
-    <>
+    <RegisterContainer>
       <PageHeading>Register</PageHeading>
       <Form onSubmit={handleSubmit} autoComplete="off" multi>
         <InputWrapper>
@@ -137,6 +143,6 @@ export const Register = () => {
         </InputWrapper>
         <Button>Register</Button>
       </Form>
-    </>
+    </RegisterContainer>
   );
 };

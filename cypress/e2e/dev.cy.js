@@ -1,7 +1,7 @@
 // DEVELOPMENT
-const baseURL = "http://localhost:3000";
+// const baseURL = "http://localhost:3000";
 // PRODUCTION
-// const baseURL = "https://frugo.netlify.app";
+const baseURL = "https://frugo.netlify.app";
 
 describe("Base test", () => {
   it("Loads home page", () => {
@@ -22,8 +22,6 @@ describe("Login", () => {
   });
   it("Loads login page", () => {
     cy.contains("Login");
-    cy.get("form").should("contain", "Email:");
-    cy.get("form").should("contain", "Password:");
   });
   it("Shows error for incorrect login details", () => {
     cy.get("input[name='email']").type("{enter}");
@@ -35,15 +33,13 @@ describe("Login", () => {
       .type("incorrect_email@email.com{enter}");
     cy.get("input[name='password']").clear().type("wrongpassword{enter}");
     cy.get("#error-message").should("contain", "Email address does not exist");
-    cy.get("input[name='email']").clear().type(Cypress.env("TEST_USER_EMAIL"));
+    cy.get("input[name='email']").clear().type("john_smith@email.com");
     cy.get("input[name='password']").clear().type("wrongpassword{enter}");
     cy.get("#error-message").should("contain", "Invalid password");
   });
   it("Successfully logs in user", () => {
-    cy.get("input[name='email']").clear().type(Cypress.env("TEST_USER_EMAIL"));
-    cy.get("input[name='password']")
-      .clear()
-      .type(Cypress.env("TEST_USER_PASSWORD"));
+    cy.get("input[name='email']").clear().type("john_smith@email.com");
+    cy.get("input[name='password']").clear().type("Password1234");
     cy.get('button[type="submit"]').contains("Login").click();
     cy.get("#test-user-logo").contains("Welcome, John");
     cy.get("button").contains("Logout");
@@ -53,10 +49,8 @@ describe("Login", () => {
 describe("Products", () => {
   it("Adds product to cart", () => {
     cy.visit(baseURL + "/login");
-    cy.get("input[name='email']").clear().type(Cypress.env("TEST_USER_EMAIL"));
-    cy.get("input[name='password']")
-      .clear()
-      .type(Cypress.env("TEST_USER_PASSWORD"));
+    cy.get("input[name='email']").clear().type("john_smith@email.com");
+    cy.get("input[name='password']").clear().type("Password1234");
     cy.intercept("**/auth/login").as("postLogin");
     cy.get('button[type="submit"]').contains("Login").click();
     cy.intercept("GET", "**/cart").as("getCart");

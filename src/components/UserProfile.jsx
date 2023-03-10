@@ -10,7 +10,7 @@ import { UpdateFieldForm } from "./UpdateFieldForm";
 const ModuleContainer = styled.div`
   background-color: white;
   border-radius: 0.3rem;
-  padding: 2rem;
+  padding: 4rem;
 `;
 
 export const UserProfile = () => {
@@ -37,30 +37,32 @@ export const UserProfile = () => {
       .then(() => navigate("/"));
   };
   return (
-    <ModuleContainer>
+    <>
       <PageHeading>Profile</PageHeading>
-      {currentRole == "Merchant" && (
-        <>
-          <UpdateFieldForm label="Name" fieldName="name" />
-          <UpdateFieldForm label="Description" fieldName="description" />
-        </>
-      )}
-      {currentRole == "Customer" && (
-        <>
-          {" "}
-          <UpdateFieldForm label="First name" fieldName="firstName" />
-          <UpdateFieldForm label="Last name" fieldName="lastName" />
-          <UpdateFieldForm label="City" fieldName="_city" ids />
-        </>
-      )}{" "}
-      <UpdateFieldForm label="Street address" fieldName="streetAddress" />
-      <UpdateFieldForm label="Email" fieldName="email" />
-      <UpdateFieldForm
-        label="Password"
-        default="*************"
-        fieldName="password"
-      />
-      <Button onClick={handleDeleteProfile}>Delete profile</Button>
-    </ModuleContainer>
+      <ModuleContainer>
+        {currentRole == "Merchant" && (
+          <>
+            <UpdateFieldForm label="Name" fieldName="name" />
+            <UpdateFieldForm label="Description" fieldName="description" />
+          </>
+        )}
+        {currentRole == "Customer" && (
+          <>
+            {" "}
+            <UpdateFieldForm label="First name" fieldName="firstName" />
+            <UpdateFieldForm label="Last name" fieldName="lastName" />
+            <UpdateFieldForm label="City" fieldName="_city" ids />
+          </>
+        )}{" "}
+        <UpdateFieldForm label="Street address" fieldName="streetAddress" />
+        <UpdateFieldForm label="Email" fieldName="email" />
+        <UpdateFieldForm
+          label="Password"
+          default="*************"
+          fieldName="password"
+        />
+        <Button onClick={handleDeleteProfile}>Delete profile</Button>
+      </ModuleContainer>
+    </>
   );
 };

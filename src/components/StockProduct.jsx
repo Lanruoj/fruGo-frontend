@@ -9,7 +9,7 @@ import { useUserContext } from "../utils/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const HorizontalContainer = styled.div`
-  width: 100%;
+  width: 75vw;
   background-color: white;
   border-radius: 0.3rem;
   padding: 0 1rem 0 1rem;
@@ -74,11 +74,7 @@ export const StockProduct = (props) => {
     <Wrapper>
       <HorizontalContainer>
         <h2>{product.product.name}</h2>
-        <List>
-          {/* <li>{product._id}</li> */}
-          {/* <li>{product.product.type}</li>
-          <li>${product.product.price}</li> */}
-        </List>
+        <List></List>
         <QuantityUpdateForm>
           <label htmlFor="stock-quantity">Quantity: &nbsp;</label>
           <NumberInput

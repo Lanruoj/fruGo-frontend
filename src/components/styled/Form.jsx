@@ -6,6 +6,9 @@ export const Form = styled.form`
   justify-content: center;
   align-items: center;
   width: 50vw;
+  max-width: 20rem;
+  padding: 2rem;
+  border-radius: 0.3rem;
 `;
 
 export const InputWrapper = styled.div`
@@ -13,20 +16,23 @@ export const InputWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
   margin: 1rem;
 `;
 
 export const Input = styled.input`
   background-color: white;
-  border-style: solid;
-  border-color: #c8c8c8;
-  border-width: 0.2px;
-  height: 1.5rem;
+  border: none;
+  border-width: 0.2rem;
+  height: 2rem;
   min-width: 15rem;
+  width: 100%;
   border-radius: 0.3rem;
+  padding: 0 0.5rem 0 0.5rem;
+  font-size: 1rem;
+  font-family: monospace;
   :disabled {
-    color: black;
+    color: gray;
   }
 `;
 

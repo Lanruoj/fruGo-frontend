@@ -43,31 +43,33 @@ export const OrderList = (props) => {
     });
   };
   return (
-    <ModuleContainer>
+    <>
       <PageHeading>Orders</PageHeading>
-      <Form>
-        <InputWrapper>
-          <Label htmlFor="status-filter">Filter by status:</Label>
-          <Dropdown
-            name="status-filter"
-            onChange={handleStatusFilter}
-            defaultValue="?status=pending"
-          >
-            <option value="?status=pending">Pending</option>
-            <option value="?status=complete">Complete</option>
-            <option value="?status=cancelled">Cancelled</option>
-          </Dropdown>
-        </InputWrapper>
-      </Form>
-      <div>
-        {orders.length ? (
-          orders.map((order) => {
-            return <Order key={order._id} order={order} />;
-          })
-        ) : (
-          <p>You currently have no {statusFilter.split("=")[1]} orders</p>
-        )}
-      </div>
-    </ModuleContainer>
+      <ModuleContainer>
+        <Form>
+          <InputWrapper>
+            <Label htmlFor="status-filter">Filter by status:</Label>
+            <Dropdown
+              name="status-filter"
+              onChange={handleStatusFilter}
+              defaultValue="?status=pending"
+            >
+              <option value="?status=pending">Pending</option>
+              <option value="?status=complete">Complete</option>
+              <option value="?status=cancelled">Cancelled</option>
+            </Dropdown>
+          </InputWrapper>
+        </Form>
+        <div>
+          {orders.length ? (
+            orders.map((order) => {
+              return <Order key={order._id} order={order} />;
+            })
+          ) : (
+            <p>You currently have no {statusFilter.split("=")[1]} orders</p>
+          )}
+        </div>
+      </ModuleContainer>
+    </>
   );
 };

@@ -6,6 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { Error } from "./Error";
 import { PageHeading } from "./styled/PageHeading";
 import { login } from "../utils/auth";
+import styled from "styled-components";
+
+const ModuleContainer = styled.div`
+  background-color: white;
+  border-radius: 0.3rem;
+`;
 
 export const Login = () => {
   const { setCurrentUser, error, setError } = useUserContext();
@@ -46,7 +52,7 @@ export const Login = () => {
     navigate("/customer/register");
   };
   return (
-    <>
+    <ModuleContainer>
       <PageHeading>Login</PageHeading>
       <Form onSubmit={handleSubmit} multi>
         <InputWrapper>
@@ -71,6 +77,6 @@ export const Login = () => {
         <Button onClick={goToRegister}>Register</Button>
         {!!error && <Error error={error} />}
       </Form>
-    </>
+    </ModuleContainer>
   );
 };

@@ -6,9 +6,11 @@ import { StockProduct } from "./StockProduct";
 import { useUserContext } from "../utils/UserContext";
 import { Link } from "react-router-dom";
 import { PageHeading } from "./styled/PageHeading";
+import { Button } from "./styled/Button";
+import { NavLink } from "./NavBar";
 
 const SubNavLink = styled(Link)`
-  color: blue;
+  background-color: green;
 `;
 
 export function Stock() {
@@ -34,11 +36,6 @@ export function Stock() {
   };
   return (
     <>
-      <nav>
-        <SubNavLink to="/merchant/stock/add">
-          Add new product to stock
-        </SubNavLink>
-      </nav>
       <PageHeading>Stock</PageHeading>
       <form>
         <SearchBar
@@ -46,7 +43,11 @@ export function Stock() {
           onChange={handleSearchQueryChange}
           placeholder="Search for products"
         />
+        <Link to="/merchant/stock/add">
+          <Button>Add new product</Button>
+        </Link>
       </form>
+
       <div>
         {products &&
           products.map((product) => {

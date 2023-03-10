@@ -10,7 +10,9 @@ export const RowWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 0.5rem;
 `;
 
 export const CustomerProducts = () => {
@@ -51,7 +53,7 @@ export const CustomerProducts = () => {
               />
             );
           })}
-        {!products.length && <h2>No products matching that criteria</h2>}
+        {!products.length && <p>No products matching that criteria</p>}
       </RowWrapper>
     </>
   );
